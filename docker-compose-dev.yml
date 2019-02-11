@@ -1,0 +1,13 @@
+version: '3.6'
+
+services:
+  client:
+    container_name: client-app
+    build:
+      context: ./services/client/
+      dockerfile: Dockerfile.dev
+    volumes:
+      - './services/client/:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '4200:4200'
