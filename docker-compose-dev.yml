@@ -11,3 +11,14 @@ services:
       - '/usr/src/app/node_modules'
     ports:
       - '4200:4200'
+
+  users:
+    container_name: users-service
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile.dev
+    volumes:
+      - './services/users:/usr/src/app'
+    ports:
+      - '8000:5000'
+      - '8100:5001'

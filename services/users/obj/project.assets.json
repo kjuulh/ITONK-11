@@ -12169,7 +12169,7 @@
       "outputPath": "/home/hermansen/Desktop/ITONK-11/services/users/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/hermansen/.config/NuGet/NuGet.Config"
+        "/home/hermansen/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"

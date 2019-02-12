@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace users.Controllers
 {
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetValues()
+        public IActionResult GetValues()
         {
             return Ok("Values");
         }
