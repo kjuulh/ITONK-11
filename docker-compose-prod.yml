@@ -2,9 +2,18 @@ version: '3.6'
 
 services:
   client:
-    container_name: client-app-prod
+    container_name: client-app
     build:
       context: ./services/client/
       dockerfile: Dockerfile.prod
     ports:
       - '80:80'
+
+  users:
+    container_name: users-service
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile.prod
+    ports:
+      - '8000:5000'
+      - '8100:5001'
