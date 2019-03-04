@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3'
 
 services:
   client:
@@ -17,3 +17,16 @@ services:
     ports:
       - '8000:5000'
       - '8100:5001'
+
+  users-db:
+    container_name: users-db
+    build:
+      context: ./services/users-db
+      dockerfile: Dockerfile.prod
+    volumes:
+      - '/usr/local/mongodb/store:/data/db'
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: 'root'
+      MONGO_INITDB_ROOT_PASSWORD: 'something_super_secret'
