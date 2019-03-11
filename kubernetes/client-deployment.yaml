@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose-dev.yml
+    kompose.version: 1.17.0 (a74acad)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: client
+  name: client
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: client
+    spec:
+      containers:
+      - image: client
+        name: client-app
+        ports:
+        - containerPort: 4200
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/src/app
+          name: client-claim0
+        - mountPath: /usr/src/app/node_modules
+          name: client-claim1
+      restartPolicy: Always
+      volumes:
+      - name: client-claim0
+        persistentVolumeClaim:
+          claimName: client-claim0
+      - name: client-claim1
+        persistentVolumeClaim:
+          claimName: client-claim1
+status: {}

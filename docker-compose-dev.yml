@@ -9,16 +9,8 @@ services:
     volumes:
       - './services/client/:/usr/src/app'
       - '/usr/src/app/node_modules'
-    labels:
-      - traefik.backend=client
-      - traefik.frontend.rule=Host:client.docker.localhost
-      - traefik.docker.network=web
-      - traefik.port=4200
-    networks:
-      - internal
-      - web
-  #    ports:
-  #      - '4200:4200'
+    ports:
+      - '4200:4200'
 
   users:
     container_name: users-service
@@ -27,17 +19,9 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - './services/users:/usr/src/app'
-    #    ports:
-    #      - '8000:5000'
-    #      - '8100:5001'
-    labels:
-      - traefik.backend=users
-      - traefik.frontend.rule=Host:users.docker.localhost
-      - traefik.docker.network=web
-      - traefik.port=5000
-    networks:
-      - internal
-      - web
+    ports:
+      - '8000:5000'
+      - '8100:5001'
     depends_on:
       - users-db
 
@@ -53,31 +37,18 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: 'root'
       MONGO_INITDB_ROOT_PASSWORD: 'something_super_secret'
-    labels:
-      - traefik.enable=false
-    networks:
-      - internal
 
   reverse-proxy:
     container_name: reverse-proxy
+    build:
+      context: ./services/reverse-proxy
+      dockerfile: Dockerfile.dev 
     restart: always
-    image: traefik:1.7.2-alpine
     ports:
       - 80:80
       - 443:443
-    networks:
-      - web
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./services/reverse-proxy/traefik.toml:/traefik.toml
-      - ./services/reverse-proxy/acme.json:/acme.json
-    labels:
-      - 'traefik.frontend.rule=Host:monitor.docker.localhost'
-      - 'traefik.docker.network: web'
-      - 'traefik.port=8080'
+    depends_on:
+      - users
+      - users-db
+      - client
 
-networks:
-  web:
-    external: true
-  internal:
-    external: false

@@ -7,19 +7,18 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 RUN apt-get update && apt-get install -yq google-chrome-stable
 
 # set working directory
-RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
 # add to path
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install and cache add dependencies
-COPY package.json /usr/src/app/package.json
+COPY package.json package.json
 RUN npm install
 RUN npm install -g @angular/cli
 
 # add app
-COPY . /usr/src/app
+COPY . . 
 
 # start app
 CMD ng serve --host 0.0.0.0
