@@ -5,7 +5,7 @@ EXPOSE 443
 
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
-COPY ["PSO_Control_Service/PSO_Control_Service.csproj", "PSO_Control_Service/"]
+COPY ["./PSO_Control_Service/PSO_Control_Service.csproj", "PSO_Control_Service/PSO_Control_Service.csproj"]
 RUN dotnet restore "PSO_Control_Service/PSO_Control_Service.csproj"
 COPY . .
 WORKDIR "/src/PSO_Control_Service"
