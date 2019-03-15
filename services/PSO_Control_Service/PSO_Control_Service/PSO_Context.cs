@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PSO_Control_Service.Models;
 
 namespace PSO_Control_Service
@@ -14,6 +10,6 @@ namespace PSO_Control_Service
         }
         public DbSet<UserModel> users;
         public DbSet<ShareModel> shares;
-        public DbSet<PSO_Control_Service.Models.UserModel> UserModel { get; set; }
+        public DbSet<UserModel> UserModel { get; set; }
     }
 }

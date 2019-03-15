@@ -1,2 +1,7 @@
-FROM mongo
+FROM postgres:alpine
 
+ENV POSTGRES_DB=usersdb
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgres
+
+EXPOSE 5432
