@@ -17,9 +17,23 @@ spec:
     spec:
       containers:
         - name: client
-          image: kasperhermansen/itonk11-client:2
+          image: kasperhermansen/itonk11-client:4
           ports:
             - containerPort: 80
+          livenessProbe:
+            initialDelaySeconds: 10
+            failureThreshold: 10
+            httpGet:
+              path: /
+              port: 80
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
