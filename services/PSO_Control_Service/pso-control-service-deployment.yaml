@@ -54,7 +54,7 @@ metadata:
     app: pso-control-service
   namespace: itonk-del1-11
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: pso-control-service
   ports:
