@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: users-db
+  labels:
+    app: users-db
+  namespace: itonk-del1-11
+spec:
+  serviceName: users-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-db
+  template:
+    metadata:
+      labels:
+        app: users-db
+    spec:
+      containers:
+        - name: users-db
+          image: kasperhermansen/itonk11-users-db:1
+          ports:
+            - containerPort: 5432
+          resources:
+            limits:
+              memory: "1Gi"
+          volumeMounts:
+            - name: users-db-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: users-db-data
+          gcePersistentDisk:
+            pdName: users-db-data-pd
+            fsType: ext4
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: users-db-data-pd
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-standard
+  replication-type: none
