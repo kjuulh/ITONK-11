@@ -13,6 +13,7 @@ namespace PSO_Control_Service.Models
         public string Name { get; set; }
         public int Count { get; set; }
         public int Value { get; set; }
+        public UserModel Owner { get; set; }
 
     }
 }
