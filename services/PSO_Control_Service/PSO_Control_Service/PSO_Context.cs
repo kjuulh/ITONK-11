@@ -7,10 +7,13 @@ namespace PSO_Control_Service
     {
         public PSO_Context(DbContextOptions<PSO_Context> options) : base(options)
         {
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
+            
             modelBuilder.Entity<UserModel>().HasData(
                 new
                 {
@@ -30,11 +33,11 @@ namespace PSO_Control_Service
                     OwnerId = 1
                 }
                 );
-
         }
         public DbSet<UserModel> users;
         public DbSet<ShareModel> shares;
         public DbSet<UserModel> UserModel { get; set; }
+        public DbSet<PSO_Control_Service.Models.ShareModel> ShareModel { get; set; }
     }
 
 }
