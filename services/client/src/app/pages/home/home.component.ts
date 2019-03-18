@@ -5,21 +5,14 @@ import {User} from '../../models/user';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.sass']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private usersService: UsersService) {
+  constructor() {
   }
 
   ngOnInit() {
-    const user = new User();
-    user.userName = 'Kasper Hermansen';
-    user.password = 'Test123456';
-
-    this.usersService.registerUser(user).subscribe((res) => {
-      console.log(res);
-    });
   }
 
 }

@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./styles/colors";
+
+* {
+  color: $primary-color;
+}
+
+html {
+  font-family: "Montserrat", Helvetica, sans-serif;
+  background-color: $background-color;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  cursor: pointer;
+  color: $primary-color;
+}
+
+a:hover {
+  color: lighten($secondary-color,  10);
+  transition: all ease-in-out 20ms;
+}
+
+a:active {
+  color: $secondary-color;
+}
+
+ul {
+  list-style: none;
+}

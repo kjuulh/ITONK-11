@@ -1,0 +1,15 @@
+<div class="container">
+  <h3>Login</h3>
+
+  <form>
+    <div class="formGroup">
+      <div><label for="username">Username</label></div>
+      <div><input type="text" class="form-control" id="username" required [(ngModel)]="username" [ngModelOptions]="{standalone: true}"></div>
+    </div>
+    <div class="formGroup">
+      <div><label for="password">Password</label></div>
+      <div><input type="password" class="form-control" id="password" required [(ngModel)]="password" [ngModelOptions]="{standalone: true}"></div>
+    </div>
+    <div class="formSubmit"><button type="submit" class="btn btn-primary" (click)="onSubmit()">LOGIN</button></div>
+  </form>
+</div>

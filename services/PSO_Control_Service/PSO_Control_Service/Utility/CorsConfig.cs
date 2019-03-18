@@ -15,7 +15,7 @@ namespace PSO_Control_Service.Utility
         
         public static void AddCors(IApplicationBuilder app)
         {
-            app.UseCors("AllowAnyOrigin");
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
         }
     }
 }

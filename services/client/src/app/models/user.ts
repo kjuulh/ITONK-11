@@ -1,8 +1,8 @@
 import {Shares} from './shares';
 
 export class User {
-  userId: number;
-  userName: string;
+  id: number;
+  name: string;
   password: string;
   shares: Array<Shares>;
 }

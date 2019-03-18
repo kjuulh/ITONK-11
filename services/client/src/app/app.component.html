@@ -1,1 +1,43 @@
-<router-outlet></router-outlet>
+<div class="container">
+  <div class="sidebar">
+    <div class="logo"><h1><a routerLink="home" routerLinkActive="active-navitem">TRADERBRO</a></h1></div>
+    <div class="navigation">
+      <div class="links">
+        <ul class="navbar">
+          <li class="navitem">
+            <h2><a routerLink="portfolio" routerLinkActive="active-navitem">PORTFOLIO</a></h2>
+          </li>
+          <li class="navitem">
+            <h2><a routerLink="options" routerLinkActive="active-navitem">OPTIONS</a></h2>
+          </li>
+          <li class="navitem">
+            <h2><a routerLink="market" routerLinkActive="active-navitem">MARKET</a></h2>
+          </li>
+        </ul>
+      </div>
+      <div class="options">
+        <ul class="navoptions">
+          <li class="navitem">
+            <h2><a routerLink="settings" routerLinkActive="active-navitem">SETTINGS</a></h2>
+          </li>
+          <li class="navitem" *ngIf="getLoggedInStatus()">
+            <h2><a (click)="logout()">LOGOUT</a></h2>
+          </li>
+          <li class="navitem" *ngIf="!getLoggedInStatus()">
+            <h2><a routerLink="login" routerLinkActive="active-navitem">LOGIN</a></h2>
+          </li>
+          <li class="navitem" *ngIf="!getLoggedInStatus()">
+            <h2><a routerLink="sign-up" routerLinkActive="active-navitem">SIGN UP</a></h2>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
+
+

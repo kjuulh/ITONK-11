@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 })
 export class UsersService {
   // Replace with environment variable
-  apiUrl = 'http://35.246.154.146/api/users';
+  apiUrl = 'http://35.246.254.34/api/users';
 
   constructor(private http: HttpClient) {
   }

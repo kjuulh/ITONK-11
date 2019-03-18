@@ -1,0 +1,83 @@
+@import './../styles/colors.scss';
+html {
+  height: 100vh;
+  width: 100vw;
+}
+
+.container {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-areas: "sidebar content";
+  grid-template-columns: 1fr 3fr;
+
+  .sidebar {
+    grid-area: sidebar;
+  }
+
+  .container {
+    grid-area: content;
+  }
+}
+
+// Positioning
+.sidebar {
+  display: block;
+  height: 100%;
+  .navigation {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-areas: "links" "options";
+    grid-template-rows: 1fr 1fr;
+
+    .links {
+      grid-area: links;
+      display: flex;
+      align-items: flex-start;
+    }
+    .options {
+      grid-area: options;
+      display: flex;
+      align-items: flex-end;
+    }
+  }
+
+
+}
+
+// Styles
+.sidebar {
+  .logo {
+    margin: 0 10px;
+    h1 {
+      display: inline-block;
+      font-weight: 600;
+      font-style: italic;
+      font-size: 2.8rem;
+
+      &:after {
+        content: '';
+        display: block;
+        width: inherit;
+        height: 2px;
+        background-color: transparentize($primary-color, 0.8);
+      }
+    }
+  }
+
+  .navitem {
+    .active-navitem {
+      display: inline-block;
+
+      &:after {
+        margin-top: 2px;
+        content: '';
+        display: block;
+        width: inherit;
+        height: 1px;
+        background-color: $secondary-color;
+      }
+    }
+  }
+}
