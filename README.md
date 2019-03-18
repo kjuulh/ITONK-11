@@ -15,3 +15,22 @@ The system will automatically listen to events and notify users of the new infor
 - As a "Stock Trader Broker" I want to be the broker between the seller (provider) og the buyer (requester) for then to be able to intermediate the  trade of one or more  shares or one or more series of shares between one or more provideres and/or one or more requesters.
 - As a "Stock Trader Broker", "Stock Share Provider" or a "Stock Share Requester", I want to inform the Tobin Tax Control, that a transaction of a certain value has been commited, for then to be able obey the public rules about taxing and paying the 1% Tobin Tax.
 - As a "Stock Trader Broker", "Stock Share Provider" or a "Stock Share Requester", I want to inform the The Public Share Owner Control, that a share, many shares or a series of shares or many series of shares has changed ownership, for then to able to inform the public about who own the shares.
+
+### To Use
+
+goto: 35.244.217.135 for ingress (it might fail, it has been pretty unstable lately)
+
+LoadBalancer for services:
+- client (frontend): 35.198.171.9
+- pso-control-service (backend): 35.246.254.34
+  - api/users
+  - api/sharemodels
+
+### Services
+
+![ServicesOverview](documentation/diagrams/ServicesOverview.png)
+
+client: frontend
+pso-control-service: backend api server
+users-db: backend users-db for storage, currently contains both users and shares. These should be two seperate services (TODO).
+
