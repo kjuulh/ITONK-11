@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PSO_Control_Service.Utility;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PSO_Control_Service {
@@ -23,27 +24,14 @@ namespace PSO_Control_Service {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
+            // Set comptability mode for mvc
             services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_2);
-            services.AddSwaggerGen (c => {
-                c.SwaggerDoc ("v1", new Info { Title = "PSO API", Version = "v1" });
-            });
-            services.AddDbContext<PSO_Context> (opt =>
-            {                
-                var host = Environment.GetEnvironmentVariable("POSTGRES_HOST");
-                var port = Environment.GetEnvironmentVariable("POSTGRES_PORT");
-                var user = Environment.GetEnvironmentVariable("POSTGRES_USER");
-                var password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
-                var database = Environment.GetEnvironmentVariable("POSTGRES_DB");
-                
-                var connectionString = $"Host={host};" + 
-                                       $"Port={port};" + 
-                                       $"Username={user};" + 
-                                       $"Password={password};" + 
-                                       $"Database={database}";
-                Console.WriteLine(connectionString);
-                opt.UseNpgsql(connectionString);
-            });
+            
+            APIDocumentationInitializer.ApiDocumentationInitializer(services);
+            StartupDatabaseInitializer.InitializeDatabase(services);
         }
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
@@ -54,20 +42,13 @@ namespace PSO_Control_Service {
                 app.UseHsts ();
             }
 
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetService<PSO_Context>();
-                context.Database.Migrate();
-                context.Database.EnsureCreated();
-            }
+            StartupDatabaseInitializer.MigrateDatabase(app);
+            APIDocumentationInitializer.AllowAPIDocumentation(app);
 
-            app.UseSwagger ();
-            app.UseSwaggerUI (c => {
-                c.SwaggerEndpoint ("/swagger/v1/swagger.json", "PSO API");
-            });
-            
             app.UseHttpsRedirection ();
             app.UseMvc ();
         }
+
+
     }
 }

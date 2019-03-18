@@ -30,10 +30,6 @@ spec:
             periodSeconds: 5
             successThreshold: 1
             timeoutSeconds: 5
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
@@ -43,7 +39,7 @@ metadata:
     app: client
   namespace: itonk-del1-11
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: client
   ports:
