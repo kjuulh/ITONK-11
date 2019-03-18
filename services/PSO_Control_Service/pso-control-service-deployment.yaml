@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: pso-control-service
-          image: kasperhermansen/itonk11-pso-control-service:1
+          image: kasperhermansen/itonk11-pso-control-service:3
           env:
             - name: POSTGRES_HOST
               value: users-db-service.itonk-del1-11.svc.cluster.local
@@ -41,10 +41,6 @@ spec:
             periodSeconds: 5
             successThreshold: 1
             timeoutSeconds: 5
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service

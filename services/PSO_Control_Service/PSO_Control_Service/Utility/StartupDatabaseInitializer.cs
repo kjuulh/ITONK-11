@@ -22,7 +22,6 @@ namespace PSO_Control_Service.Utility
                                        $"Username={user};" +
                                        $"Password={password};" +
                                        $"Database={database}";
-                Console.WriteLine(connectionString);
                 opt.UseNpgsql(connectionString);
             });
         }
