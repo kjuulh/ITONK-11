@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     this.usersService.getUsers().subscribe(res => res.forEach((model, index) => {
       if (this.username === model.name && this.password === model.password) {
         localStorage.setItem('name', model.name);
+        localStorage.setItem('id', model.id.toString());
         this.router.navigate(['/home']);
       }
     }));

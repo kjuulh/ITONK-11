@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: pso-control-service
-          image: kasperhermansen/itonk11-pso-control-service:6
+          image: kasperhermansen/itonk11-pso-control-service:7
           env:
             - name: POSTGRES_HOST
               value: users-db-service.itonk-del1-11.svc.cluster.local
@@ -32,6 +32,16 @@ spec:
           ports:
             - containerPort: 80
           livenessProbe:
+            initialDelaySeconds: 10
+            failureThreshold: 10
+            httpGet:
+              path: /api/users
+              port: 80
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
             initialDelaySeconds: 10
             failureThreshold: 10
             httpGet:

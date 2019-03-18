@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../models/user';
 import {Observable} from 'rxjs';
+import {Share} from '../../models/share';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,14 @@ export class UsersService {
 
   public getUsers(url?: string): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
+  }
+
+  public getSharesForUser(id: number) {
+    const shares: Share[] = [];
+    this.http.get<User>(`${this.apiUrl}/${id}`).subscribe(res => res.shares.forEach((model, index) => {
+      shares.push(model);
+    }));
+
+    return shares;
   }
 }

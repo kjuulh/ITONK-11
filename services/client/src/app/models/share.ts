@@ -1,6 +1,6 @@
-export class Shares {
+export class Share {
   id: number;
-  shareName: string;
+  name: string;
   count: number;
   value: number;
 }

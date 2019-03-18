@@ -9,6 +9,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
+import { PortfolioComponent } from './pages/portfolio/portfolio.component';
+import { MarketComponent } from './pages/market/market.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import {RouterModule} from '@angular/router';
     HomeComponent,
     LoginComponent,
     SignupComponent,
+    PortfolioComponent,
+    MarketComponent,
   ],
   imports: [
     BrowserModule,

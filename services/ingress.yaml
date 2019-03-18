@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traderbro-ingress
+  namespace: itonk-del1-11
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: client
+              servicePort: 80
+          - path: /api
+            backend:
+              serviceName: pso-control-service
+              servicePort: 80
