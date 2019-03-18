@@ -9,10 +9,10 @@ namespace PSO_Control_Service.Models
     public class ShareModel
     {
         [Key]
-        public int ShareId { get; set; }
-        public string ShareName { get; set; }
-        public int ShareCount { get; set; }
-        public int ShareValue { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Count { get; set; }
+        public int Value { get; set; }
 
     }
 }

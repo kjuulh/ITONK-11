@@ -8,10 +8,10 @@ namespace PSO_Control_Service.Models
     public class UserModel
     {
         [Key]
-        public int UserId { get; set; }
-        public string Username { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         [DataType(DataType.Password)]
-        public string UserPassword { get; set; }
-        public List<ShareModel> shares { get; set; }       
+        public string Password { get; set; }
+        public List<ShareModel> Shares { get; set; }       
     }
 }

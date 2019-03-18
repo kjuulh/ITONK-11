@@ -39,7 +39,7 @@ namespace PSO_Control_Service.Controllers {
         // PUT: api/User/5
         [HttpPut ("{id}")]
         public async Task<IActionResult> PutUserModel (int id, UserModel userModel) {
-            if (id != userModel.UserId) {
+            if (id != userModel.Id) {
                 return BadRequest ();
             }
 
@@ -64,7 +64,7 @@ namespace PSO_Control_Service.Controllers {
             _context.UserModel.Add (userModel);
             await _context.SaveChangesAsync ();
 
-            return CreatedAtAction ("GetUserModel", new { id = userModel.UserId }, userModel);
+            return CreatedAtAction ("GetUserModel", new { id = userModel.Id }, userModel);
         }
 
         // DELETE: api/User/5
@@ -82,7 +82,7 @@ namespace PSO_Control_Service.Controllers {
         }
 
         private bool UserModelExists (int id) {
-            return _context.UserModel.Any (e => e.UserId == id);
+            return _context.UserModel.Any (e => e.Id == id);
         }
     }
 }
