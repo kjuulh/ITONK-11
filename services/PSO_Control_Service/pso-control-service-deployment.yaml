@@ -1,30 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: client
+  name: pso-control-service
   labels:
-    app: client
+    app: pso-control-service
   namespace: itonk-del1-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: client
+      app: pso-control-service
   template:
     metadata:
       labels:
-        app: client
+        app: pso-control-service
     spec:
       containers:
-        - name: client
-          image: kasperhermansen/itonk11-client:4
+        - name: pso-control-service
+          image: kasperhermansen/itonk11-pso-control-service:1
+          env:
+            - name: POSTGRES_HOST
+              value: users-db-service.itonk-del1-11.svc.cluster.local
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB
+              value: usersdb
           ports:
             - containerPort: 80
           livenessProbe:
             initialDelaySeconds: 10
             failureThreshold: 10
             httpGet:
-              path: /
+              path: /api/users
               port: 80
               scheme: HTTP
             periodSeconds: 5
@@ -38,14 +49,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: client
+  name: pso-control-service
   labels:
-    app: client
+    app: pso-control-service
   namespace: itonk-del1-11
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
-    app: client
+    app: pso-control-service
   ports:
     - name: http
       port: 80
