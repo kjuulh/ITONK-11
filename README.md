@@ -30,7 +30,7 @@ LoadBalancer for services:
 
 ![ServicesOverview](documentation/diagrams/ServicesOverview.png)
 
-client: frontend
-pso-control-service: backend api server
-users-db: backend users-db for storage, currently contains both users and shares. These should be two seperate services (TODO).
+- client: frontend
+- pso-control-service: backend api server
+- users-db: backend users-db for storage, currently contains both users and shares. These should be two seperate services (TODO).
 
