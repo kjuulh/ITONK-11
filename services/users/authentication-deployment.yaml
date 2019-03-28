@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication-service
+  labels:
+    app: authentication-service
+  namespace: itonk-del1-11
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentication-service
+  template:
+    metadata:
+      labels:
+        app: authentication-service
+    spec:
+      containers:
+        - name: authentication-service
+          image: kasperhermansen/itonk11-authentication-service:1
+          env:
+            - name: POSTGRES_HOST
+              value: authentication-db-service.itonk-del1-11.svc.cluster.local
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB
+              value: authenticationdb
+            - name: USERS_SERVICE
+              value: users-service.itonk-del1-11.svc.cluster.local
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            initialDelaySeconds: 10
+            failureThreshold: 10
+            httpGet:
+              path: /api/health/ping
+              port: 80
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            initialDelaySeconds: 10
+            failureThreshold: 10
+            httpGet:
+              path: /api/health/ping
+              port: 80
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authentication-service
+  labels:
+    app: authentication-service
+  namespace: itonk-del1-11
+spec:
+  type: LoadBalancer
+  selector:
+    app: authentication-service
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
