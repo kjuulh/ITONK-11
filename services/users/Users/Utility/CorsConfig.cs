@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Authentication.Utility
+namespace Users.Utility
 {
     public class CorsConfig
     {

@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Authentication.Controllers {
+namespace Users.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
-    public class AuthenticationController : ControllerBase {
-        private readonly AuthenticationContext _context;
+    public class UsersController : ControllerBase {
+        private readonly UsersContext _context;
 
-        public UsersController (AuthenticationContext context) {
+        public UsersController (UsersContext context) {
             _context = context;
         }
     }
