@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Users.Database;
 
 namespace Users.Utility
 {
@@ -30,8 +31,8 @@ namespace Users.Utility
                         opt.UseNpgsql(connectionString);
                     });
                     break;
-                case "TEST":
                 default:
+                case "TEST":
                     services.AddDbContext<UsersContext>(ops => { ops.UseInMemoryDatabase(databaseName: "Users"); });
                     break;
             }
@@ -53,8 +54,8 @@ namespace Users.Utility
                     }
 
                     break;
-                case "TEST":
                 default:
+                case "TEST":
                     break;
             }
         }

@@ -4,37 +4,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Users.Controllers
-{
-  [Route("api/[controller]")]
-  public class HealthController : Controller
-  {
-    public HealthController() { }
+namespace Users.Controllers {
+  [Route ("api/[controller]")]
+  public class HealthController : Controller {
+    public HealthController () { }
 
     // GET api/health
-    [HttpGet("")]
-    public ActionResult<IEnumerable<string>> Gets()
-    {
+    [HttpGet ("")]
+    public ActionResult<IEnumerable<string>> Gets () {
       return new string[] { "value1", "value2" };
     }
 
     // GET api/health/5
-    [HttpGet("{id}")]
-    public ActionResult<string> GetById(int id)
-    {
-      return "value" + id;
+    [HttpGet ("{id}")]
+    public ActionResult<string> GetById (int id) {
+      // GET api/health/ping
+      [HttpGet ("ping")]
+      public async Task<ActionResult<string>> Ping () {
+        return Ok ("{\"message\": \"pong!\"}");
+      }
     }
 
     // POST api/health
-    [HttpPost("")]
-    public void Post([FromBody] string value) { }
+    [HttpPost ("")]
+    public void Post ([FromBody] string value) { }
 
     // PUT api/health/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value) { }
+    [HttpPut ("{id}")]
+    public void Put (int id, [FromBody] string value) { }
 
     // DELETE api/health/5
-    [HttpDelete("{id}")]
-    public void DeleteById(int id) { }
+    [HttpDelete ("{id}")]
+    public void DeleteById (int id) { }
   }
 }
