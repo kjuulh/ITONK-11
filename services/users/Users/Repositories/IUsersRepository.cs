@@ -15,6 +15,6 @@ namespace Users.Repositories
         void Update(User user);
         void Delete(Guid id);
         Task DeleteAsync(Guid id);
-        Task<User> GetAsync(string email); 
+        Task<User> GetAsync(string email);
     }
 }

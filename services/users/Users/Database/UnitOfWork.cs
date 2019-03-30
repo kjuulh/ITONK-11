@@ -22,7 +22,5 @@ namespace Users.Database
         {
             _context.SaveChangesAsync();
         }
-        
-        
     }
 }

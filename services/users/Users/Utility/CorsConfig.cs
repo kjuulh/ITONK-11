@@ -12,7 +12,7 @@ namespace Users.Utility
                 opt.AddPolicy("AllowAll", p => { p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
             });
         }
-        
+
         public static void AddCors(IApplicationBuilder app)
         {
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());

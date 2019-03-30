@@ -30,7 +30,7 @@ namespace Users.Services
                 Email = userViewModel.Email,
                 DateAdded = DateTime.UtcNow
             };
-            
+
             _unitOfWork.UsersRepository.Register(user);
             _unitOfWork.CommitAsync();
             return user.UserId;

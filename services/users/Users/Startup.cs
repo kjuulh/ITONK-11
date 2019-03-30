@@ -26,11 +26,11 @@ namespace Users
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
             StartupDatabaseInitializer.InitializeDatabase(services);
-            
+
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUsersService, UsersService>();
-            
+
             CorsConfig.AddCorsPolicy(services);
         }
 

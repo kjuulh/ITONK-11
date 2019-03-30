@@ -26,7 +26,7 @@ namespace Users.Repositories
         {
             return GetAsync(id).Result;
         }
-        
+
         public async Task<User> GetAsync(Guid id)
         {
             return await _usersEntity.SingleOrDefaultAsync(user => user.UserId == id);

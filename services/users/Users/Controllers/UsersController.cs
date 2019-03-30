@@ -11,14 +11,15 @@ using Users.Models;
 using Users.Services;
 using Users.ViewModels;
 
-namespace Users.Controllers {
-    
-    [Route ("api/[controller]")]
+namespace Users.Controllers
+{
+    [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase {
+    public class UsersController : ControllerBase
+    {
         private readonly IUsersService _usersService;
 
-        public UsersController (IUsersService usersService)
+        public UsersController(IUsersService usersService)
         {
             _usersService = usersService;
         }
@@ -30,13 +31,13 @@ namespace Users.Controllers {
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute]Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var user = _usersService.Get(id);
 
             if (user == null)
                 return NotFound();
-            
+
             return Ok(user);
         }
 
@@ -53,7 +54,7 @@ namespace Users.Controllers {
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody]UserViewModel userViewModel)
+        public async Task<IActionResult> Register([FromBody] UserViewModel userViewModel)
         {
             if (userViewModel == null)
                 return BadRequest();
@@ -63,11 +64,11 @@ namespace Users.Controllers {
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute]Guid id, [FromBody]User user)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] User user)
         {
             if (id != user.UserId)
                 return BadRequest();
-            
+
             _usersService.Update(user);
 
             return NoContent();
