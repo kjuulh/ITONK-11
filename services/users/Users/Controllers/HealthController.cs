@@ -8,7 +8,7 @@ namespace Users.Controllers
     {
         // GET api/health/ping
         [HttpGet("ping")]
-        public ActionResult<string> Ping()
+        public async Task<ActionResult<string>> Ping()
         {
             return Ok("{\"message\": \"pong!\"}");
         }

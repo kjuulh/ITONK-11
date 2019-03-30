@@ -9,5 +9,6 @@ services:
       - './services/users:/usr/src/app'
     ports:
       - 5000:80
+      - 5001:443
     environment:
       - RUNTIME_ENV=TEST
