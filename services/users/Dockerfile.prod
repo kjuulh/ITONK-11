@@ -5,16 +5,16 @@ EXPOSE 443
 
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
-COPY ["./Authentication/Authentication.csproj", "Authentication/Authentication.csproj"]
-RUN dotnet restore "Authentication/Authentication.csproj"
+COPY ["./Users/Users.csproj", "Users/Users.csproj"]
+RUN dotnet restore "Users/Users.csproj"
 COPY . .
-WORKDIR "/src/Authentication"
-RUN dotnet build "Authentication.csproj" -c Release -o /app
+WORKDIR "/src/Users"
+RUN dotnet build "Users.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "Authentication.csproj" -c Release -o /app
+RUN dotnet publish "Users.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "Authentication.dll"]
+ENTRYPOINT ["dotnet", "Users.dll"]
