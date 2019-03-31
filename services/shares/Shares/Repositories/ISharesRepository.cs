@@ -9,9 +9,11 @@ namespace Shares.Repositories
     {
         Share Get(Guid id);
         Task<Share> GetAsync(Guid id);
+        Share GetByName(string name);
+        Task<Share> GetByNameAsync(string name);
         IEnumerable<Share> GetAll();
         IAsyncEnumerable<Share> GetAllAsync();
-        void Register(Share share);
+        void Establish(Share share);
         void Update(Share share);
         void Delete(Guid id);
         Task DeleteAsync(Guid id);

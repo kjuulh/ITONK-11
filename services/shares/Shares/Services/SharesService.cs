@@ -4,6 +4,7 @@ using System.Linq;
 using Shares.Database;
 using Shares.Models;
 using Shares.Repositories;
+using Shares.ViewModels;
 
 namespace Shares.Services
 {
@@ -36,6 +37,26 @@ namespace Shares.Services
         {
             _unitOfWork.SharesRepository.Update(share);
             _unitOfWork.CommitAsync();
+        }
+
+        public Guid Establish(ShareViewModel shareViewModel)
+        {
+            var share = new Share()
+            {
+                Name = shareViewModel.Name,
+                ShareId = new Guid(),
+                SingleShareValue = shareViewModel.TotalValue/shareViewModel.TotalCount,
+                TotalCount = shareViewModel.TotalCount,
+                TotalValue = shareViewModel.TotalValue
+            };
+            _unitOfWork.SharesRepository.Establish(share);
+            _unitOfWork.CommitAsync();
+            return share.ShareId;
+        }
+
+        public Share GetByName(string name)
+        {
+            return _unitOfWork.SharesRepository.GetByName(name);
         }
     }
 }

@@ -32,6 +32,16 @@ namespace Shares.Repositories
             return await _sharesEntity.SingleOrDefaultAsync(share => share.ShareId == id);
         }
 
+        public Share GetByName(string name)
+        {
+            return GetByNameAsync(name).Result;
+        }
+
+        public async Task<Share> GetByNameAsync(string name)
+        {
+            return await _sharesEntity.SingleOrDefaultAsync(share => share.Name == name);
+        }
+
         public IEnumerable<Share> GetAll()
         {
             return GetAllAsync().ToEnumerable();
@@ -42,7 +52,7 @@ namespace Shares.Repositories
             return _sharesEntity.AsAsyncEnumerable();
         }
 
-        public void Register(Share share)
+        public void Establish(Share share)
         {
             _context.Entry(share).State = EntityState.Added;
         }
