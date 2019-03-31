@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: shares-db
-          image: kasperhermansen/itonk11-users-db:2
+          image: kasperhermansen/itonk11-shares-db:1.0
           env:
             - name: PGDATA
               value: /var/lib/postgresql/pgdata
