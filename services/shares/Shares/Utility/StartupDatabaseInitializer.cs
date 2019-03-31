@@ -33,7 +33,7 @@ namespace Shares.Utility
                     break;
                 default:
                 case "TEST":
-                    services.AddDbContext<SharesContext>(ops => { ops.UseInMemoryDatabase(databaseName: "Users"); });
+                    services.AddDbContext<SharesContext>(ops => { ops.UseInMemoryDatabase(databaseName: "Shares"); });
                     break;
             }
         }

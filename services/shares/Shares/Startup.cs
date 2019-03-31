@@ -32,6 +32,7 @@ namespace Shares
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
             StartupDatabaseInitializer.InitializeDatabase(services);
+            
             services.AddScoped<ISharesRepository, SharesRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ISharesService, SharesService>();

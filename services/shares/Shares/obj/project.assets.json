@@ -1784,6 +1784,19 @@
           "lib/netstandard2.0/_._": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.Tools.DotNet/2.1.0-preview1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.App": "2.0.0",
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "compile": {
+          "lib/netcoreapp2.0/dotnet-ef.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/dotnet-ef.dll": {}
+        }
+      },
       "Microsoft.Extensions.Caching.Abstractions/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -6128,6 +6141,25 @@
         "tools/net461/win-x86/ef.exe",
         "tools/netcoreapp2.0/any/ef.dll",
         "tools/netcoreapp2.0/any/ef.runtimeconfig.json"
+      ]
+    },
+    "Microsoft.EntityFrameworkCore.Tools.DotNet/2.1.0-preview1-final": {
+      "sha512": "FrXR1KeAi5CTQttz2Dxz8twCQE0JR9mAXw48wJ0D8oaE9Ik8IbTp8T2esPpmzJ12mOXV5g37wpQcZiQMwQ5Luw==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.tools.dotnet/2.1.0-preview1-final",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netcoreapp2.0/dotnet-ef.dll",
+        "lib/netcoreapp2.0/dotnet-ef.runtimeconfig.json",
+        "microsoft.entityframeworkcore.tools.dotnet.2.1.0-preview1-final.nupkg.sha512",
+        "microsoft.entityframeworkcore.tools.dotnet.nuspec",
+        "prefercliruntime",
+        "tools/net461/ef.exe",
+        "tools/net461/ef.x86.exe",
+        "tools/netcoreapp2.0/ef.dll",
+        "tools/netcoreapp2.0/ef.runtimeconfig.json"
       ]
     },
     "Microsoft.Extensions.Caching.Abstractions/2.2.0": {
@@ -12339,6 +12371,7 @@
     ".NETCoreApp,Version=v2.2": [
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
+      "Microsoft.EntityFrameworkCore.Tools.DotNet >= 2.1.0-preview1-final",
       "Microsoft.NETCore.App >= 2.2.0",
       "NpgSql.EntityFrameworkCore.PostgreSQL.Design >= 1.1.1",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 2.2.0",
@@ -12362,7 +12395,7 @@
         "/usr/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/home/jakob/.config/NuGet/NuGet.Config"
+        "/home/jakob/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"
@@ -12394,6 +12427,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[2.2.0, )"
+          },
+          "Microsoft.EntityFrameworkCore.Tools.DotNet": {
+            "target": "Package",
+            "version": "[2.1.0-preview1-final, )"
           },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",

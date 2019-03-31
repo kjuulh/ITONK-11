@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "d58aeecb24e7d6616d7fdd38af17162b21dbd2a3"
+    "signature": "df520008a42ba4d51a8f0529026bf00af52f17fd"
   },
   "compilationOptions": {
     "defines": [
@@ -26,6 +26,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
+          "Microsoft.EntityFrameworkCore.Tools.DotNet": "2.1.0-preview1-final",
           "Microsoft.NETCore.App": "2.2.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.1.1",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "2.2.0",
@@ -51,6 +52,21 @@
         },
         "compile": {
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Relational.Design.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools.DotNet/2.1.0-preview1-final": {
+        "dependencies": {
+          "Microsoft.NETCore.App": "2.2.0",
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/dotnet-ef.dll": {
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.0.18047"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp2.0/dotnet-ef.dll": {}
         }
       },
       "Npgsql/4.0.4": {
@@ -3373,6 +3389,13 @@
       "sha512": "sha512-2mf02PjAx5rTU19Np6J8MK5PhTOKsAS8BXfyikLrP3ZLrC4MUsWP5iv0qGgwmg6jDmAVReXwP9Jja5LhJq+20A==",
       "path": "microsoft.entityframeworkcore.relational.design/1.1.2",
       "hashPath": "microsoft.entityframeworkcore.relational.design.1.1.2.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Tools.DotNet/2.1.0-preview1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FrXR1KeAi5CTQttz2Dxz8twCQE0JR9mAXw48wJ0D8oaE9Ik8IbTp8T2esPpmzJ12mOXV5g37wpQcZiQMwQ5Luw==",
+      "path": "microsoft.entityframeworkcore.tools.dotnet/2.1.0-preview1-final",
+      "hashPath": "microsoft.entityframeworkcore.tools.dotnet.2.1.0-preview1-final.nupkg.sha512"
     },
     "Npgsql/4.0.4": {
       "type": "package",
