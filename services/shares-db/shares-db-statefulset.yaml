@@ -47,7 +47,7 @@ spec:
     - metadata:
         name: shares-db-data
       spec:
-        accessModes: ["ReadWriteOnce"]
+        accessModes: ['ReadWriteOnce']
         storageClassName: shares-db-data-pd
         resources:
           requests:
@@ -60,8 +60,5 @@ metadata:
 provisioner: kubernetes.io/gce-pd
 parameters:
   type: pd-standard
-
-
-
   replication-type: none
   zones: europe-west3-a
