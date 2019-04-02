@@ -20,7 +20,7 @@ spec:
           image: kasperhermansen/itonk11-shares:1
           env:
             - name: RUNTIME_ENV
-              value: TEST
+              value: Production
             - name: POSTGRES_HOST
               value: shares-db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER
@@ -60,7 +60,7 @@ metadata:
   name: shares-service
   labels:
     app: shares-service
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:

@@ -35,6 +35,7 @@ namespace Shares.Services
 
         public void Update(Share share)
         {
+            share.Name = share.Name.ToLower();
             _unitOfWork.SharesRepository.Update(share);
             _unitOfWork.CommitAsync();
         }
@@ -43,7 +44,7 @@ namespace Shares.Services
         {
             var share = new Share()
             {
-                Name = shareViewModel.Name,
+                Name = shareViewModel.Name.ToLower(),
                 ShareId = new Guid(),
                 SingleShareValue = shareViewModel.TotalValue/shareViewModel.TotalCount,
                 TotalCount = shareViewModel.TotalCount,
@@ -56,7 +57,7 @@ namespace Shares.Services
 
         public Share GetByName(string name)
         {
-            return _unitOfWork.SharesRepository.GetByName(name);
+            return _unitOfWork.SharesRepository.GetByName(name.ToLower());
         }
     }
 }

@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: shares-db-service
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   selector:
     statefulset.kubernetes.io/pod-name: shares-db-0
@@ -18,7 +18,7 @@ metadata:
   name: shares-db
   labels:
     app: shares-db
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   serviceName: shares-db
   replicas: 1
@@ -37,12 +37,12 @@ spec:
           image: kasperhermansen/itonk11-shares-db:1.0
           env:
             - name: PGDATA
-              value: /var/lib/postgresql/pgdata
+              value: /var/lib/postgresql/pgshares
           ports:
             - containerPort: 5432
           volumeMounts:
             - name: shares-db-data
-              mountPath: /var/lib/postgresql/data
+              mountPath: /var/lib/postgresql/sharesdata
   volumeClaimTemplates:
     - metadata:
         name: shares-db-data

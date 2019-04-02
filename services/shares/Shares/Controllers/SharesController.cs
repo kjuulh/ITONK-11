@@ -48,31 +48,17 @@ namespace Shares.Controllers
         [HttpPost]
         public async Task<IActionResult> EstablishShare([FromBody] ShareViewModel shareViewModel)
         {
-            if (shareViewModel == null)
-            {
-                return BadRequest();
-            }
-            
-            if (shareViewModel.Name == null)
-            {
-                return BadRequest();
-            }
 
+            if (!ModelState.IsValid)
+            {
+              return BadRequest();
+            }
             if (_sharesService.GetByName(shareViewModel.Name.ToLower())!=null)
             {
-                return BadRequest("A share with that name allready exists");
+                return BadRequest("A share with that name already exists");
             }
-            
-            
-            if (shareViewModel.TotalCount==0 || shareViewModel.TotalValue==0)
-            {
-                return BadRequest();
-            }
-            
-            //Make sure name always get saved in lowercase -> easy to check if exists
-            shareViewModel.Name = shareViewModel.Name.ToLower();
             var share = _sharesService.Get(_sharesService.Establish(shareViewModel));
-            return CreatedAtAction(nameof(Get), share, share);
+            return CreatedAtAction(nameof(Get), share.ShareId, share);
         }
     
 
