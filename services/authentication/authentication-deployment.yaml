@@ -20,7 +20,7 @@ spec:
           image: kasperhermansen/itonk11-authentication:3
           env:
             - name: RUNTIME_ENV
-              value: TEST
+              value: PRODUCTION
             - name: POSTGRES_HOST
               value: db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER
@@ -31,6 +31,10 @@ spec:
               value: "5432"
             - name: POSTGRES_DB
               value: Authenticationdb
+            - name: USERS_SERVICE_DNS
+              value: users-service.itonk-11.svc.cluster.local
+            - name: USERS_SERVICE_PORT
+              value: "80"
           ports:
             - containerPort: 80
           resources:

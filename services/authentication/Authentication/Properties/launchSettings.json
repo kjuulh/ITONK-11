@@ -22,9 +22,11 @@
       "launchBrowser": true,
       "launchUrl": "api/health/ping",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "USERS_SERVICE_DNS": "localhost",
+        "USERS_SERVICE_PORT": "5000"
       },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "applicationUrl": "https://localhost:5003;http://localhost:5002"
     },
     "Docker": {
       "commandName": "Docker",

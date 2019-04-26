@@ -30,7 +30,11 @@ namespace Authentication.Services
 
         public async Task<UsersServiceViewModel> RegisterUser(string username)
         {
-            var requestUri = "http://users-service:80/api/users";
+            var usersServiceDNS = Environment.GetEnvironmentVariable ("USERS_SERVICE_DNS");
+            if (string.IsNullOrEmpty(usersServiceDNS)) throw new NullReferenceException("USERS_SERVICE_DNS url is null");
+            var usersServicePORT = Environment.GetEnvironmentVariable ("USERS_SERVICE_PORT");
+            if (string.IsNullOrEmpty(usersServicePORT)) throw new NullReferenceException("USERS_SERVICE_PORT url is null");
+            var requestUri = "http://" + usersServiceDNS + ":" + usersServicePORT + "/api/users";
             var request = HttpRequestPost(
                 requestUri, new
                 { Email = username }, 
@@ -48,7 +52,11 @@ namespace Authentication.Services
 
         public async Task<UsersServiceViewModel> GetUser(Guid id)
         {
-            var requestUri = "http://users-service:80/api/users/" + id.ToString();
+            var usersServiceDNS = Environment.GetEnvironmentVariable ("USERS_SERVICE_DNS");
+            if (string.IsNullOrEmpty(usersServiceDNS)) throw new NullReferenceException("USERS_SERVICE_DNS url is null");
+            var usersServicePORT = Environment.GetEnvironmentVariable ("USERS_SERVICE_PORT");
+            if (string.IsNullOrEmpty(usersServicePORT)) throw new NullReferenceException("USERS_SERVICE_PORT url is null");
+            var requestUri = "http://" + usersServiceDNS + ":" + usersServicePORT + "/api/users/" + id.ToString();
             var request = HttpRequestGet(requestUri, out var client);
 
             var response = await client.SendAsync(request);
@@ -63,7 +71,11 @@ namespace Authentication.Services
 
         public async Task<UsersServiceViewModel> GetUser(string username)
         {
-            var requestUri = "http://users-service:80/api/users/" + username;
+            var usersServiceDNS = Environment.GetEnvironmentVariable ("USERS_SERVICE_DNS");
+            if (string.IsNullOrEmpty(usersServiceDNS)) throw new NullReferenceException("USERS_SERVICE_DNS url is null");
+            var usersServicePORT = Environment.GetEnvironmentVariable ("USERS_SERVICE_PORT");
+            if (string.IsNullOrEmpty(usersServicePORT)) throw new NullReferenceException("USERS_SERVICE_PORT url is null");
+            var requestUri = "http://" + usersServiceDNS + ":" + usersServicePORT + "/api/users/" + username;
             var request = HttpRequestGet(requestUri, out var client);
 
             var response = await client.SendAsync(request);
@@ -93,7 +105,10 @@ namespace Authentication.Services
             var request = new HttpRequestMessage(HttpMethod.Post,
                 requestUri);
             request.Headers.Add("Accept", "application/json");
-            request.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8);
+
+            var jsonContent = JsonConvert.SerializeObject(content, Formatting.None).ToLower();
+            
+            request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             client = _httpClientFactory.CreateClient();
             return request;

@@ -35,7 +35,7 @@ namespace Authentication.Services
 
         public async Task<User> Register(string username, string password)
         {
-            var userServiceModel = await _usersService.RegisterUser(username);
+            var userServiceModel = await _usersService.RegisterUser(username.ToLower());
 
             if (userServiceModel != null)
             {
@@ -57,7 +57,7 @@ namespace Authentication.Services
 
         public async Task<string> Authenticate(string username, string password)
         {
-            var user = await _unitOfWork.AuthenticationRepository.GetAsync(username);
+            var user = await _unitOfWork.AuthenticationRepository.GetAsync(username.ToLower());
 
             if (user == null)
                 return null;
@@ -97,6 +97,7 @@ namespace Authentication.Services
 
         public void Update(User user)
         {
+            user.Username = user.Username.ToLower();
             _unitOfWork.AuthenticationRepository.Update(user);
             _unitOfWork.CommitAsync();
         }
