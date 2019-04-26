@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Authentication.Database;
-using Authentication.Models;
+﻿using System.Threading.Tasks;
 using Authentication.Services;
 using Authentication.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Authentication.Controllers {
     [Route ("api/[controller]")]
@@ -22,48 +15,40 @@ namespace Authentication.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get () {
-            return Ok (_authenticationService.GetAll ());
+        public IActionResult GetAll()
+        {
+            return Ok(_authenticationService.GetAll());
         }
 
-        [HttpGet ("{id}")]
-        public async Task<IActionResult> Get ([FromRoute] Guid id) {
-            var user = _authenticationService.Get (id);
-
-            if (user == null)
-                return NotFound ();
-
-            return Ok (user);
-        }
-
-        [HttpGet ("email/{email}")]
-        public async Task<ActionResult> Get ([FromRoute] string email) {
-            var user = _authenticationService.Get (email);
-
-            if (user == null)
-                return NotFound ();
-
-            return Ok (user);
-        }
-
-        [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register ([FromBody] UserViewModel userViewModel) {
-            if (userViewModel == null)
-                return BadRequest ();
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] UsersRegistrationViewModel userModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Model is not valid");
+            
+            var user = await _authenticationService.Register(userModel.Username, userModel.Password);
 
-            var user = _authenticationService.Get (_authenticationService.Register (userViewModel));
-            return CreatedAtAction (nameof (Get), new { id = user.UserId }, user);
+            if (user == null)
+                return BadRequest("Something went for user registration");
+
+            return Ok(user);
         }
 
-        [HttpPut ("{id}")]
-        public async Task<IActionResult> Update ([FromRoute] Guid id, [FromBody] User user) {
-            if (id != user.UserId)
-                return BadRequest ();
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] UsersAuthenticationViewModel userModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Model is not valid");
 
-            _authenticationService.Update (user);
+            var token = await _authenticationService.Authenticate(userModel.Username, userModel.Password);
 
-            return NoContent ();
+            if (string.IsNullOrEmpty(token))
+                return BadRequest("Password or username didn't match");
+
+            return Ok(token);
         }
+        
     }
 }

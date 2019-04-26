@@ -53,8 +53,8 @@ namespace Authentication.Repositories {
             if (userToDelete != null) _authenticationEntity.Remove (userToDelete);
         }
 
-        public Task<User> GetAsync (string email) {
-            return _authenticationEntity.SingleOrDefaultAsync (user => user.Email == email);
+        public Task<User> GetAsync (string username) {
+            return _authenticationEntity.SingleOrDefaultAsync (user => user.Username == username);
         }
     }
 }
