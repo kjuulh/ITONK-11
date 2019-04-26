@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Authentication.Utility
+namespace Users.Utility
 {
     public class CorsConfig
     {
@@ -12,7 +12,7 @@ namespace Authentication.Utility
                 opt.AddPolicy("AllowAll", p => { p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
             });
         }
-        
+
         public static void AddCors(IApplicationBuilder app)
         {
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());

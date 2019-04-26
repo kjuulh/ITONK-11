@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: authentication-service
+  name: users
   labels:
-    app: authentication-service
-  namespace: itonk-del1-11
+    app: users
+  namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: authentication-service
+      app: users
   template:
     metadata:
       labels:
-        app: authentication-service
+        app: users
     spec:
       containers:
-        - name: authentication-service
-          image: kasperhermansen/itonk11-authentication-service:1
+        - name: users
+          image: kasperhermansen/itonk11-users:1
           env:
+            - name: RUNTIME_ENV
+              value: TEST
             - name: POSTGRES_HOST
-              value: authentication-db-service.itonk-del1-11.svc.cluster.local
+              value: users-db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER
               value: postgres
             - name: POSTGRES_PASSWORD
               value: postgres
             - name: POSTGRES_PORT
-              value: "5432"
+              value: '5432'
             - name: POSTGRES_DB
-              value: authenticationdb
-            - name: USERS_SERVICE
-              value: users-service.itonk-del1-11.svc.cluster.local
+              value: Usersdb
           ports:
             - containerPort: 80
           livenessProbe:
@@ -57,14 +57,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: authentication-service
+  name: users-service
   labels:
-    app: authentication-service
+    app: users-service
   namespace: itonk-del1-11
 spec:
   type: LoadBalancer
   selector:
-    app: authentication-service
+    app: users
   ports:
     - name: http
       port: 80
