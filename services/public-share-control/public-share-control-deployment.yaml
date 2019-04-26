@@ -4,7 +4,7 @@ metadata:
   name: pso-control-service
   labels:
     app: pso-control-service
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   replicas: 1
   selector:
@@ -20,7 +20,7 @@ spec:
           image: kasperhermansen/itonk11-pso-control-service:7
           env:
             - name: POSTGRES_HOST
-              value: users-db-service.itonk-del1-11.svc.cluster.local
+              value: users-db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER
               value: postgres
             - name: POSTGRES_PASSWORD
@@ -58,7 +58,7 @@ metadata:
   name: pso-control-service
   labels:
     app: pso-control-service
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:

@@ -60,7 +60,7 @@ metadata:
   name: users-service
   labels:
     app: users-service
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:

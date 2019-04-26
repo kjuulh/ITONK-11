@@ -7,8 +7,8 @@ namespace Authentication.Controllers {
     public class HealthController : Controller {
         // GET api/health/ping
         [HttpGet ("ping")]
-        public async Task<ActionResult<string>> Ping () {
-            return Ok ("{\"message\": \"pong!\"}");
+        public ActionResult<string> Ping () {
+            return Ok (new {Message =  "pong!"});
         }
     }
 }

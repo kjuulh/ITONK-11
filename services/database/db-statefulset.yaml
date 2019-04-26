@@ -1,11 +1,11 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: users-db-service
-  namespace: itonk-del1-11
+  name: db-service
+  namespace: itonk-11
 spec:
   selector:
-    statefulset.kubernetes.io/pod-name: users-db-0
+    statefulset.kubernetes.io/pod-name: db-0
   type: NodePort
   ports:
     - name: http
@@ -15,50 +15,40 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: users-db
+  name: db
   labels:
-    app: users-db
-  namespace: itonk-del1-11
+    app: db
+  namespace: itonk-11
 spec:
-  serviceName: users-db
+  serviceName: db
   replicas: 1
   updateStrategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: users-db
+      app: db
   template:
     metadata:
       labels:
-        app: users-db
+        app: db
     spec:
       containers:
-        - name: users-db
-          image: kasperhermansen/itonk11-users-db:2
+        - name: db
+          image: kasperhermansen/itonk11-db:1
           env:
             - name: PGDATA
               value: /var/lib/postgresql/pgdata
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: users-db-data
+            - name: db-data
               mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
     - metadata:
-        name: users-db-data
+        name: db-data
       spec:
         accessModes: ["ReadWriteOnce"]
-        storageClassName: users-db-data-pd
         resources:
           requests:
             storage: 1Gi
----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: fast
-provisioner: kubernetes.io/gce-pd
-parameters:
-  type: pd-standard
-  replication-type: none
-  zones: europe-west3-a
+
