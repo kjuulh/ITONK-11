@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Users.Controllers
+namespace Shares.Controllers
 {
     [Route("api/[controller]")]
     public class HealthController : Controller

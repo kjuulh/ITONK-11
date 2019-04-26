@@ -1,0 +1,64 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: shares-db-service
+  namespace: itonk-11
+spec:
+  selector:
+    statefulset.kubernetes.io/pod-name: shares-db-0
+  type: NodePort
+  ports:
+    - name: http
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: shares-db
+  labels:
+    app: shares-db
+  namespace: itonk-11
+spec:
+  serviceName: shares-db
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: shares-db
+  template:
+    metadata:
+      labels:
+        app: shares-db
+    spec:
+      containers:
+        - name: shares-db
+          image: kasperhermansen/itonk11-shares-db:1.0
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/pgshares
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: shares-db-data
+              mountPath: /var/lib/postgresql/sharesdata
+  volumeClaimTemplates:
+    - metadata:
+        name: shares-db-data
+      spec:
+        accessModes: ['ReadWriteOnce']
+        storageClassName: shares-db-data-pd
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-standard
+  replication-type: none
+  zones: europe-west3-a
