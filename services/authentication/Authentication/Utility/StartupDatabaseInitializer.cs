@@ -24,11 +24,11 @@ namespace Authentication.Utility {
                             $"Password={password};" +
                             $"Database={database}";
                         opt.UseNpgsql (connectionString);
-                    }, ServiceLifetime.Transient);
+                    });
                     break;
                 default:
                 case "TEST":
-                    services.AddDbContext<AuthenticationContext> (ops => { ops.UseInMemoryDatabase (databaseName: "Authentication"); }, ServiceLifetime.Transient);
+                    services.AddDbContext<AuthenticationContext> (ops => { ops.UseInMemoryDatabase (databaseName: "Authentication"); });
                     break;
             }
         }

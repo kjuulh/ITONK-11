@@ -10,7 +10,7 @@ using Users.Database;
 namespace Users.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20190330194950_initial")]
+    [Migration("20190426211752_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,9 @@ namespace Users.Migrations
                     b.Property<string>("Email");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

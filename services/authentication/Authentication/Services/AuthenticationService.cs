@@ -43,6 +43,7 @@ namespace Authentication.Services
                 var user = new User
                 {
                     UserId = userServiceModel.UserId, 
+                    Username = userServiceModel.Email,
                     Hash = cipher.Hash, 
                     Salt = cipher.Salt
                 };

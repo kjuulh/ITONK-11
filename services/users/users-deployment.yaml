@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: users
-          image: kasperhermansen/itonk11-users:2
+          image: kasperhermansen/itonk11-users:3
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION

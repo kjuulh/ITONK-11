@@ -19,6 +19,12 @@ namespace Users.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
