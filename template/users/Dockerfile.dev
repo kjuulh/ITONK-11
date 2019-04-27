@@ -1,7 +1,0 @@
-FROM microsoft/dotnet:2.2-sdk-alpine
-
-WORKDIR /usr/src/app
-COPY *.csproj ./
-RUN dotnet restore
-
-ENTRYPOINT ["dotnet", "run", "--urls", "http://0.0.0.0:5000"]
