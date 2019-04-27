@@ -4,13 +4,17 @@ using Authentication.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Authentication.Controllers {
-    [Route ("api/[controller]")]
+namespace Authentication.Controllers
+{
+    [Authorize]
+    [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticationController : ControllerBase {
+    public class AuthenticationController : ControllerBase
+    {
         private readonly IAuthenticationService _authenticationService;
 
-        public AuthenticationController (IAuthenticationService authenticationService) {
+        public AuthenticationController(IAuthenticationService authenticationService)
+        {
             _authenticationService = authenticationService;
         }
 
@@ -26,11 +30,11 @@ namespace Authentication.Controllers {
         {
             if (!ModelState.IsValid)
                 return BadRequest("Model is not valid");
-            
+
             var user = await _authenticationService.Register(userModel.Username, userModel.Password);
 
             if (user == null)
-                return BadRequest("Something went for user registration");
+                return BadRequest("Something went wrong for user registration");
 
             return Ok(user);
         }
@@ -49,6 +53,5 @@ namespace Authentication.Controllers {
 
             return Ok(token);
         }
-        
     }
 }

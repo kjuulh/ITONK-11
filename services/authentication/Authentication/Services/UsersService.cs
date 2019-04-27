@@ -75,7 +75,7 @@ namespace Authentication.Services
             if (string.IsNullOrEmpty(usersServiceDNS)) throw new NullReferenceException("USERS_SERVICE_DNS url is null");
             var usersServicePORT = Environment.GetEnvironmentVariable ("USERS_SERVICE_PORT");
             if (string.IsNullOrEmpty(usersServicePORT)) throw new NullReferenceException("USERS_SERVICE_PORT url is null");
-            var requestUri = "http://" + usersServiceDNS + ":" + usersServicePORT + "/api/users/" + username;
+            var requestUri = "http://" + usersServiceDNS + ":" + usersServicePORT + "/api/users/email/" + username;
             var request = HttpRequestGet(requestUri, out var client);
 
             var response = await client.SendAsync(request);

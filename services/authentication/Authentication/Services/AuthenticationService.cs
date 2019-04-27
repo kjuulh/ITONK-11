@@ -35,25 +35,22 @@ namespace Authentication.Services
 
         public async Task<User> Register(string username, string password)
         {
-            var userServiceModel = await _usersService.RegisterUser(username.ToLower());
+            var userServiceModel = await _usersService.RegisterUser(username.ToLower()) ?? await _usersService.GetUser(username.ToLower());
 
-            if (userServiceModel != null)
+            if (userServiceModel == null) return null;
+            
+            var cipher = CryptoProvider.Encrypt(new CryptoProvider.Plain {Password = password});
+            var user = new User
             {
-                var cipher = CryptoProvider.Encrypt(new CryptoProvider.Plain {Password = password});
-                var user = new User
-                {
-                    UserId = userServiceModel.UserId, 
-                    Username = userServiceModel.Email,
-                    Hash = cipher.Hash, 
-                    Salt = cipher.Salt
-                };
+                UserId = userServiceModel.UserId, 
+                Username = userServiceModel.Email,
+                Hash = cipher.Hash, 
+                Salt = cipher.Salt
+            };
 
-                _unitOfWork.AuthenticationRepository.Register(user);
-                _unitOfWork.CommitAsync();
-                return user;
-            }
-
-            return null;
+            _unitOfWork.AuthenticationRepository.Register(user);
+            _unitOfWork.CommitAsync();
+            return user;
         }
 
         public async Task<string> Authenticate(string username, string password)

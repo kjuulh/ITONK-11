@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: authentication
-          image: kasperhermansen/itonk11-authentication:3
+          image: kasperhermansen/itonk11-authentication:4
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION
