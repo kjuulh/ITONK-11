@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Threading.Tasks;
+using Gateway.Utility;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Users.Database;
-using Users.Repositories;
-using Users.Services;
-using Users.Utility;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
-namespace Users
+namespace Gateway
 {
     public class Startup
     {
@@ -24,18 +24,13 @@ namespace Users
         {
             // Set compability mode for mvc
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            APIDocumentationInitializer.ApiDocumentationInitializer(services);
-            StartupDatabaseInitializer.InitializeDatabase(services);
-
-            services.AddScoped<IUsersRepository, UsersRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUsersService, UsersService>();
-
             CorsConfig.AddCorsPolicy(services);
+
+            services.AddOcelot(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -48,11 +43,10 @@ namespace Users
                 app.UseHttpsRedirection();
             }
 
-            StartupDatabaseInitializer.MigrateDatabase(app);
-            APIDocumentationInitializer.AllowAPIDocumentation(app);
             CorsConfig.AddCors(app);
-
             app.UseMvc();
+
+            await app.UseOcelot();
         }
     }
 }

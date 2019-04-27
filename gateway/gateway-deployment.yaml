@@ -1,40 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users
+  name: gateway
   labels:
-    app: users
+    app: gateway
   namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: gateway
   template:
     metadata:
       labels:
-        app: users
+        app: gateway
     spec:
       containers:
-        - name: users
-          image: kasperhermansen/itonk11-users:1
-          env:
-            - name: RUNTIME_ENV
-              value: TEST
-            - name: POSTGRES_HOST
-              value: users-db-service.itonk-11.svc.cluster.local
-            - name: POSTGRES_USER
-              value: postgres
-            - name: POSTGRES_PASSWORD
-              value: postgres
-            - name: POSTGRES_PORT
-              value: '5432'
-            - name: POSTGRES_DB
-              value: Usersdb
+        - name: gateway
+          image: kasperhermansen/itonk11-gateway:3
           ports:
             - containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
           livenessProbe:
-            initialDelaySeconds: 10
+            initialDelaySeconds: 30
             failureThreshold: 10
             httpGet:
               path: /api/health/ping
@@ -44,7 +35,7 @@ spec:
             successThreshold: 1
             timeoutSeconds: 5
           readinessProbe:
-            initialDelaySeconds: 10
+            initialDelaySeconds: 30
             failureThreshold: 10
             httpGet:
               path: /api/health/ping
@@ -57,14 +48,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-service
+  name: gateway-service
   labels:
-    app: users-service
+    app: gateway-service
   namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:
-    app: users
+    app: gateway
   ports:
     - name: http
       port: 80
