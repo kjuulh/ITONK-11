@@ -15,20 +15,20 @@ namespace Bank.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     public class BankController : ControllerBase {
-        private readonly IBankService _bankService;
+        private readonly IAccountService _accountService;
 
-        public BankController (IBankService bankService) {
-            _bankService = bankService;
+        public BankController (IAccountService accountService) {
+            _accountService = accountService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get () {
-            return Ok (_bankService.GetAll ());
+            return Ok (_accountService.GetAll ());
         }
 
         [HttpGet ("{id}")]
         public async Task<IActionResult> Get ([FromRoute] Guid id) {
-            var user = _bankService.Get (id);
+            var user = _accountService.Get (id);
 
             if (user == null)
                 return NotFound ();
@@ -38,7 +38,7 @@ namespace Bank.Controllers {
 
         [HttpGet ("email/{email}")]
         public async Task<ActionResult> Get ([FromRoute] string email) {
-            var user = _bankService.Get (email);
+            var user = _accountService.Get (email);
 
             if (user == null)
                 return NotFound ();
@@ -48,11 +48,11 @@ namespace Bank.Controllers {
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register ([FromBody] UserViewModel userViewModel) {
-            if (userViewModel == null)
+        public async Task<IActionResult> Register ([FromBody] AccountViewModel accountViewModel) {
+            if (!ModelState.IsValid)
                 return BadRequest ();
 
-            var user = _bankService.Get (_bankService.Register (userViewModel));
+            var user = _accountService.Get (_accountService.Register(accountViewModel.ToString()));
             return CreatedAtAction (nameof (Get), new { id = user.UserId }, user);
         }
 
@@ -61,7 +61,7 @@ namespace Bank.Controllers {
             if (id != user.UserId)
                 return BadRequest ();
 
-            _bankService.Update (user);
+            _accountService.Update (user);
 
             return NoContent ();
         }

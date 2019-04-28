@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using Bank.Database;
 using Bank.Models;
-using Bank.Repositories;
-using Bank.ViewModels;
 
 namespace Bank.Services {
-    public class BankService : IBankService {
+    public interface IAccountService
+    {
+        User Get (Guid id);
+        Guid Register (string userViewModel);
+        IEnumerable<User> GetAll ();
+        void Delete (Guid id);
+        void Update (User user);
+        User Get (string email);
+    }
+
+    public class AccountService : IAccountService
+    {
         private readonly UnitOfWork _unitOfWork;
 
-        public BankService (IUnitOfWork unitOfWork) {
+        public AccountService (IUnitOfWork unitOfWork) {
             _unitOfWork = (UnitOfWork) unitOfWork;
         }
 
@@ -18,10 +27,10 @@ namespace Bank.Services {
             return _unitOfWork.BankRepository.GetAsync (id).Result;
         }
 
-        public Guid Register (UserViewModel userViewModel) {
+        public Guid Register (string userViewModel) {
             var user = new User () {
                 UserId = Guid.NewGuid (),
-                Email = userViewModel.Email,
+                Email = userViewModel,
                 DateAdded = DateTime.UtcNow
             };
 

@@ -29,7 +29,7 @@ namespace Bank
 
             services.AddScoped<IBankRepository, BankRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IBankService, BankService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             CorsConfig.AddCorsPolicy(services);
         }
