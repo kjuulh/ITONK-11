@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PSO_Control_Service": {
+    "Authentication": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/health/ping",

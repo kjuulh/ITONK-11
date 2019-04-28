@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PSO_Control_Service": {
+    "Gateway config": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "api/health/ping",
