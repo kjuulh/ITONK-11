@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Users.Models
 {

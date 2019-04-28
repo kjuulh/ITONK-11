@@ -9,6 +9,13 @@ namespace Users.Database
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasIndex(c => c.Email)
+                .IsUnique();
+        }
+
         public DbSet<User> Users { get; set; }
     }
 }
