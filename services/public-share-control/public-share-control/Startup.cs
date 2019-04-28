@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PublicShareControl.Database;
+using PublicShareControl.Repositories;
 using PublicShareControl.Utility;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -35,6 +37,8 @@ namespace PublicShareControl
       CorsConfig.AddCorsPolicy(services);
       APIDocumentationInitializer.ApiDocumentationInitializer(services);
       StartupDatabaseInitializer.InitializeDatabase(services);
+      services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+      services.AddScoped<IUnitOfWork,UnitOfWork>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +52,7 @@ namespace PublicShareControl
       {
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
+        app.UseHttpsRedirection();
       }
 
       StartupDatabaseInitializer.MigrateDatabase(app);
