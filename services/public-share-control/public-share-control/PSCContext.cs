@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using PublicShareControl.Models;
 
 namespace PublicShareControl
@@ -10,30 +11,14 @@ namespace PublicShareControl
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-      modelBuilder.Entity<UserModel>().HasData(
+      modelBuilder.Entity<PortfolioModel>().HasData(
           new
           {
-            Id = 1,
-            Name = "SeededUser",
-            Password = "pass"
-          }
-      );
-
-      modelBuilder.Entity<ShareModel>().HasData(
-          new
-          {
-            Id = 1,
-            Name = "Seeded SHare",
-            Count = 1,
-            Value = 300,
-            OwnerId = 1
+            Id= new Guid()
           }
       );
     }
-    public DbSet<UserModel> users;
-    public DbSet<ShareModel> shares;
-    public DbSet<UserModel> UserModel { get; set; }
-    public DbSet<ShareModel> ShareModel { get; set; }
+    public DbSet<PortfolioModel> Portfolios{ get; set; }
   }
 
 }

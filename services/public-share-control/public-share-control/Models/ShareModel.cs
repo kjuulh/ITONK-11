@@ -9,11 +9,8 @@ namespace PublicShareControl.Models
   public class ShareModel
   {
     [Key]
-    public int Id { get; set; }
-    public string Name { get; set; }
+    public Guid Id { get; set; }
+    public Guid ShareType { get; set; }
     public int Count { get; set; }
-    public int Value { get; set; }
-    public UserModel Owner { get; set; }
-
   }
 }

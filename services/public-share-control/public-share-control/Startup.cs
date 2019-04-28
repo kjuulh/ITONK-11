@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PSO_Control_Service.Utility;
+using PublicShareControl.Utility;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PublicShareControl

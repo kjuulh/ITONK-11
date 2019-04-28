@@ -9,7 +9,7 @@ namespace PublicShareControl.Utility
   {
     public static void InitializeDatabase(IServiceCollection services)
     {
-      services.AddDbContext<PSO_Context>(opt =>
+      services.AddDbContext<PSCContext>(opt =>
       {
         var host = Environment.GetEnvironmentVariable("POSTGRES_HOST");
         var port = Environment.GetEnvironmentVariable("POSTGRES_PORT");
@@ -30,7 +30,7 @@ namespace PublicShareControl.Utility
     {
       using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
       {
-        var context = serviceScope.ServiceProvider.GetService<PSO_Context>();
+        var context = serviceScope.ServiceProvider.GetService<PSCContext>();
         context.Database.Migrate();
         context.Database.EnsureCreated();
       }
