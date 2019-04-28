@@ -27,7 +27,8 @@ namespace Bank
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
             StartupDatabaseInitializer.InitializeDatabase(services);
 
-            services.AddScoped<IBankRepository, BankRepository>();
+            services.AddScoped<IAccountsRepository, AccountsRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
 
