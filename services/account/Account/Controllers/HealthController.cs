@@ -7,7 +7,7 @@ namespace Account.Controllers {
     public class HealthController : Controller {
         // GET api/health/ping
         [HttpGet ("ping")]
-        public async Task<ActionResult<string>> Ping () {
+        public ActionResult<string> Ping () {
             return Ok ("{\"message\": \"pong!\"}");
         }
     }

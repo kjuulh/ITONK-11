@@ -1,51 +1,62 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Account.Database;
-using Account.Models;
-using Account.Repositories;
-using Account.ViewModels;
 
-namespace Account.Services {
-    public class AccountService : IAccountService {
+namespace Account.Services
+{
+    public interface IAccountService
+    {
+        Task<Models.Account> Get(Guid id);
+        Guid Create();
+        IEnumerable<Models.Account> GetAll();
+        void Delete(Guid id);
+        void Update(Models.Account account);
+    }
+
+    public class AccountService : IAccountService
+    {
         private readonly UnitOfWork _unitOfWork;
 
-        public AccountService (IUnitOfWork unitOfWork) {
+        public AccountService(IUnitOfWork unitOfWork)
+        {
             _unitOfWork = (UnitOfWork) unitOfWork;
         }
 
-        public User Get (Guid id) {
-            return _unitOfWork.AccountRepository.GetAsync (id).Result;
+        public async Task<Models.Account> Get(Guid id)
+        {
+            return await _unitOfWork.AccountRepository.GetAsync(id);
         }
 
-        public Guid Register (UserViewModel userViewModel) {
-            var user = new User () {
-                UserId = Guid.NewGuid (),
-                Email = userViewModel.Email,
+        public Guid Create()
+        {
+            var account = new Models.Account()
+            {
+                AccountId = Guid.NewGuid(),
                 DateAdded = DateTime.UtcNow
             };
 
-            _unitOfWork.AccountRepository.Register (user);
-            _unitOfWork.CommitAsync ();
-            return user.UserId;
+            _unitOfWork.AccountRepository.Register(account);
+            _unitOfWork.CommitAsync();
+            return account.AccountId;
         }
 
-        public IEnumerable<User> GetAll () {
-            return _unitOfWork.AccountRepository.GetAllAsync ().ToEnumerable ();
+        public IEnumerable<Models.Account> GetAll()
+        {
+            return _unitOfWork.AccountRepository.GetAllAsync().ToEnumerable();
         }
 
-        public void Delete (Guid id) {
-            _unitOfWork.AccountRepository.Delete (id);
-            _unitOfWork.CommitAsync ();
+        public void Delete(Guid id)
+        {
+            _unitOfWork.AccountRepository.Delete(id);
+            _unitOfWork.CommitAsync();
         }
 
-        public void Update (User user) {
-            _unitOfWork.AccountRepository.Update (user);
-            _unitOfWork.CommitAsync ();
-        }
-
-        public User Get (string email) {
-            return _unitOfWork.AccountRepository.GetAsync (email).Result;
+        public void Update(Models.Account account)
+        {
+            _unitOfWork.AccountRepository.Update(account);
+            _unitOfWork.CommitAsync();
         }
     }
 }

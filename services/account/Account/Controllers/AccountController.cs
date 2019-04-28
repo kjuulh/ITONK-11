@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Account.Database;
@@ -11,59 +13,137 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Account.Controllers {
-    [Route ("api/[controller]")]
+namespace Account.Controllers
+{
+    [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase {
+    public class AccountController : ControllerBase
+    {
         private readonly IAccountService _accountService;
+        private readonly ITransactionsService _transactionsService;
 
-        public AccountController (IAccountService accountService) {
+        public AccountController(IAccountService accountService, ITransactionsService transactionsService)
+        {
             _accountService = accountService;
+            _transactionsService = transactionsService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get () {
-            return Ok (_accountService.GetAll ());
+        public IActionResult Get()
+        {
+            var accounts = _accountService.GetAll().ToList();
+
+            if (accounts.Count == 0)
+                return Ok(new List<Models.Account>());
+            
+            foreach (var account in accounts)
+            {
+                var transactions = _transactionsService.GetAll(account.AccountId).ToList();
+                account.Transactions = transactions;
+            }
+            
+            return Ok(accounts);
         }
 
-        [HttpGet ("{id}")]
-        public async Task<IActionResult> Get ([FromRoute] Guid id) {
-            var user = _accountService.Get (id);
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get([FromRoute] Guid id)
+        {
+            var account = await _accountService.Get(id);
 
-            if (user == null)
-                return NotFound ();
+            if (account == null)
+                return NotFound();
 
-            return Ok (user);
-        }
-
-        [HttpGet ("email/{email}")]
-        public async Task<ActionResult> Get ([FromRoute] string email) {
-            var user = _accountService.Get (email);
-
-            if (user == null)
-                return NotFound ();
-
-            return Ok (user);
+            return Ok(account);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register ([FromBody] UserViewModel userViewModel) {
-            if (userViewModel == null)
-                return BadRequest ();
-
-            var user = _accountService.Get (_accountService.Register (userViewModel));
-            return CreatedAtAction (nameof (Get), new { id = user.UserId }, user);
+        public async Task<IActionResult> Create()
+        {
+            var account = await _accountService.Get(_accountService.Create());
+            return CreatedAtAction(nameof(Get), new {id = account.AccountId}, account);
         }
 
-        [HttpPut ("{id}")]
-        public async Task<IActionResult> Update ([FromRoute] Guid id, [FromBody] User user) {
-            if (id != user.UserId)
-                return BadRequest ();
+        [HttpPut("{id}")]
+        public IActionResult Update([FromRoute] Guid id, [FromBody] Models.Account account)
+        {
+            if (id != account.AccountId)
+                return BadRequest();
 
-            _accountService.Update (user);
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-            return NoContent ();
+            _accountService.Update(account);
+
+            return NoContent();
+        }
+
+        [HttpGet("{accountId}/transactions")]
+        public ActionResult<List<Transaction>> GetTransactions([FromRoute] Guid accountId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var transactions = _transactionsService.GetAll(accountId).ToList();
+            foreach (var transaction in transactions)
+            {
+                transaction.Account.Transactions = null;
+            }
+            if (transactions == null)
+                return NotFound();
+
+            return transactions;
+        }
+
+        [HttpGet("transactions/{transactionId}")]
+        public async Task<IActionResult> GetTransaction([FromRoute] Guid transactionId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var transaction = await _transactionsService.Get(transactionId);
+            
+            if (transaction == null)
+                return NotFound();
+
+            return Ok(transaction);
+        }
+
+        [HttpPost("{accountId}/transactions")]
+        public IActionResult AddTransaction([FromRoute] Guid accountId,
+            [FromBody] TransactionCreateViewModel transactionCreateViewModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                var transactionId = _transactionsService.AppendTransaction(accountId, transactionCreateViewModel.Amount);
+                return Ok(transactionId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        [HttpPut("{accountId}/transactions/{transactionId}")]
+        public async Task<IActionResult> RevertTransaction([FromRoute] Guid accountId, [FromRoute] Guid transactionId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                var revertedTransactionId = await _transactionsService.RevertTransaction(accountId, transactionId);
+                return Ok(revertedTransactionId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

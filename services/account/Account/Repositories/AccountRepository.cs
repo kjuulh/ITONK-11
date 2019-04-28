@@ -4,57 +4,75 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Account.Database;
-using Account.Models;
 using Account.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
-namespace Account.Repositories {
-    public class AccountRepository : IAccountRepository {
+namespace Account.Repositories
+{
+    public interface IAccountRepository
+    {
+        Models.Account Get(Guid id);
+        Task<Models.Account> GetAsync(Guid id);
+        IEnumerable<Models.Account> GetAll();
+        IAsyncEnumerable<Models.Account> GetAllAsync();
+        void Register(Models.Account account);
+        void Update(Models.Account account);
+        void Delete(Guid id);
+        Task DeleteAsync(Guid id);
+    }
+
+    public class AccountRepository : IAccountRepository
+    {
         private readonly AccountContext _context;
-        private readonly DbSet<User> _accountEntity;
+        private readonly DbSet<Models.Account> _accountEntity;
 
-        public AccountRepository (AccountContext context) {
+        public AccountRepository(AccountContext context)
+        {
             _context = context;
-            _accountEntity = context.Set<User> ();
+            _accountEntity = context.Set<Models.Account>();
         }
 
-        public User Get (Guid id) {
-            return GetAsync (id).Result;
+        public Models.Account Get(Guid id)
+        {
+            return GetAsync(id).Result;
         }
 
-        public async Task<User> GetAsync (Guid id) {
-            return await _accountEntity.SingleOrDefaultAsync (user => user.UserId == id);
+        public async Task<Models.Account> GetAsync(Guid id)
+        {
+            return await _accountEntity.SingleOrDefaultAsync(account => account.AccountId == id);
         }
 
-        public IEnumerable<User> GetAll () {
-            return GetAllAsync ().ToEnumerable ();
+        public IEnumerable<Models.Account> GetAll()
+        {
+            return GetAllAsync().ToEnumerable();
         }
 
-        public IAsyncEnumerable<User> GetAllAsync () {
-            return _accountEntity.AsAsyncEnumerable ();
+        public IAsyncEnumerable<Models.Account> GetAllAsync()
+        {
+            return _accountEntity.AsAsyncEnumerable();
         }
 
-        public void Register (User user) {
-            _context.Entry (user).State = EntityState.Added;
+        public void Register(Models.Account account)
+        {
+            _context.Entry(account).State = EntityState.Added;
         }
 
-        public void Update (User user) {
-            _context.Entry (user).State = EntityState.Modified;
+        public void Update(Models.Account account)
+        {
+            _context.Entry(account).State = EntityState.Modified;
         }
 
-        public void Delete (Guid id) {
-            var userToDelete = _accountEntity.SingleOrDefault (user => user.UserId == id);
-            if (userToDelete != null) _accountEntity.Remove (userToDelete);
+        public void Delete(Guid id)
+        {
+            var accountToDelete = _accountEntity.SingleOrDefault(account => account.AccountId == id);
+            if (accountToDelete != null) _accountEntity.Remove(accountToDelete);
         }
 
-        public async Task DeleteAsync (Guid id) {
-            var userToDelete = await GetAsync (id);
-            if (userToDelete != null) _accountEntity.Remove (userToDelete);
-        }
-
-        public Task<User> GetAsync (string email) {
-            return _accountEntity.SingleOrDefaultAsync (user => user.Email == email);
+        public async Task DeleteAsync(Guid id)
+        {
+            var accountToDelete = await GetAsync(id);
+            if (accountToDelete != null) _accountEntity.Remove(accountToDelete);
         }
     }
 }
