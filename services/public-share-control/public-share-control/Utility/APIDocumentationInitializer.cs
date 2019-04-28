@@ -8,14 +8,14 @@ namespace PublicShareControl.Utility
   {
     public static void ApiDocumentationInitializer(IServiceCollection services)
     {
-      services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "PSO API", Version = "v1" }); });
+      services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "PSC API", Version = "v1" }); });
     }
 
 
     public static void AllowAPIDocumentation(IApplicationBuilder app)
     {
       app.UseSwagger();
-      app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "PSO API"); });
+      app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "PSC API"); });
     }
   }
 }

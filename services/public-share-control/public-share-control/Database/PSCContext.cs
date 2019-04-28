@@ -14,7 +14,8 @@ namespace PublicShareControl
       modelBuilder.Entity<PortfolioModel>().HasData(
           new
           {
-            Id= new Guid()
+            Id= Guid.NewGuid(),
+            Owner=Guid.NewGuid()
           }
       );
     }

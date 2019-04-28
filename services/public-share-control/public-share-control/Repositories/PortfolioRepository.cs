@@ -56,5 +56,10 @@ namespace PublicShareControl.Repositories
             var portfolioToDelete = await GetAsync(id);
             if (portfolioToDelete != null) _portfolioEntity.Remove(portfolioToDelete);
         }
+
+        public void CreatePortfolio(PortfolioModel model)
+        {
+            _context.Entry(model).State = EntityState.Added;
+        }
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PublicShareControl.Database;
 using PublicShareControl.Repositories;
+using PublicShareControl.Services;
 using PublicShareControl.Utility;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -39,6 +40,7 @@ namespace PublicShareControl
       StartupDatabaseInitializer.InitializeDatabase(services);
       services.AddScoped<IPortfolioRepository, PortfolioRepository>();
       services.AddScoped<IUnitOfWork,UnitOfWork>();
+      services.AddScoped<IPortfolioService, PortfolioService>(); 
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,8 +60,6 @@ namespace PublicShareControl
       StartupDatabaseInitializer.MigrateDatabase(app);
       APIDocumentationInitializer.AllowAPIDocumentation(app);
       CorsConfig.AddCors(app);
-
-      app.UseHttpsRedirection();
       app.UseMvc();
     }
 

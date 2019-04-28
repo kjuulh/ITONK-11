@@ -14,5 +14,6 @@ namespace PublicShareControl.Repositories
         void Update(PortfolioModel portfolio);
         void Delete(Guid id);
         Task DeleteAsync(Guid id);
+        void CreatePortfolio(PortfolioModel model);
     }
 }
