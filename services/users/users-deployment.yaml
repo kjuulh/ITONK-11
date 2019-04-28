@@ -17,12 +17,12 @@ spec:
     spec:
       containers:
         - name: users
-          image: kasperhermansen/itonk11-users:1
+          image: kasperhermansen/itonk11-users:3
           env:
             - name: RUNTIME_ENV
-              value: TEST
+              value: PRODUCTION
             - name: POSTGRES_HOST
-              value: users-db-service.itonk-11.svc.cluster.local
+              value: db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER
               value: postgres
             - name: POSTGRES_PASSWORD
@@ -33,6 +33,10 @@ spec:
               value: Usersdb
           ports:
             - containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
           livenessProbe:
             initialDelaySeconds: 10
             failureThreshold: 10
@@ -60,7 +64,7 @@ metadata:
   name: users-service
   labels:
     app: users-service
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:

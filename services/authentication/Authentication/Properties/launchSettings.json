@@ -12,24 +12,26 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/UserController",
+      "launchUrl": "api/health/ping",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PSO_Control_Service": {
+    "Authentication": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/UserController",
+      "launchUrl": "api/health/ping",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "USERS_SERVICE_DNS": "localhost",
+        "USERS_SERVICE_PORT": "5000"
       },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "applicationUrl": "https://localhost:5003;http://localhost:5002"
     },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/UserController"
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/health/ping"
     }
   }
 }

@@ -25,13 +25,13 @@ namespace Users.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             return Ok(_usersService.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
+        public IActionResult Get([FromRoute] Guid id)
         {
             var user = _usersService.Get(id);
 
@@ -42,7 +42,7 @@ namespace Users.Controllers
         }
 
         [HttpGet("email/{email}")]
-        public async Task<ActionResult> Get([FromRoute] string email)
+        public ActionResult Get([FromRoute] string email)
         {
             var user = _usersService.Get(email);
 
@@ -56,10 +56,15 @@ namespace Users.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] UserViewModel userViewModel)
         {
-            if (userViewModel == null)
+            if (!ModelState.IsValid)
                 return BadRequest();
 
-            var user = _usersService.Get(_usersService.Register(userViewModel));
+            var userId = await _usersService.Register(userViewModel);
+            var user = await _usersService.Get(userId);
+
+            if (user == null)
+                return StatusCode(500);
+            
             return CreatedAtAction(nameof(Get), new {id = user.UserId}, user);
         }
 
@@ -69,7 +74,7 @@ namespace Users.Controllers
             if (id != user.UserId)
                 return BadRequest();
 
-            _usersService.Update(user);
+            await _usersService.Update(user);
 
             return NoContent();
         }

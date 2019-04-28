@@ -1,8 +1,10 @@
+using System.Threading.Tasks;
+
 namespace Users.Database
 {
     public interface IUnitOfWork
     {
         void Commit();
-        void CommitAsync();
+        Task CommitAsync();
     }
 }

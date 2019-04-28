@@ -4,7 +4,7 @@ metadata:
   name: client
   labels:
     app: client
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   replicas: 1
   selector:
@@ -47,7 +47,7 @@ metadata:
   name: client
   labels:
     app: client
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Users.Database;
 using Users.Models;
 using Users.Repositories;
@@ -17,22 +18,22 @@ namespace Users.Services
             _unitOfWork = (UnitOfWork) unitOfWork;
         }
 
-        public User Get(Guid id)
+        public async Task<User> Get(Guid id)
         {
-            return _unitOfWork.UsersRepository.GetAsync(id).Result;
+            return await _unitOfWork.UsersRepository.GetAsync(id);
         }
 
-        public Guid Register(UserViewModel userViewModel)
+        public async Task<Guid> Register(UserViewModel userViewModel)
         {
-            var user = new User()
+            var user = new User
             {
                 UserId = Guid.NewGuid(),
-                Email = userViewModel.Email,
+                Email = userViewModel.Email.ToLower(),
                 DateAdded = DateTime.UtcNow
             };
 
             _unitOfWork.UsersRepository.Register(user);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
             return user.UserId;
         }
 
@@ -41,16 +42,17 @@ namespace Users.Services
             return _unitOfWork.UsersRepository.GetAllAsync().ToEnumerable();
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
             _unitOfWork.UsersRepository.Delete(id);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
         }
 
-        public void Update(User user)
+        public async Task Update(User user)
         {
+            user.Email = user.Email.ToLower();
             _unitOfWork.UsersRepository.Update(user);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
         }
 
         public User Get(string email)

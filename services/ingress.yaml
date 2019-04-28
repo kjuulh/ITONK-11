@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: traderbro-ingress
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   rules:
     - http:
