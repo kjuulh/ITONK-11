@@ -12,7 +12,8 @@ namespace Bank.Database {
         {
             modelBuilder.Entity<Account>()
                 .HasOne(e => e.User)
-                .WithMany(o => o.Accounts);
+                .WithMany(o => o.Accounts)
+                .HasForeignKey(f => f.UserId);
         }
     }
 }

@@ -64,7 +64,7 @@ metadata:
   name: account-service
   labels:
     app: account-service
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:

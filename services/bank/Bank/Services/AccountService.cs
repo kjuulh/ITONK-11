@@ -6,22 +6,27 @@ using Newtonsoft.Json;
 
 namespace Bank.Services
 {
-    public class AccountsService
+    public interface IAccountService
     {
-        public class AccountsViewModel
+        Task<AccountService.AccountViewModel> CreateAccount();
+        Task<AccountService.AccountViewModel> GetAccount(Guid id);
+    }
+
+    public class AccountService : IAccountService
+    {
+        public class AccountViewModel
         {
-            public Guid UserId { get; set; }
-            public decimal balance;
+            public Guid AccountId { get; set; }
         }
 
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public AccountsService(IHttpClientFactory httpClientFactory)
+        public AccountService(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<AccountsViewModel> CreateAccount()
+        public async Task<AccountViewModel> CreateAccount()
         {
             var accountsServiceDNS = Environment.GetEnvironmentVariable("ACCOUNTS_SERVICE_DNS");
             if (string.IsNullOrEmpty(accountsServiceDNS))
@@ -30,37 +35,38 @@ namespace Bank.Services
             if (string.IsNullOrEmpty(accountsServicePORT))
                 throw new NullReferenceException("ACCOUNTS_SERVICE_PORT url is null");
 
-            var requestUri = "http://" + accountsServiceDNS + ":" + accountsServicePORT + "/api/accounts";
+            var requestUri = "http://" + accountsServiceDNS + ":" + accountsServicePORT + "/api/account";
             var request = HttpRequestPost(requestUri, new {} ,out var client);
 
             var response = await client.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsAsync<AccountsViewModel>();
+                return await response.Content.ReadAsAsync<AccountViewModel>();
             }
 
             return null;
         }
 
 
-        public async Task<AccountsViewModel> GetAccount(Guid id)
+        public async Task<AccountViewModel> GetAccount(Guid id)
         {
-            var usersServiceDNS = Environment.GetEnvironmentVariable("USERS_SERVICE_DNS");
-            if (string.IsNullOrEmpty(usersServiceDNS))
-                throw new NullReferenceException("USERS_SERVICE_DNS url is null");
-            var usersServicePORT = Environment.GetEnvironmentVariable("USERS_SERVICE_PORT");
-            if (string.IsNullOrEmpty(usersServicePORT))
-                throw new NullReferenceException("USERS_SERVICE_PORT url is null");
+            var accountsServiceDNS = Environment.GetEnvironmentVariable("ACCOUNTS_SERVICE_DNS");
+            if (string.IsNullOrEmpty(accountsServiceDNS))
+                throw new NullReferenceException("ACCOUNTS_SERVICE_DNS url is null");
+            var accountsServicePORT = Environment.GetEnvironmentVariable("ACCOUNTS_SERVICE_PORT");
+            if (string.IsNullOrEmpty(accountsServicePORT))
+                throw new NullReferenceException("ACCOUNTS_SERVICE_PORT url is null");
 
-            var requestUri = "http://" + usersServiceDNS + ":" + usersServicePORT + "/api/users/" + id;
+            var requestUri = "http://" + accountsServiceDNS + ":" + accountsServicePORT + "/api/account/" + id;
+
             var request = HttpRequestGet(requestUri, out var client);
 
             var response = await client.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsAsync<AccountsViewModel>();
+                return await response.Content.ReadAsAsync<AccountViewModel>();
             }
 
             return null;

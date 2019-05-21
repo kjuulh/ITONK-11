@@ -7,25 +7,48 @@ using Bank.Models;
 
 namespace Bank.Services
 {
-    public class BankService
+    public interface IBankService
+    {
+        Task<IEnumerable<User>> GetAll();
+        Task<User> GetUser(Guid userId);
+        Task<Guid> ReconcileUser(Guid userId);
+        Task<User> CreateAccount(Guid userId);
+        Task Delete(Guid userId);
+        Task Update(User user);
+    }
+
+    public class BankService : IBankService
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly IUsersService _usersService;
+        private readonly IAccountService _accountService;
 
-        public BankService(IUnitOfWork unitOfWork, IUsersService usersService)
+        public BankService(IUnitOfWork unitOfWork, IUsersService usersService, IAccountService accountsService)
         {
             _usersService = usersService;
+            _accountService = accountsService;
             _unitOfWork = (UnitOfWork) unitOfWork;
         }
         
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
-            return _unitOfWork.UsersRepository.GetAllAsync().ToEnumerable();
+            var users = await _unitOfWork.UsersRepository.GetAllAsync().ToList();
+
+            foreach (var user in users)
+            {
+                user.Accounts = _unitOfWork.AccountsRepository.GetByUserIdAsync(user.UserId).ToList();
+            }
+
+            return users;
         }
 
         public async Task<User> GetUser(Guid userId)
         {
-            return await _unitOfWork.UsersRepository.GetAsync(userId);
+            var user = await _unitOfWork.UsersRepository.GetAsync(userId);
+
+            user.Accounts = _unitOfWork.AccountsRepository.GetByUserIdAsync(user.UserId).ToList();
+
+            return user;
         }
 
         public async Task<Guid> ReconcileUser(Guid userId)
@@ -39,28 +62,52 @@ namespace Bank.Services
                 DateAdded = DateTime.UtcNow
             };
 
-            _unitOfWork.UsersRepository.Create(user);
-            _unitOfWork.CommitAsync();
-            return user.UserId;
-        }
-
-        public async Task CreateAccount(Guid userId)
-        {
-            var user = await _unitOfWork.UsersRepository.GetAsync(userId) ?? throw new ArgumentException("User was not found");
-                
+            var localUser = await _unitOfWork.UsersRepository.GetAsync(userId);
             
+            if (localUser == null)
+            {
+                _unitOfWork.UsersRepository.Create(user);
+                await _unitOfWork.CommitAsync();
+                return user.UserId;
+            }
+            return localUser.UserId;
         }
 
-        public void Delete(Guid userId)
+        public async Task<User> CreateAccount(Guid userId)
+        {
+            var userIdSoT = await ReconcileUser(userId); // User id source of truth
+            if (userIdSoT == Guid.Empty) throw new ArgumentException("User was not found");
+            
+            var user = await _unitOfWork.UsersRepository.GetAsync(userId) ?? throw new ArgumentException("User was not found");
+
+            var account = await _accountService.CreateAccount();
+            if (account == null) throw new Exception("Account couldn't be created");
+
+            var accountRelation = new Account()
+            {
+                AccountId = account.AccountId,
+                User = user
+            };
+            
+            _unitOfWork.AccountsRepository.Create(accountRelation);
+            await _unitOfWork.CommitAsync();
+            
+            user.Accounts.Add(accountRelation);
+            await _unitOfWork.CommitAsync();
+
+            return await GetUser(user.UserId);
+        }
+
+        public async Task Delete(Guid userId)
         {
             _unitOfWork.UsersRepository.Delete(userId);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
         }
 
-        public void Update(User user)
+        public async Task Update(User user)
         {
             _unitOfWork.UsersRepository.Update(user);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
         }
     }
 }

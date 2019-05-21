@@ -7,6 +7,7 @@ using Bank.Database;
 using Bank.Repositories;
 using Bank.Services;
 using Bank.Utility;
+using Newtonsoft.Json;
 
 namespace Bank
 {
@@ -23,14 +24,18 @@ namespace Bank
         public void ConfigureServices(IServiceCollection services)
         {
             // Set compability mode for mvc
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
             StartupDatabaseInitializer.InitializeDatabase(services);
 
+            services.AddHttpClient();
             services.AddScoped<IAccountsRepository, AccountsRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IBankService, BankService>();
 
             CorsConfig.AddCorsPolicy(services);
         }

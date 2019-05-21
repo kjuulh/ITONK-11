@@ -60,7 +60,7 @@ metadata:
   name: bank-service
   labels:
     app: bank-service
-  namespace: itonk-del1-11
+  namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:
