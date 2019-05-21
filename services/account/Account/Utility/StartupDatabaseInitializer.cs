@@ -33,7 +33,7 @@ namespace Account.Utility
                     break;
                 default:
                 case "TEST":
-                    services.AddDbContext<AccountContext>(ops => { ops.UseInMemoryDatabase(databaseName: "Account"); });
+                    services.AddDbContext<AccountContext>(ops => { ops.UseInMemoryDatabase("Account"); });
                     break;
             }
         }

@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Account.Database;
 using Account.Models;
 using Account.Services;
 using Account.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Account.Controllers
 {
@@ -35,13 +30,13 @@ namespace Account.Controllers
 
             if (accounts.Count == 0)
                 return Ok(new List<Models.Account>());
-            
+
             foreach (var account in accounts)
             {
                 var transactions = _transactionsService.GetAll(account.AccountId).ToList();
                 account.Transactions = transactions;
             }
-            
+
             return Ok(accounts);
         }
 
@@ -85,10 +80,7 @@ namespace Account.Controllers
                 return BadRequest();
 
             var transactions = _transactionsService.GetAll(accountId).ToList();
-            foreach (var transaction in transactions)
-            {
-                transaction.Account.Transactions = null;
-            }
+            foreach (var transaction in transactions) transaction.Account.Transactions = null;
             if (transactions == null)
                 return NotFound();
 
@@ -102,7 +94,7 @@ namespace Account.Controllers
                 return BadRequest();
 
             var transaction = await _transactionsService.Get(transactionId);
-            
+
             if (transaction == null)
                 return NotFound();
 
@@ -118,7 +110,8 @@ namespace Account.Controllers
 
             try
             {
-                var transactionId = _transactionsService.AppendTransaction(accountId, transactionCreateViewModel.Amount);
+                var transactionId =
+                    _transactionsService.AppendTransaction(accountId, transactionCreateViewModel.Amount);
                 return Ok(transactionId);
             }
             catch (Exception e)

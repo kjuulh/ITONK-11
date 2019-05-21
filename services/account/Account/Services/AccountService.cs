@@ -31,7 +31,7 @@ namespace Account.Services
 
         public Guid Create()
         {
-            var account = new Models.Account()
+            var account = new Models.Account
             {
                 AccountId = Guid.NewGuid(),
                 DateAdded = DateTime.UtcNow

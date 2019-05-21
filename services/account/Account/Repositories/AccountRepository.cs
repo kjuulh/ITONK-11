@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Account.Database;
-using Account.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
@@ -24,8 +22,8 @@ namespace Account.Repositories
 
     public class AccountRepository : IAccountRepository
     {
-        private readonly AccountContext _context;
         private readonly DbSet<Models.Account> _accountEntity;
+        private readonly AccountContext _context;
 
         public AccountRepository(AccountContext context)
         {
