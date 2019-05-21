@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Bank.Database;
+using Bank.Repositories;
+using Bank.Services;
+using Bank.Utility;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Bank.Database;
-using Bank.Repositories;
-using Bank.Services;
-using Bank.Utility;
 using Newtonsoft.Json;
 
 namespace Bank
@@ -25,7 +25,8 @@ namespace Bank
         {
             // Set compability mode for mvc
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+                .AddJsonOptions(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
             StartupDatabaseInitializer.InitializeDatabase(services);
 

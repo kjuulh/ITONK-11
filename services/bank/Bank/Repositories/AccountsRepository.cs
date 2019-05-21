@@ -25,8 +25,8 @@ namespace Bank.Repositories
 
     public class AccountsRepository : IAccountsRepository
     {
-        private readonly BankContext _context;
         private readonly DbSet<Account> _accountsEntity;
+        private readonly BankContext _context;
 
         public AccountsRepository(BankContext context)
         {
@@ -53,7 +53,7 @@ namespace Bank.Repositories
         {
             return _accountsEntity.Where(account => account.User.UserId == userId);
         }
-        
+
         public IEnumerable<Account> GetAll()
         {
             return GetAllAsync().ToEnumerable();

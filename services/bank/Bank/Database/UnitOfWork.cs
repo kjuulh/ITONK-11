@@ -5,8 +5,6 @@ namespace Bank.Database
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public IAccountsRepository AccountsRepository { get; }
-        public IUsersRepository UsersRepository { get; }
         private readonly BankContext _context;
 
         public UnitOfWork(BankContext context, IAccountsRepository accountsRepository, IUsersRepository usersRepository)
@@ -15,6 +13,9 @@ namespace Bank.Database
             AccountsRepository = accountsRepository;
             UsersRepository = usersRepository;
         }
+
+        public IAccountsRepository AccountsRepository { get; }
+        public IUsersRepository UsersRepository { get; }
 
         public void Commit()
         {

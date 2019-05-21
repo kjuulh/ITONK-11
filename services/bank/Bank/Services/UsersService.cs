@@ -1,8 +1,6 @@
 using System;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Bank.Services
 {
@@ -13,11 +11,6 @@ namespace Bank.Services
 
     public class UsersService : IUsersService
     {
-        public class UsersServiceViewModel
-        {
-            public Guid UserId { get; set; }
-        }
-
         private readonly IHttpClientFactory _httpClientFactory;
 
         public UsersService(IHttpClientFactory httpClientFactory)
@@ -33,16 +26,13 @@ namespace Bank.Services
             var usersServicePORT = Environment.GetEnvironmentVariable("USERS_SERVICE_PORT");
             if (string.IsNullOrEmpty(usersServicePORT))
                 throw new NullReferenceException("USERS_SERVICE_PORT url is null");
-            
+
             var requestUri = "http://" + usersServiceDNS + ":" + usersServicePORT + "/api/users/" + id;
             var request = HttpRequestGet(requestUri, out var client);
 
             var response = await client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsAsync<UsersServiceViewModel>();
-            }
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<UsersServiceViewModel>();
 
             return null;
         }
@@ -55,6 +45,11 @@ namespace Bank.Services
 
             client = _httpClientFactory.CreateClient();
             return request;
+        }
+
+        public class UsersServiceViewModel
+        {
+            public Guid UserId { get; set; }
         }
     }
 }

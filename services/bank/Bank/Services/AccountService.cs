@@ -14,11 +14,6 @@ namespace Bank.Services
 
     public class AccountService : IAccountService
     {
-        public class AccountViewModel
-        {
-            public Guid AccountId { get; set; }
-        }
-
         private readonly IHttpClientFactory _httpClientFactory;
 
         public AccountService(IHttpClientFactory httpClientFactory)
@@ -36,14 +31,11 @@ namespace Bank.Services
                 throw new NullReferenceException("ACCOUNTS_SERVICE_PORT url is null");
 
             var requestUri = "http://" + accountsServiceDNS + ":" + accountsServicePORT + "/api/account";
-            var request = HttpRequestPost(requestUri, new {} ,out var client);
+            var request = HttpRequestPost(requestUri, new { }, out var client);
 
             var response = await client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsAsync<AccountViewModel>();
-            }
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<AccountViewModel>();
 
             return null;
         }
@@ -64,10 +56,7 @@ namespace Bank.Services
 
             var response = await client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsAsync<AccountViewModel>();
-            }
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<AccountViewModel>();
 
             return null;
         }
@@ -94,6 +83,11 @@ namespace Bank.Services
 
             client = _httpClientFactory.CreateClient();
             return request;
+        }
+
+        public class AccountViewModel
+        {
+            public Guid AccountId { get; set; }
         }
     }
 }

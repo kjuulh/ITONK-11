@@ -19,9 +19,9 @@ namespace Bank.Services
 
     public class BankService : IBankService
     {
+        private readonly IAccountService _accountService;
         private readonly UnitOfWork _unitOfWork;
         private readonly IUsersService _usersService;
-        private readonly IAccountService _accountService;
 
         public BankService(IUnitOfWork unitOfWork, IUsersService usersService, IAccountService accountsService)
         {
@@ -29,15 +29,13 @@ namespace Bank.Services
             _accountService = accountsService;
             _unitOfWork = (UnitOfWork) unitOfWork;
         }
-        
+
         public async Task<IEnumerable<User>> GetAll()
         {
             var users = await _unitOfWork.UsersRepository.GetAllAsync().ToList();
 
             foreach (var user in users)
-            {
                 user.Accounts = _unitOfWork.AccountsRepository.GetByUserIdAsync(user.UserId).ToList();
-            }
 
             return users;
         }
@@ -63,13 +61,14 @@ namespace Bank.Services
             };
 
             var localUser = await _unitOfWork.UsersRepository.GetAsync(userId);
-            
+
             if (localUser == null)
             {
                 _unitOfWork.UsersRepository.Create(user);
                 await _unitOfWork.CommitAsync();
                 return user.UserId;
             }
+
             return localUser.UserId;
         }
 
@@ -77,21 +76,22 @@ namespace Bank.Services
         {
             var userIdSoT = await ReconcileUser(userId); // User id source of truth
             if (userIdSoT == Guid.Empty) throw new ArgumentException("User was not found");
-            
-            var user = await _unitOfWork.UsersRepository.GetAsync(userId) ?? throw new ArgumentException("User was not found");
+
+            var user = await _unitOfWork.UsersRepository.GetAsync(userId) ??
+                       throw new ArgumentException("User was not found");
 
             var account = await _accountService.CreateAccount();
             if (account == null) throw new Exception("Account couldn't be created");
 
-            var accountRelation = new Account()
+            var accountRelation = new Account
             {
                 AccountId = account.AccountId,
                 User = user
             };
-            
+
             _unitOfWork.AccountsRepository.Create(accountRelation);
             await _unitOfWork.CommitAsync();
-            
+
             user.Accounts.Add(accountRelation);
             await _unitOfWork.CommitAsync();
 
