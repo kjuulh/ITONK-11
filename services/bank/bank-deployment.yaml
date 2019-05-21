@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: bank
-          image: kasperhermansen/itonk11-bank:1
+          image: kasperhermansen/itonk11-bank:2
           env:
             - name: RUNTIME_ENV
               value: TEST
@@ -31,8 +31,20 @@ spec:
               value: '5432'
             - name: POSTGRES_DB
               value: Bankdb
+            - name: USERS_SERVICE_DNS
+              value: users-service.itonk-11.svc.cluster.local
+            - name: USERS_SERVICE_PORT
+              value: "80"
+            - name: ACCOUNTS_SERVICE_DNS
+              value: accounts-service.itonk-11.svc.cluster.local
+            - name: ACCOUNTS_SERVICE_PORT
+              value: "80"
           ports:
             - containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
           livenessProbe:
             initialDelaySeconds: 10
             failureThreshold: 10
