@@ -1,44 +1,32 @@
-namespace Payment.Controllers {
-    [Route ("api/[controller]")]
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Payment.ViewModels;
+
+namespace Payment.Controllers
+{
+    [Route("api/[controller]")]
     [ApiController]
-    public class PaymentController : ControllerBase {
-        private readonly IPaymentService _paymentService;
+    public class PaymentController : ControllerBase
+    {
+        [AllowAnonymous]
+        [HttpPost("create")]
+        public async Task<IActionResult> DoTransaction([FromBody] CreateTransactionViewModel transaction)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Model is not valid");
 
-        public PaymentController (IPaymentService paymentService) {
-            _paymentService = paymentService;
-        }
-
-        [HttpGet]
-        public IActionResult GetAll () {
-            return Ok (_paymentService.GetAll ());
+            return Ok(transaction);
         }
 
         [AllowAnonymous]
-        [HttpPost ("register")]
-        public async Task<IActionResult> Register ([FromBody] UsersRegistrationViewModel userModel) {
+        [HttpPost("revert")]
+        public async Task<IActionResult> RevertTransaction([FromBody] RevertTransactionViewModel transaction)
+        {
             if (!ModelState.IsValid)
-                return BadRequest ("Model is not valid");
+                return BadRequest("Model is not valid");
 
-            var user = await _paymentService.Register (userModel.Username, userModel.Password);
-
-            if (user == null)
-                return BadRequest ("Something went wrong for user registration");
-
-            return Ok (user);
-        }
-
-        [AllowAnonymous]
-        [HttpPost ("authenticate")]
-        public async Task<IActionResult> Authenticate ([FromBody] UsersPaymentViewModel userModel) {
-            if (!ModelState.IsValid)
-                return BadRequest ("Model is not valid");
-
-            var token = await _paymentService.Authenticate (userModel.Username, userModel.Password);
-
-            if (string.IsNullOrEmpty (token))
-                return BadRequest ("Password or username didn't match");
-
-            return Ok (token);
+            return Ok(transaction);
         }
     }
 }
