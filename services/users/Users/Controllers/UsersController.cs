@@ -31,9 +31,9 @@ namespace Users.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get([FromRoute] Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            var user = _usersService.Get(id);
+            var user = await _usersService.Get(id);
 
             if (user == null)
                 return NotFound();
