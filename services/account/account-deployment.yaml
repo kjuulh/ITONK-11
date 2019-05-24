@@ -17,10 +17,10 @@ spec:
     spec:
       containers:
         - name: account
-          image: kasperhermansen/itonk11-account:1
+          image: kasperhermansen/itonk11-account:4
           env:
             - name: RUNTIME_ENV
-              value: TEST
+              value: PRODUCTION
             - name: POSTGRES_HOST
               value: db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER

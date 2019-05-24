@@ -30,7 +30,7 @@ namespace Bank.Services
             if (string.IsNullOrEmpty(accountsServicePORT))
                 throw new NullReferenceException("ACCOUNTS_SERVICE_PORT url is null");
 
-            var requestUri = "http://" + accountsServiceDNS + ":" + accountsServicePORT + "/api/account";
+            var requestUri = "http://" + accountsServiceDNS + ":" + accountsServicePORT + "/api/Account";
             var request = HttpRequestPost(requestUri, new { }, out var client);
 
             var response = await client.SendAsync(request);
