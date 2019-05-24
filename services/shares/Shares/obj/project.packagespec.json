@@ -1,17 +1,17 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "/media/jakob/3E788A047889BAE3/ONK/ITONK-11/services/shares/Shares/Shares.csproj",
+    "projectUniqueName": "/home/hermansen/Documents/git/ITONK-11/services/shares/Shares/Shares.csproj",
     "projectName": "Shares",
-    "projectPath": "/media/jakob/3E788A047889BAE3/ONK/ITONK-11/services/shares/Shares/Shares.csproj",
-    "outputPath": "/media/jakob/3E788A047889BAE3/ONK/ITONK-11/services/shares/Shares/obj/",
+    "projectPath": "/home/hermansen/Documents/git/ITONK-11/services/shares/Shares/Shares.csproj",
+    "outputPath": "/home/hermansen/Documents/git/ITONK-11/services/shares/Shares/obj/",
     "projectStyle": "PackageReference",
-    "fallbackFolders": [
-      "/usr/share/dotnet/sdk/NuGetFallbackFolder"
-    ],
     "originalTargetFrameworks": [
       "netcoreapp2.2"
     ],
+    "sources": {
+      "https://api.nuget.org/v3/index.json": {}
+    },
     "frameworks": {
       "netcoreapp2.2": {
         "projectReferences": {}
@@ -29,7 +29,7 @@
         "Microsoft.AspNetCore.App": {
           "suppressParent": "All",
           "target": "Package",
-          "version": "[2.2.0, )",
+          "version": "[2.2.3, )",
           "autoReferenced": true
         },
         "Microsoft.AspNetCore.Razor.Design": {

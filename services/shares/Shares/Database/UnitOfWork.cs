@@ -1,10 +1,10 @@
+using System.Threading.Tasks;
 using Shares.Repositories;
 
 namespace Shares.Database
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public ISharesRepository SharesRepository { get; }
         private readonly SharesContext _context;
 
         public UnitOfWork(SharesContext context, ISharesRepository sharesRepository)
@@ -13,14 +13,16 @@ namespace Shares.Database
             _context = context;
         }
 
+        public ISharesRepository SharesRepository { get; }
+
         public void Commit()
         {
             _context.SaveChanges();
         }
 
-        public void CommitAsync()
+        public async Task CommitAsync()
         {
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

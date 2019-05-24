@@ -2,7 +2,7 @@
   "runtimeOptions": {
     "tfm": "netcoreapp2.2",
     "framework": {
-      "name": "Microsoft.AspNetCore.App",
+      "name": "Microsoft.NETCore.App",
       "version": "2.2.0"
     },
     "configProperties": {

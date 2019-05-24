@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Extensions.Internal;
 using Shares.Database;
 using Shares.Models;
-using Shares.Services;
 
 namespace Shares.Repositories
 {
