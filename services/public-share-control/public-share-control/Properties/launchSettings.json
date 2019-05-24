@@ -17,12 +17,16 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PSO_Control_Service": {
+    "public-share-control": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "api/health/ping",
+      "launchBrowser": false,
+      "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "USERS_SERVICE_DNS": "localhost",
+        "USERS_SERVICE_PORT": "5046",
+        "SHARES_SERVICE_DNS": "localhost",
+        "SHARES_SERVICE_PORT": "5045"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     },

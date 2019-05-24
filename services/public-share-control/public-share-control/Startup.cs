@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using PublicShareControl.Database;
 using PublicShareControl.Repositories;
 using PublicShareControl.Services;
@@ -23,13 +24,21 @@ namespace PublicShareControl
         public void ConfigureServices(IServiceCollection services)
         {
             // Set compability mode for mvc
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             CorsConfig.AddCorsPolicy(services);
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
             StartupDatabaseInitializer.InitializeDatabase(services);
+
+            services.AddHttpClient();
+            
             services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+            services.AddScoped<ISharesRepository, SharesRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<ISharesService, SharesService>();
             services.AddScoped<IPortfolioService, PortfolioService>();
         }
 

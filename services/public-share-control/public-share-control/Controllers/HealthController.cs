@@ -8,9 +8,9 @@ namespace PublicShareControl.Controllers
     {
         // GET api/health/ping
         [HttpGet("ping")]
-        public async Task<ActionResult<string>> Ping()
+        public ActionResult<string> Ping()
         {
-            return Ok("{\"message\": \"pong!\"}");
+            return Ok(new {Message = "pong!"});
         }
     }
 }

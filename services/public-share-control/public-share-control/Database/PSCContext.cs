@@ -10,17 +10,20 @@ namespace PublicShareControl
         {
         }
 
-        public DbSet<PortfolioModel> Portfolios { get; set; }
+        public DbSet<Portfolio> Portfolios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PortfolioModel>().HasData(
+            modelBuilder.Entity<Portfolio>()
+                .HasMany(e => e.Shares)
+                .WithOne(e => e.Portfolio)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Share>().HasKey(ck =>
                 new
                 {
-                    Id = Guid.NewGuid(),
-                    Owner = Guid.NewGuid()
-                }
-            );
+                    ck.ShareId, ck.PortfolioId
+                });
         }
     }
 }

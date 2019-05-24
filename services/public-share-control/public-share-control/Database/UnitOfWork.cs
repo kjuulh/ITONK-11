@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using PublicShareControl.Repositories;
 
 namespace PublicShareControl.Database
@@ -6,22 +7,24 @@ namespace PublicShareControl.Database
     {
         private readonly PSCContext _context;
 
-        public UnitOfWork(PSCContext context, IPortfolioRepository portfolioRepository)
+        public UnitOfWork(PSCContext context, IPortfolioRepository portfolioRepository, ISharesRepository sharesRepository)
         {
             PortfolioRepository = portfolioRepository;
+            SharesRepository = sharesRepository;
             _context = context;
         }
 
         public IPortfolioRepository PortfolioRepository { get; }
+        public ISharesRepository SharesRepository { get; }
 
         public void Commit()
         {
             _context.SaveChanges();
         }
 
-        public void CommitAsync()
+        public async Task CommitAsync()
         {
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }
