@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users
+  name: bank
   labels:
-    app: users
+    app: bank
   namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: bank
   template:
     metadata:
       labels:
-        app: users
+        app: bank
     spec:
       containers:
-        - name: users
-          image: kasperhermansen/itonk11-users:4
+        - name: bank
+          image: kasperhermansen/itonk11-bank:2
           env:
             - name: RUNTIME_ENV
-              value: PRODUCTION
+              value: TEST
             - name: POSTGRES_HOST
-              value: db-service.itonk-11.svc.cluster.local
+              value: bank-db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER
               value: postgres
             - name: POSTGRES_PASSWORD
@@ -30,7 +30,15 @@ spec:
             - name: POSTGRES_PORT
               value: '5432'
             - name: POSTGRES_DB
-              value: Usersdb
+              value: Bankdb
+            - name: USERS_SERVICE_DNS
+              value: users-service.itonk-11.svc.cluster.local
+            - name: USERS_SERVICE_PORT
+              value: "80"
+            - name: ACCOUNTS_SERVICE_DNS
+              value: accounts-service.itonk-11.svc.cluster.local
+            - name: ACCOUNTS_SERVICE_PORT
+              value: "80"
           ports:
             - containerPort: 80
           resources:
@@ -61,14 +69,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-service
+  name: bank-service
   labels:
-    app: users-service
+    app: bank-service
   namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:
-    app: users
+    app: bank
   ports:
     - name: http
       port: 80

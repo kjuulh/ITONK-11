@@ -1,0 +1,14 @@
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/bin/Debug/netcoreapp2.2/Bank.deps.json
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/bin/Debug/netcoreapp2.2/Bank.runtimeconfig.json
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/bin/Debug/netcoreapp2.2/Bank.runtimeconfig.dev.json
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/bin/Debug/netcoreapp2.2/Bank.dll
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/bin/Debug/netcoreapp2.2/Bank.pdb
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/obj/Debug/netcoreapp2.2/Bank.csprojAssemblyReference.cache
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/obj/Debug/netcoreapp2.2/Bank.csproj.CoreCompileInputs.cache
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/obj/Debug/netcoreapp2.2/Bank.RazorAssemblyInfo.cache
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/obj/Debug/netcoreapp2.2/Bank.RazorAssemblyInfo.cs
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/obj/Debug/netcoreapp2.2/Bank.AssemblyInfoInputs.cache
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/obj/Debug/netcoreapp2.2/Bank.AssemblyInfo.cs
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/obj/Debug/netcoreapp2.2/Bank.RazorTargetAssemblyInfo.cache
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/obj/Debug/netcoreapp2.2/Bank.dll
+/home/hermansen/Desktop/ITONK-11/services/bank/Bank/obj/Debug/netcoreapp2.2/Bank.pdb
