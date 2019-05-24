@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: pso-control-service
-          image: kasperhermansen/itonk11-pso-control-service:7
+          image: kasperhermansen/itonk11-pso-control-service:20
           env:
             - name: RUNTIME_ENV
               value: Production
@@ -49,7 +49,7 @@ spec:
             initialDelaySeconds: 10
             failureThreshold: 10
             httpGet:
-              path: /api/users
+              path: /api/health/ping
               port: 80
               scheme: HTTP
             periodSeconds: 5
@@ -59,7 +59,7 @@ spec:
             initialDelaySeconds: 10
             failureThreshold: 10
             httpGet:
-              path: /api/users
+              path: /api/health/ping
               port: 80
               scheme: HTTP
             periodSeconds: 5
