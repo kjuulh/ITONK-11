@@ -19,6 +19,8 @@ spec:
         - name: payment
           image: kasperhermansen/itonk11-payments:1
           env:
+            - name: RUNTIME_ENV
+              value: PRODUCTION
             - name: ACCOUNTS_SERVICE_DNS
               value: accounts-service.itonk-11.svc.cluster.local
             - name: ACCOUNTS_SERVICE_PORT

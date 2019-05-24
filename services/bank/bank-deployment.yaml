@@ -17,12 +17,12 @@ spec:
     spec:
       containers:
         - name: bank
-          image: kasperhermansen/itonk11-bank:2
+          image: kasperhermansen/itonk11-bank:3
           env:
             - name: RUNTIME_ENV
-              value: TEST
+              value: PRODUCTION
             - name: POSTGRES_HOST
-              value: bank-db-service.itonk-11.svc.cluster.local
+              value: db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER
               value: postgres
             - name: POSTGRES_PASSWORD
@@ -36,7 +36,7 @@ spec:
             - name: USERS_SERVICE_PORT
               value: "80"
             - name: ACCOUNTS_SERVICE_DNS
-              value: accounts-service.itonk-11.svc.cluster.local
+              value: account-service.itonk-11.svc.cluster.local
             - name: ACCOUNTS_SERVICE_PORT
               value: "80"
           ports:

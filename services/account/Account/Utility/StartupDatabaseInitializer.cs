@@ -19,13 +19,13 @@ namespace Account.Utility
                     {
                         var host = Environment.GetEnvironmentVariable("POSTGRES_HOST");
                         var port = Environment.GetEnvironmentVariable("POSTGRES_PORT");
-                        var account = Environment.GetEnvironmentVariable("POSTGRES_USER");
+                        var user = Environment.GetEnvironmentVariable("POSTGRES_USER");
                         var password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
                         var database = Environment.GetEnvironmentVariable("POSTGRES_DB");
 
                         var connectionString = $"Host={host};" +
                                                $"Port={port};" +
-                                               $"Accountname={account};" +
+                                               $"Username={user};" +
                                                $"Password={password};" +
                                                $"Database={database}";
                         opt.UseNpgsql(connectionString);
