@@ -13,5 +13,4 @@ namespace PublicShareControl.Controllers
             return Ok("{\"message\": \"pong!\"}");
         }
     }
-    
 }

@@ -36,7 +36,7 @@ namespace PublicShareControl.Services
 
         public Guid CreatePortfolio(PortfolioModel model)
         {
-            var portfolio = new PortfolioModel()
+            var portfolio = new PortfolioModel
             {
                 Owner = Guid.NewGuid(),
                 Shares = null

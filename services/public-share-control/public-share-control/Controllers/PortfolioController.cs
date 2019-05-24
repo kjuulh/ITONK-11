@@ -16,20 +16,19 @@ namespace PublicShareControl.Controllers
         {
             _portfolioService = portfolioService;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             return Ok(_portfolioService.GetAll());
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> CreatePortfolio([FromBody] PortfolioModel portfolioModel)
         {
-
             //if (!ModelState.IsValid)
             //{
-              //  return BadRequest();
+            //  return BadRequest();
             //}
             /*
             if (_sharesService.GetByName(shareViewModel.Name.ToLower())!=null)
@@ -39,6 +38,5 @@ namespace PublicShareControl.Controllers
             var portfolio = _portfolioService.Get(_portfolioService.CreatePortfolio(portfolioModel));
             return CreatedAtAction(nameof(Get), portfolio.Id, portfolio);
         }
-        
     }
 }
