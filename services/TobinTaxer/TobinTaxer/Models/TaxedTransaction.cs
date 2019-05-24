@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TobinTaxer.Models
 {
-    public class Transaction
+    public class TaxedTransaction
     {
         [Key]
         public Guid TransactionId { get; set; }
@@ -11,5 +11,7 @@ namespace TobinTaxer.Models
 
         public decimal TaxedValue { get; set; }
         public DateTime DateTaxed { get; set; }
+
+        public Boolean Taxed { get; set; }
     }
 }

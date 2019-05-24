@@ -42,16 +42,18 @@ namespace TobinTaxer.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] TransactionViewModel transactionViewModel)
+        public async Task<IActionResult> RegisterTaxedTransactions(DateTime timestamp)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var transactionId = await _TobinTaxerService.Register(transactionViewModel);
-            var transaction = await _TobinTaxerService.Get(transactionId);
+
+            var transaction = _TobinTaxerService.Get(timestamp);
 
             if (transaction == null)
                 return StatusCode(500);
+
+            _TobinTaxerService.TaxTransaction(transaction);
             
             return CreatedAtAction(nameof(Get), new {id = transaction.TransactionId}, transaction);
         }

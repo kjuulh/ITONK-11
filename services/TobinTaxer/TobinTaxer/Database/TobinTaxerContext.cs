@@ -11,11 +11,11 @@ namespace TobinTaxer.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Transaction>()
+            modelBuilder.Entity<TaxedTransaction>()
                 .HasIndex(c => c.TransactionId)
                 .IsUnique();
         }
 
-        public DbSet<Transaction> TobinTaxer { get; set; }
+        public DbSet<TaxedTransaction> TobinTaxer { get; set; }
     }
 }

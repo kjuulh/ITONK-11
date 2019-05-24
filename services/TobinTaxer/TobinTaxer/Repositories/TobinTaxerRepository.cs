@@ -12,40 +12,40 @@ namespace TobinTaxer.Repositories
     public class TobinTaxerRepository : ITobinTaxerRepository
     {
         private readonly TobinTaxerContext _context;
-        private readonly DbSet<Transaction> _TobinTaxerEntity;
+        private readonly DbSet<TaxedTransaction> _TobinTaxerEntity;
 
         public TobinTaxerRepository(TobinTaxerContext context)
         {
             _context = context;
-            _TobinTaxerEntity = context.Set<Transaction>();
+            _TobinTaxerEntity = context.Set<TaxedTransaction>();
         }
 
-        public Transaction Get(Guid id)
+        public TaxedTransaction Get(Guid id)
         {
             return GetAsync(id).Result;
         }
 
-        public async Task<Transaction> GetAsync(Guid id)
+        public async Task<TaxedTransaction> GetAsync(Guid id)
         {
             return await _TobinTaxerEntity.SingleOrDefaultAsync(transaction => transaction.TransactionId == id);
         }
 
-        public IEnumerable<Transaction> GetAll()
+        public IEnumerable<TaxedTransaction> GetAll()
         {
             return GetAllAsync().ToEnumerable();
         }
 
-        public IAsyncEnumerable<Transaction> GetAllAsync()
+        public IAsyncEnumerable<TaxedTransaction> GetAllAsync()
         {
             return _TobinTaxerEntity.AsAsyncEnumerable();
         }
 
-        public void Register(Transaction transaction)
+        public void Register(TaxedTransaction transaction)
         {
             _context.Entry(transaction).State = EntityState.Added;
         }
 
-        public void Update(Transaction transaction)
+        public void Update(TaxedTransaction transaction)
         {
             _context.Entry(transaction).State = EntityState.Modified;
         }
@@ -62,7 +62,7 @@ namespace TobinTaxer.Repositories
             if (transactionToDelete != null) _TobinTaxerEntity.Remove(transactionToDelete);
         }
 
-        public Task<Transaction> GetAsync(DateTime timestamp)
+        public Task<TaxedTransaction> GetAsync(DateTime timestamp)
         {
             return _TobinTaxerEntity.SingleOrDefaultAsync(transaction => transaction.DateTaxed == timestamp);
         }

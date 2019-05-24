@@ -7,14 +7,14 @@ namespace TobinTaxer.Repositories
 {
     public interface ITobinTaxerRepository
     {
-        Transaction Get(Guid id);
-        Task<Transaction> GetAsync(Guid id);
-        IEnumerable<Transaction> GetAll();
-        IAsyncEnumerable<Transaction> GetAllAsync();
-        void Register(Transaction user);
-        void Update(Transaction user);
+        TaxedTransaction Get(Guid id);
+        Task<TaxedTransaction> GetAsync(Guid id);
+        IEnumerable<TaxedTransaction> GetAll();
+        IAsyncEnumerable<TaxedTransaction> GetAllAsync();
+        void Register(TaxedTransaction transaction);
+        void Update(TaxedTransaction transaction);
         void Delete(Guid id);
         Task DeleteAsync(Guid id);
-        Task<Transaction> GetAsync(DateTime timestamp);
+        Task<TaxedTransaction> GetAsync(DateTime timestamp);
     }
 }

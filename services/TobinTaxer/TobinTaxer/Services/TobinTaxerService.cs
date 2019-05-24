@@ -17,14 +17,14 @@ namespace TobinTaxer.Services
             _unitOfWork = (UnitOfWork) unitOfWork;
         }
 
-        public async Task<Transaction> Get(Guid id)
+        public async Task<TaxedTransaction> Get(Guid id)
         {
             return await _unitOfWork.TobinTaxerRepository.GetAsync(id);
         }
 
         public async Task<Guid> Register(TransactionViewModel transactionViewModel)
         {
-            var transaction = new Transaction
+            var transaction = new TaxedTransaction
             {
                 TransactionId = Guid.NewGuid(),
                 Value = transactionViewModel.Value,
@@ -37,7 +37,7 @@ namespace TobinTaxer.Services
             return transaction.TransactionId;
         }
 
-        public IEnumerable<Transaction> GetAll()
+        public IEnumerable<TaxedTransaction> GetAll()
         {
             return _unitOfWork.TobinTaxerRepository.GetAllAsync().ToEnumerable();
         }
@@ -48,9 +48,27 @@ namespace TobinTaxer.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public Transaction Get(DateTime timestamp)
+        public TaxedTransaction Get(DateTime timestamp)
         {
             return _unitOfWork.TobinTaxerRepository.GetAsync(timestamp).Result;
+        }
+
+        public TaxedTransaction TaxTransaction(TaxedTransaction transactions)
+        {
+            //Used for test only 
+            //TODO: Delete this when Stock Broker is up and running
+            TaxedTransaction obj = new TaxedTransaction()
+            {
+                Value = 100
+            };
+
+            //Tax transactions
+
+            obj.TaxedValue = obj.Value - (obj.Value / 2 * 100);
+            obj.DateTaxed = DateTime.Now;
+            obj.Taxed = true;
+
+            return obj;
         }
     }
 }
