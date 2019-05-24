@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Payment.Services;
 using Payment.Utility;
 
 namespace Payment
@@ -24,6 +25,8 @@ namespace Payment
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
 
             services.AddHttpClient();
+            services.AddScoped<IAccountsService, AccountsService>();
+            services.AddScoped<IPaymentService, PaymentService>();
 
             CorsConfig.AddCorsPolicy(services);
         }

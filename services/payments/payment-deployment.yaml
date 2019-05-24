@@ -17,23 +17,11 @@ spec:
     spec:
       containers:
         - name: payment
-          image: kasperhermansen/itonk11-payment:4
+          image: kasperhermansen/itonk11-payments:1
           env:
-            - name: RUNTIME_ENV
-              value: PRODUCTION
-            - name: POSTGRES_HOST
-              value: db-service.itonk-11.svc.cluster.local
-            - name: POSTGRES_USER
-              value: postgres
-            - name: POSTGRES_PASSWORD
-              value: postgres
-            - name: POSTGRES_PORT
-              value: '5432'
-            - name: POSTGRES_DB
-              value: Paymentdb
-            - name: USERS_SERVICE_DNS
-              value: users-service.itonk-11.svc.cluster.local
-            - name: USERS_SERVICE_PORT
+            - name: ACCOUNTS_SERVICE_DNS
+              value: accounts-service.itonk-11.svc.cluster.local
+            - name: ACCOUNTS_SERVICE_PORT
               value: '80'
           ports:
             - containerPort: 80
