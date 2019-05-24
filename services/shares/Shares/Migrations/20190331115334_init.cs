@@ -8,25 +8,22 @@ namespace Shares.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Shares",
-                columns: table => new
+                "Shares",
+                table => new
                 {
-                    ShareId = table.Column<Guid>(nullable: false),
+                    ShareId = table.Column<Guid>(),
                     Name = table.Column<string>(nullable: true),
-                    TotalValue = table.Column<float>(nullable: false),
-                    TotalCount = table.Column<int>(nullable: false),
-                    SingleShareValue = table.Column<float>(nullable: false)
+                    TotalValue = table.Column<float>(),
+                    TotalCount = table.Column<int>(),
+                    SingleShareValue = table.Column<float>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Shares", x => x.ShareId);
-                });
+                constraints: table => { table.PrimaryKey("PK_Shares", x => x.ShareId); });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Shares");
+                "Shares");
         }
     }
 }
