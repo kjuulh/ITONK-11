@@ -8,8 +8,8 @@ namespace StockTraderBroker.Services
 {
     public interface IAccountService
     {
-        Task<AccountService.AccountViewModel> CreateAccount();
-        Task<AccountService.AccountViewModel> GetAccount(Guid id);
+        Task<bool> PostTaxes(Guid accountId, decimal amount);
+        Task<AccountService.BalanceViewModel> GetBalance(Guid accountId);
     }
 
     public class AccountService : IAccountService
@@ -21,7 +21,7 @@ namespace StockTraderBroker.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<AccountViewModel> CreateAccount()
+        public async Task<bool> PostTaxes(Guid accountId, decimal amount)
         {
             var accountsServiceDNS = Environment.GetEnvironmentVariable("ACCOUNTS_SERVICE_DNS");
             if (string.IsNullOrEmpty(accountsServiceDNS))
@@ -30,18 +30,18 @@ namespace StockTraderBroker.Services
             if (string.IsNullOrEmpty(accountsServicePORT))
                 throw new NullReferenceException("ACCOUNTS_SERVICE_PORT url is null");
 
-            var requestUri = "http://" + accountsServiceDNS + ":" + accountsServicePORT + "/api/Account";
-            var request = HttpRequestPost(requestUri, new { }, out var client);
+            var requestUri = "http://" + accountsServiceDNS + ":" + accountsServicePORT + $"/api/Account/{accountId}/transactions";
+            var request = HttpRequestPost(requestUri, new { Amount = amount }, out var client);
 
             var response = await client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<AccountViewModel>();
+            if (response.IsSuccessStatusCode) return true;
 
-            return null;
+            return false;
         }
 
 
-        public async Task<AccountViewModel> GetAccount(Guid id)
+        public async Task<BalanceViewModel> GetBalance(Guid accountId)
         {
             var accountsServiceDNS = Environment.GetEnvironmentVariable("ACCOUNTS_SERVICE_DNS");
             if (string.IsNullOrEmpty(accountsServiceDNS))
@@ -50,13 +50,13 @@ namespace StockTraderBroker.Services
             if (string.IsNullOrEmpty(accountsServicePORT))
                 throw new NullReferenceException("ACCOUNTS_SERVICE_PORT url is null");
 
-            var requestUri = "http://" + accountsServiceDNS + ":" + accountsServicePORT + "/api/account/" + id;
+            var requestUri = "http://" + accountsServiceDNS + ":" + accountsServicePORT + "/api/Account/" + accountId;
 
             var request = HttpRequestGet(requestUri, out var client);
 
             var response = await client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<AccountViewModel>();
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<BalanceViewModel>();
 
             return null;
         }
@@ -85,9 +85,9 @@ namespace StockTraderBroker.Services
             return request;
         }
 
-        public class AccountViewModel
+        public class BalanceViewModel
         {
-            public Guid AccountId { get; set; }
+            public Decimal Balance { get; set; }
         }
     }
 }

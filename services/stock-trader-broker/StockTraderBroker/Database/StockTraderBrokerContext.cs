@@ -9,15 +9,6 @@ namespace StockTraderBroker.Database
         {
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Account> Accounts { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Account>()
-                .HasOne(e => e.User)
-                .WithMany(o => o.Accounts)
-                .HasForeignKey(f => f.UserId);
-        }
+        public DbSet<Request> Requests { get; set; }
     }
 }

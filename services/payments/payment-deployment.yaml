@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: payment
-          image: kasperhermansen/itonk11-payments:1
+          image: kasperhermansen/itonk11-payments:5
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION

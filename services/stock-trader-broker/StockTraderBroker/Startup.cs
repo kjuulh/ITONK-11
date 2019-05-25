@@ -31,12 +31,13 @@ namespace StockTraderBroker
             StartupDatabaseInitializer.InitializeDatabase(services);
 
             services.AddHttpClient();
-            services.AddScoped<IAccountsRepository, AccountsRepository>();
-            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IRequestsRepository, RequestsRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IStockTraderBrokerService, StockTraderBrokerService>();
+            services.AddScoped<IPaymentsService, PaymentsService>();
+            services.AddScoped<IShareControlService, ShareControlService>();
+            services.AddScoped<ISharesService, SharesService>();
+            services.AddScoped<ITraderService, TraderService>();
 
             CorsConfig.AddCorsPolicy(services);
         }

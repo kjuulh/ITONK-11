@@ -5,77 +5,107 @@ using System.Threading.Tasks;
 using StockTraderBroker.Database;
 using StockTraderBroker.Models;
 using StockTraderBroker.Services;
-using StockTraderBroker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StockTraderBroker.ViewModels;
 
 namespace StockTraderBroker.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Trader")]
     [ApiController]
     public class StockTraderBrokerController : ControllerBase
     {
-        private readonly IStockTraderBrokerService _stockTraderBrokerService;
-
-        public StockTraderBrokerController(IAccountService accountService, IStockTraderBrokerService stockTraderBrokerService)
+        private readonly ITraderService _traderService;
+        public StockTraderBrokerController(ITraderService traderService)
         {
-            _stockTraderBrokerService = stockTraderBrokerService;
+            this._traderService = traderService;
+        }
+
+        [HttpPost("sell")]
+        public async Task<IActionResult> SellShare([FromBody] SellShareViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var request = await _traderService.CreateRequest(viewModel);
+
+            return CreatedAtAction(nameof(GetRequestById), new { request.RequestId }, request);
+        }
+
+        [HttpPut("sell/{requestId}")]
+        public async Task<IActionResult> UpdateRequest([FromRoute] Guid requestId, [FromBody] UpdateRequestViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                var request = await _traderService.UpdateRequest(requestId, viewModel);
+
+                if (request == null)
+                    return NotFound("request not found");
+                return Ok(request);
+            }
+            catch (System.Exception)
+            {
+                return BadRequest("Couldn't update model");
+                throw;
+            }
+        }
+
+        [HttpPost("buy/{requestId}")]
+        public async Task<IActionResult> BuyShare([FromRoute] Guid requestId, [FromBody] BuyShareViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var share = await _traderService.BuyShareAsync(requestId, viewModel);
+
+            if (share == false)
+                return NotFound("request was not found, or user has insufficient funds");
+
+            return Ok(new {Status = "success"});
+        }
+
+        [HttpGet("{requestId}")]
+        public async Task<IActionResult> GetRequestById([FromRoute] Guid requestId)
+        {
+            Request request = null;
+
+            try
+            {
+                request = await _traderService.GetRequestByIdAsync(requestId);
+
+                if (request == null)
+                    return NotFound("Request not found");
+
+                return Ok(request);
+            }
+            catch (System.Exception)
+            {
+                return BadRequest("Couldn't return user");
+            }
+        }
+
+        [HttpDelete("{requestId}")]
+        public async Task<IActionResult> DeleteRequestById([FromRoute] Guid requestId)
+        {
+
+            try
+            {
+                await _traderService.DeleteRequest(requestId);
+                return Ok(new { Status = "success" });
+            }
+            catch (System.Exception)
+            {
+                return NotFound("request not found");
+                throw;
+            }
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            return Ok(await _stockTraderBrokerService.GetAll());
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
-        {
-            var user = await _stockTraderBrokerService.GetUser(id);
-
-            if (user == null)
-                return NotFound();
-
-            return Ok(user);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] AccountViewModel accountViewModel)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var user = await _stockTraderBrokerService.CreateAccount(accountViewModel.UserId);
-
-            return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] User user)
-        {
-            if (id != user.UserId)
-                return BadRequest();
-
-            await _stockTraderBrokerService.Update(user);
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            if (id != Guid.Empty || id == null)
-                return BadRequest();
-
-            await _stockTraderBrokerService.Delete(id);
-
-            return NoContent();
-        }
+        public IActionResult GetAll() => Ok(_traderService.GetAll().ToEnumerable());
     }
 }

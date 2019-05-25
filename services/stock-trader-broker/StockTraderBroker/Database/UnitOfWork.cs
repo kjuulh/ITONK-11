@@ -12,17 +12,15 @@ namespace StockTraderBroker.Database
 
     public class UnitOfWork : IUnitOfWork
     {
+        public IRequestsRepository RequestsRepository { get; set; }
         private readonly StockTraderBrokerContext _context;
 
-        public UnitOfWork(StockTraderBrokerContext context, IAccountsRepository accountsRepository, IUsersRepository usersRepository)
+        public UnitOfWork(StockTraderBrokerContext context, IRequestsRepository requestsRepository)
         {
-            _context = context;
-            AccountsRepository = accountsRepository;
-            UsersRepository = usersRepository;
+            this._context = context;
+            this.RequestsRepository = requestsRepository;
         }
 
-        public IAccountsRepository AccountsRepository { get; }
-        public IUsersRepository UsersRepository { get; }
 
         public void Commit()
         {

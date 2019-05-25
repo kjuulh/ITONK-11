@@ -8,14 +8,14 @@ namespace Users.Utility
     {
         public static void ApiDocumentationInitializer(IServiceCollection services)
         {
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "Users API", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("users", new Info { Title = "Users API", Version = "v1" }); });
         }
-        
-        
+
+
         public static void AllowAPIDocumentation(IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users API"); });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/users/swagger.json", "Users API"); });
         }
     }
 }

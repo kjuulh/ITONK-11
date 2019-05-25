@@ -8,14 +8,14 @@ namespace Shares.Utility
     {
         public static void ApiDocumentationInitializer(IServiceCollection services)
         {
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "Shares API", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("shares", new Info { Title = "Shares API", Version = "v1" }); });
         }
 
 
         public static void AllowAPIDocumentation(IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Shares API"); });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/shares/swagger.json", "Shares API"); });
         }
     }
 }

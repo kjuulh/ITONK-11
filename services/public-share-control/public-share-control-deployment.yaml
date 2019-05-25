@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: pso-control-service
-          image: kasperhermansen/itonk11-pso-control-service:20
+          image: kasperhermansen/itonk11-pso-control-service:21
           env:
             - name: RUNTIME_ENV
               value: Production
@@ -30,7 +30,7 @@ spec:
             - name: POSTGRES_PORT
               value: "5432"
             - name: POSTGRES_DB
-              value: PublicShareControlDb
+              value: publicsharecontroldb
             - name: USERS_SERVICE_DNS
               value: users-service.itonk-11.svc.cluster.local
             - name: USERS_SERVICE_PORT
