@@ -5,16 +5,16 @@ EXPOSE 443
 
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
-COPY ["./StockTrader/StockTrader.csproj", "StockTrader/StockTrader.csproj"]
-RUN dotnet restore "StockTrader/StockTrader.csproj"
+COPY ["./StockTraderBroker/StockTraderBroker.csproj", "StockTraderBroker/StockTraderBroker.csproj"]
+RUN dotnet restore "StockTraderBroker/StockTraderBroker.csproj"
 COPY . .
-WORKDIR "/src/StockTrader"
-RUN dotnet build "StockTrader.csproj" -c Release -o /app
+WORKDIR "/src/StockTraderBroker"
+RUN dotnet build "StockTraderBroker.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "StockTrader.csproj" -c Release -o /app
+RUN dotnet publish "StockTraderBroker.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "StockTrader.dll"]
+ENTRYPOINT ["dotnet", "StockTraderBroker.dll"]

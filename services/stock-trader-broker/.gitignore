@@ -3,15 +3,15 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-# Account-specific files
-*.rsaccount
+# User-specific files
+*.rsuser
 *.suo
-*.account
-*.accountosscache
+*.user
+*.userosscache
 *.sln.docstates
 
-# Account-specific files (MonoDevelop/Xamarin Studio)
-*.accountprefs
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
 
 # Build results
 [Dd]ebug/
@@ -120,7 +120,7 @@ $tf/
 # ReSharper is a .NET coding add-in
 _ReSharper*/
 *.[Rr]e[Ss]harper
-*.DotSettings.account
+*.DotSettings.user
 
 # JustCode is a .NET coding add-in
 .JustCode
@@ -256,7 +256,7 @@ ServiceFabricBackup/
 *.rdl.data
 *.bim.layout
 *.bim_*.settings
-*.rptproj.rsaccount
+*.rptproj.rsuser
 *- Backup*.rdl
 
 # Microsoft Fakes
@@ -326,7 +326,7 @@ ASALocalRun/
 *.binlog
 
 # NVidia Nsight GPU debugger configuration file
-*.nvaccount
+*.nvuser
 
 # MFractors (Xamarin productivity tool) working folder
 .mfractor/
