@@ -9,7 +9,7 @@ namespace Account.Services
     public interface ITransactionsService
     {
         Task<Transaction> Get(Guid id);
-        Guid AppendTransaction(Guid accountId, decimal amount);
+        Task<Guid> AppendTransaction(Guid accountId, decimal amount);
         Task<Guid> RevertTransaction(Guid accountId, Guid transactionId);
         IEnumerable<Transaction> GetAll(Guid accountId);
     }
@@ -39,7 +39,7 @@ namespace Account.Services
             return transactions;
         }
 
-        public Guid AppendTransaction(Guid accountId, decimal amount)
+        public async Task<Guid> AppendTransaction(Guid accountId, decimal amount)
         {
             var account = _unitOfWork.AccountRepository.Get(accountId);
 
@@ -64,7 +64,7 @@ namespace Account.Services
             {
                 _unitOfWork.TransactionsRepository.Create(transaction);
                 _unitOfWork.AccountRepository.Update(account);
-                _unitOfWork.CommitAsync();
+                await _unitOfWork.CommitAsync();
                 return transaction.TransactionId;
             }
 
@@ -91,7 +91,7 @@ namespace Account.Services
 
             _unitOfWork.TransactionsRepository.Create(revertedTransaction);
             _unitOfWork.AccountRepository.Update(account);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
             return revertedTransaction.TransactionId;
         }
     }

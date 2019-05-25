@@ -17,12 +17,12 @@ spec:
     spec:
       containers:
         - name: payment
-          image: kasperhermansen/itonk11-payments:1
+          image: kasperhermansen/itonk11-payments:6
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION
             - name: ACCOUNTS_SERVICE_DNS
-              value: accounts-service.itonk-11.svc.cluster.local
+              value: account-service.itonk-11.svc.cluster.local
             - name: ACCOUNTS_SERVICE_PORT
               value: '80'
           ports:

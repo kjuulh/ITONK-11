@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: account
-          image: kasperhermansen/itonk11-account:4
+          image: kasperhermansen/itonk11-account:9
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION
@@ -30,7 +30,7 @@ spec:
             - name: POSTGRES_PORT
               value: '5432'
             - name: POSTGRES_DB
-              value: Accountdb
+              value: accountdb
           resources:
             limits:
               memory: "128Mi"

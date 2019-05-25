@@ -55,12 +55,12 @@ namespace Account.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Create()
         {
-            var account = await _accountService.Get(_accountService.Create());
+            var account = await _accountService.Get(await _accountService.Create());
             return CreatedAtAction(nameof(Get), new {id = account.AccountId}, account);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] Models.Account account)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] Models.Account account)
         {
             if (id != account.AccountId)
                 return BadRequest();
@@ -68,7 +68,7 @@ namespace Account.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            _accountService.Update(account);
+            await _accountService.Update(account);
 
             return NoContent();
         }
@@ -81,8 +81,6 @@ namespace Account.Controllers
 
             var transactions = _transactionsService.GetAll(accountId).ToList();
             foreach (var transaction in transactions) transaction.Account.Transactions = null;
-            if (transactions == null)
-                return NotFound();
 
             return transactions;
         }
@@ -102,7 +100,7 @@ namespace Account.Controllers
         }
 
         [HttpPost("{accountId}/transactions")]
-        public IActionResult AddTransaction([FromRoute] Guid accountId,
+        public async Task<IActionResult> AddTransaction([FromRoute] Guid accountId,
             [FromBody] TransactionCreateViewModel transactionCreateViewModel)
         {
             if (!ModelState.IsValid)
@@ -111,7 +109,7 @@ namespace Account.Controllers
             try
             {
                 var transactionId =
-                    _transactionsService.AppendTransaction(accountId, transactionCreateViewModel.Amount);
+                    await _transactionsService.AppendTransaction(accountId, transactionCreateViewModel.Amount);
                 return Ok(transactionId);
             }
             catch (Exception e)

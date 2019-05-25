@@ -1,18 +1,7 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/{catchAll}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "authentication-service",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/authentication/{catchAll}"
-    },
-    {
-      "DownstreamPathTemplate": "/api/{catchAll}",
+      "DownstreamPathTemplate": "/api/users{catchAll}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -20,7 +9,348 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/users/{catchAll}"
+      "UpstreamPathTemplate": "/api/users{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/users",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "users-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "users-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/users/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/users/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "users-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/users/swagger.json"
+    },
+    {
+      "DownstreamPathTemplate": "/api/account{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "account-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/account{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/account",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "account-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/account"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "account-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/account/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/account/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "account-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/account/swagger.json"
+    },
+    {
+      "DownstreamPathTemplate": "/api/authentication{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authentication-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/authentication{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/authentication",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authentication-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/authentication"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authentication-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/authentication/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/authentication/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authentication-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/authentication/swagger.json"
+    },
+    {
+      "DownstreamPathTemplate": "/api/bank{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bank-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/bank{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/bank",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bank-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/bank"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bank-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/bank/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/bank/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bank-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/bank/swagger.json"
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "payment-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/payment{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/bank",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "payment-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/payment"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "payment-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/payment/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/payment/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "payment-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/payment/swagger.json"
+    },
+    {
+      "DownstreamPathTemplate": "/api/portfolio{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "pso-control-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/portfolio{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/portfolio",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "pso-control-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/portfolio"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "pso-control-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/portfolio/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/portfolio/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "pso-control-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/portfolio/swagger.json"
+    },
+    {
+      "DownstreamPathTemplate": "/api/shares{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "shares-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/shares{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/shares",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "shares-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/shares"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "shares-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/shares/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/shares/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "shares-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/shares/swagger.json"
+    },
+    {
+      "DownstreamPathTemplate": "/api/trader{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-trader-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/trader{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/trader",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-trader-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/trader"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-trader-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/trader/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/trader/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-trader-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/trader/swagger.json"
     }
   ],
   "GlobalConfiguration": {

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: shares
-          image: kasperhermansen/itonk11-shares:2
+          image: kasperhermansen/itonk11-shares:3
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION
@@ -30,7 +30,7 @@ spec:
             - name: POSTGRES_PORT
               value: '5432'
             - name: POSTGRES_DB
-              value: Sharesdb
+              value: sharesdb
           resources:
             limits:
               memory: "128Mi"

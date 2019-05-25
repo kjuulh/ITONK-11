@@ -8,13 +8,13 @@ namespace Payment.Utility
     {
         public static void ApiDocumentationInitializer(IServiceCollection services)
         {
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "Payment API", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("payment", new Info { Title = "Payment API", Version = "v1" }); });
         }
 
         public static void AllowAPIDocumentation(IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Payment API"); });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/payment/swagger.json", "Payment API"); });
         }
     }
 }

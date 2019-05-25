@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Account.Repositories;
 
 namespace Account.Database
@@ -22,9 +23,9 @@ namespace Account.Database
             _context.SaveChanges();
         }
 
-        public void CommitAsync()
+        public async Task CommitAsync()
         {
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }
