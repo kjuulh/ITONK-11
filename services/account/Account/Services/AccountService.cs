@@ -9,10 +9,10 @@ namespace Account.Services
     public interface IAccountService
     {
         Task<Models.Account> Get(Guid id);
-        Guid Create();
+        Task<Guid> Create();
         IEnumerable<Models.Account> GetAll();
-        void Delete(Guid id);
-        void Update(Models.Account account);
+        Task Delete(Guid id);
+        Task Update(Models.Account account);
     }
 
     public class AccountService : IAccountService
@@ -29,7 +29,7 @@ namespace Account.Services
             return await _unitOfWork.AccountRepository.GetAsync(id);
         }
 
-        public Guid Create()
+        public async Task<Guid> Create()
         {
             var account = new Models.Account
             {
@@ -38,7 +38,7 @@ namespace Account.Services
             };
 
             _unitOfWork.AccountRepository.Register(account);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
             return account.AccountId;
         }
 
@@ -47,16 +47,16 @@ namespace Account.Services
             return _unitOfWork.AccountRepository.GetAllAsync().ToEnumerable();
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
             _unitOfWork.AccountRepository.Delete(id);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
         }
 
-        public void Update(Models.Account account)
+        public async Task Update(Models.Account account)
         {
             _unitOfWork.AccountRepository.Update(account);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
         }
     }
 }

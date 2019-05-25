@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: account
-          image: kasperhermansen/itonk11-account:6
+          image: kasperhermansen/itonk11-account:9
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION

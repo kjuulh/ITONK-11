@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: shares
-          image: kasperhermansen/itonk11-shares:2
+          image: kasperhermansen/itonk11-shares:3
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION
