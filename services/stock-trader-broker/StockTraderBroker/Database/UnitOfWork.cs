@@ -3,6 +3,13 @@ using StockTraderBroker.Repositories;
 
 namespace StockTraderBroker.Database
 {
+    public interface IUnitOfWork
+    {
+        void Commit();
+        Task CommitAsync();
+    }
+
+
     public class UnitOfWork : IUnitOfWork
     {
         private readonly StockTraderBrokerContext _context;

@@ -49,8 +49,8 @@ namespace StockTraderBroker.Controllers
                 return BadRequest();
 
             var user = await _stockTraderBrokerService.CreateAccount(accountViewModel.UserId);
-            
-            return CreatedAtAction(nameof(Get), new {id = user.UserId}, user);
+
+            return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
         }
 
         [HttpPut("{id}")]

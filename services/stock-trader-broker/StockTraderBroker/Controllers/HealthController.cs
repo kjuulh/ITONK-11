@@ -9,7 +9,7 @@ namespace StockTraderBroker.Controllers
         [HttpGet("ping")]
         public ActionResult<string> Ping()
         {
-            return Ok(new {Message = "pong!"});
+            return Ok(new { Message = "pong!" });
         }
     }
 }
