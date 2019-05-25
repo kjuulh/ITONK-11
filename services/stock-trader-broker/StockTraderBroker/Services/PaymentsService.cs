@@ -32,8 +32,8 @@ namespace StockTraderBroker.Services
             var requestUri = "http://" + paymentsServiceDNS + ":" + paymentsServicePORT + $"/api/Payment/create";
             var request = HttpRequestPost(requestUri, new
             {
-                BuyerAccountId = sellerAccountId,
-                SellerAccountId = buyerAccountId,
+                BuyerAccountId = buyerAccountId,
+                SellerAccountId = sellerAccountId,
                 Amount = amount
             }, out var client);
 

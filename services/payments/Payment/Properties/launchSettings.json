@@ -23,12 +23,12 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "USERS_SERVICE_DNS": "localhost",
-        "USERS_SERVICE_PORT": "5041",
-        "ACCOUNTS_SERVICE_DNS": "localhost",
-        "ACCOUNTS_SERVICE_PORT": "5044"
+        "USERS_SERVICE_DNS": "api.kjuulh.io",
+        "USERS_SERVICE_PORT": "80",
+        "ACCOUNTS_SERVICE_DNS": "api.kjuulh.io",
+        "ACCOUNTS_SERVICE_PORT": "80"
       },
-      "applicationUrl": "https://localhost:5000;http://localhost:5001"
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
     },
     "Docker": {
       "commandName": "Docker",

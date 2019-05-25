@@ -129,7 +129,8 @@ namespace StockTraderBroker.Services
                 var value = (await _sharesService.GetShareValue(request.ShareId)).SingleShareValue * request.Amount;
 
                 // Check if user has enough funds
-                if ((await _accountService.GetBalance(viewModel.AccountId)).Balance < value)
+                var balance = (await _accountService.GetBalance(viewModel.AccountId)).Balance;
+                if (balance < value)
                     throw new ArgumentException("User doesn't have enough funds");
 
                 // Process transaction
