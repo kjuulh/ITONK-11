@@ -15,13 +15,30 @@ namespace StockTraderBroker.Controllers
 {
     [Route("api/Trader")]
     [ApiController]
-    public class StockTraderBrokerController : ControllerBase
+    public class TraderController : ControllerBase
     {
         private readonly ITraderService _traderService;
-        public StockTraderBrokerController(ITraderService traderService)
+        public TraderController(ITraderService traderService)
         {
             this._traderService = traderService;
         }
+        
+        [HttpGet]
+        public IActionResult GetAll() => Ok(_traderService.GetAll().ToEnumerable());
+        
+        [HttpGet("closed")]
+        public IActionResult GetClosed() => Ok(_traderService.GetAll().Where(r => r.Status == "closed").ToEnumerable());
+        
+        [HttpGet("open")]
+        public IActionResult GetOpen() => Ok(_traderService.GetAll().Where(r => r.Status == "open").ToEnumerable());
+
+        [HttpGet("closed/{year}/{month}")]
+        public IActionResult GetClosedByMonth([FromRoute] int year, [FromRoute] int month)
+        {
+            var requests = _traderService.GetAll();
+            var closedRequests = requests.Where(r => r.DateClosed.Year == year && r.DateClosed.Month == month && r.Status == "closed");
+            return Ok(closedRequests.ToEnumerable());
+        } 
 
         [HttpPost("sell")]
         public async Task<IActionResult> SellShare([FromBody] SellShareViewModel viewModel)
@@ -105,7 +122,5 @@ namespace StockTraderBroker.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult GetAll() => Ok(_traderService.GetAll().ToEnumerable());
     }
 }

@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stockTrader
+  name: stock-trader
   labels:
-    app: stockTrader
+    app: stock-trader
   namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: stockTrader
+      app: stock-trader
   template:
     metadata:
       labels:
-        app: stockTrader
+        app: stock-trader
     spec:
       containers:
-        - name: stockTrader
-          image: kasperhermansen/itonk11-stockTrader:1
+        - name: stock-trader
+          image: kasperhermansen/itonk11-stock-trader:1
           env:
             - name: RUNTIME_ENV
-              value: TEST
+              value: PRODUCTION
             - name: POSTGRES_HOST
               value: db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER
@@ -30,7 +30,23 @@ spec:
             - name: POSTGRES_PORT
               value: '5432'
             - name: POSTGRES_DB
-              value: StockTraderdb
+              value: stocktraderdb
+            - name: ACCOUNTS_SERVICE_DNS
+              value: account-service
+            - name: ACCOUNTS_SERVICE_PORT
+              value: "80"
+            - name: SHARECONTROL_SERVICE_DNS
+              value: pso-control-service
+            - name: SHARECONTROL_SERVICE_PORT
+              value: "80" 
+            - name: PAYMENTS_SERVICE_DNS
+              value: payment-service
+            - name: PAYMENTS_SERVICE_PORT
+              value: "80" 
+            - name: SHARES_SERVICE_DNS
+              value: shares-control-service
+            - name: SHARES_SERVICE_PORT
+              value: "80" 
           resources:
             limits:
               memory: "128Mi"
@@ -61,14 +77,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: stockTrader-service
+  name: stock-trader-service
   labels:
-    app: stockTrader-service
+    app: stock-trader-service
   namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:
-    app: stockTrader
+    app: stock-trader
   ports:
     - name: http
       port: 80

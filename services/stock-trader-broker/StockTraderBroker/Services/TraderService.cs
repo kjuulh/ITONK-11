@@ -121,6 +121,9 @@ namespace StockTraderBroker.Services
 
             if (request == null)
                 throw new ArgumentException("request doesn't exist");
+            
+            if (request.Status == "closed")
+                throw new ArgumentException("request is closed");
 
             //TODO: Handle rollbacks
             try
