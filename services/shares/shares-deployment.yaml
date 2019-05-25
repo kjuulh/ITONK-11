@@ -17,12 +17,12 @@ spec:
     spec:
       containers:
         - name: shares
-          image: kasperhermansen/itonk11-shares:1
+          image: kasperhermansen/itonk11-shares:2
           env:
             - name: RUNTIME_ENV
-              value: Production
+              value: PRODUCTION
             - name: POSTGRES_HOST
-              value: shares-db-service.itonk-11.svc.cluster.local
+              value: db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER
               value: postgres
             - name: POSTGRES_PASSWORD
@@ -31,6 +31,10 @@ spec:
               value: '5432'
             - name: POSTGRES_DB
               value: Sharesdb
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
           ports:
             - containerPort: 80
           livenessProbe:

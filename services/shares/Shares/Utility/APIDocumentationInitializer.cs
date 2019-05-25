@@ -10,8 +10,8 @@ namespace Shares.Utility
         {
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "Shares API", Version = "v1"}); });
         }
-        
-        
+
+
         public static void AllowAPIDocumentation(IApplicationBuilder app)
         {
             app.UseSwagger();
