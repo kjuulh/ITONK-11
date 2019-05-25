@@ -307,6 +307,50 @@
         }
       ],
       "UpstreamPathTemplate": "/swagger/shares/swagger.json"
+    },
+    {
+      "DownstreamPathTemplate": "/api/trader{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-trader-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/trader{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/trader",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-trader-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/trader"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-trader-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/trader/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/trader/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-trader-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/trader/swagger.json"
     }
   ],
   "GlobalConfiguration": {

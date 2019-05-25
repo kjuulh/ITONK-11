@@ -44,7 +44,7 @@ spec:
             - name: PAYMENTS_SERVICE_PORT
               value: "80" 
             - name: SHARES_SERVICE_DNS
-              value: shares-control-service
+              value: shares-service
             - name: SHARES_SERVICE_PORT
               value: "80" 
           resources:
