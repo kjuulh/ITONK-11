@@ -3,19 +3,19 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace StockSeller.Utility
 {
-    public class CorsConfig
+  public class CorsConfig
+  {
+    public static void AddCorsPolicy(IServiceCollection services)
     {
-        public static void AddCorsPolicy(IServiceCollection services)
-        {
-            services.AddCors(opt =>
-            {
-                opt.AddPolicy("AllowAll", p => { p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
-            });
-        }
-
-        public static void AddCors(IApplicationBuilder app)
-        {
-            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-        }
+      services.AddCors(opt =>
+      {
+        opt.AddPolicy("AllowAll", p => { p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
+      });
     }
+
+    public static void AddCors(IApplicationBuilder app)
+    {
+      app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+    }
+  }
 }
