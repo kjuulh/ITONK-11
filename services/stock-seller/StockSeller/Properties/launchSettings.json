@@ -1,7 +1,7 @@
 {
   "iisSettings": {
-    "windowsStockProvider": false,
-    "anonymousStockProvider": true,
+    "windowsStockSeller": false,
+    "anonymousStockSeller": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:54327",
       "sslPort": 44301
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "StockProvider": {
+    "StockSeller": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "swagger",

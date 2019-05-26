@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace StockProvider.Controllers
+namespace StockSeller.Controllers
 {
     [Route("api/[controller]")]
     public class HealthController : Controller
@@ -9,7 +9,7 @@ namespace StockProvider.Controllers
         [HttpGet("ping")]
         public ActionResult<string> Ping()
         {
-            return Ok(new {Message = "pong!"});
+            return Ok(new { Message = "pong!" });
         }
     }
 }
