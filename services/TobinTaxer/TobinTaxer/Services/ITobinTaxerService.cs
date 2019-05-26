@@ -9,10 +9,10 @@ namespace TobinTaxer.Services
     public interface ITobinTaxerService
     {
         Task<TaxedTransaction> Get(Guid id);
-        Task<Guid> Register(TransactionViewModel transactionViewModel);
+        Task<Guid> Register(TaxedTransactionViewModel transactionViewModel);
         IEnumerable<TaxedTransaction> GetAll();
         Task Delete(Guid id);
         TaxedTransaction Get(DateTime timestamp);
-        TaxedTransaction TaxTransaction(TaxedTransaction transaction);
+        TaxedTransaction TaxTransaction(TransactionViewModel transaction);
     }
 }

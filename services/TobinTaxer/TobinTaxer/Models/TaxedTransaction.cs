@@ -12,6 +12,6 @@ namespace TobinTaxer.Models
         public decimal TaxedValue { get; set; }
         public DateTime DateTaxed { get; set; }
 
-        public Boolean Taxed { get; set; }
+        public bool Taxed { get; set; }
     }
 }

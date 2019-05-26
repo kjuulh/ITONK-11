@@ -31,6 +31,10 @@ spec:
               value: '5432'
             - name: POSTGRES_DB
               value: TobinTaxerdb
+            - name: STOCK_TRADER_BROKER_DNS
+              value: stock-trader-broker-service.itonk-11.svc.cluster.local
+            - name: STOCK_TRADER_BROKER_PORT
+              value: "80"
           ports:
             - containerPort: 80
           resources:

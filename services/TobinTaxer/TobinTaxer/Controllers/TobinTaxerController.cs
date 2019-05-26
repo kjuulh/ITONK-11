@@ -13,10 +13,12 @@ namespace TobinTaxer.Controllers
     public class TobinTaxerController : ControllerBase
     {
         private readonly ITobinTaxerService _TobinTaxerService;
+        private readonly ITraderService _traderService;
 
-        public TobinTaxerController(ITobinTaxerService TobinTaxerService)
+        public TobinTaxerController(ITobinTaxerService TobinTaxerService, ITraderService traderService)
         {
             _TobinTaxerService = TobinTaxerService;
+            _traderService = traderService;
         }
 
 
@@ -42,20 +44,20 @@ namespace TobinTaxer.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> RegisterTaxedTransactions(DateTime timestamp)
+        public async Task<IActionResult> RegisterTaxedTransactions(DateTime dateAdded)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
 
-            var transaction = _TobinTaxerService.Get(timestamp);
+            var transaction = await _traderService.GetTransaction(dateAdded);
 
             if (transaction == null)
                 return StatusCode(500);
 
-            _TobinTaxerService.TaxTransaction(transaction);
+            var taxedTransaction = _TobinTaxerService.TaxTransaction(transaction);
             
-            return CreatedAtAction(nameof(Get), new {id = transaction.TransactionId}, transaction);
+            return CreatedAtAction(nameof(Get), new {id = taxedTransaction.TransactionId}, taxedTransaction);
         }
     }
 }
