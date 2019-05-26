@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     statefulset.kubernetes.io/pod-name: db-0
-  type: NodePort
+  type: LoadBalancer
   ports:
     - name: http
       port: 5432
@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: db
-          image: kasperhermansen/itonk11-db:1
+          image: kasperhermansen/itonk11-db:20
           env:
             - name: PGDATA
               value: /var/lib/postgresql/pgdata

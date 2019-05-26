@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Shares.Controllers
@@ -9,9 +7,9 @@ namespace Shares.Controllers
     {
         // GET api/health/ping
         [HttpGet("ping")]
-        public async Task<ActionResult<string>> Ping()
+        public ActionResult<string> Ping()
         {
-            return Ok("{\"message\": \"pong!\"}");
+            return Ok(new {Message = "pong!"});
         }
     }
 }

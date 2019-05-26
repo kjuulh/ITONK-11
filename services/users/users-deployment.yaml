@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: users
-          image: kasperhermansen/itonk11-users:3
+          image: kasperhermansen/itonk11-users:5
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION
@@ -30,7 +30,7 @@ spec:
             - name: POSTGRES_PORT
               value: '5432'
             - name: POSTGRES_DB
-              value: Usersdb
+              value: usersdb
           ports:
             - containerPort: 80
           resources:

@@ -17,10 +17,12 @@ spec:
     spec:
       containers:
         - name: pso-control-service
-          image: kasperhermansen/itonk11-pso-control-service:7
+          image: kasperhermansen/itonk11-pso-control-service:21
           env:
+            - name: RUNTIME_ENV
+              value: Production
             - name: POSTGRES_HOST
-              value: users-db-service.itonk-11.svc.cluster.local
+              value: db-service.itonk-11.svc.cluster.local
             - name: POSTGRES_USER
               value: postgres
             - name: POSTGRES_PASSWORD
@@ -28,14 +30,26 @@ spec:
             - name: POSTGRES_PORT
               value: "5432"
             - name: POSTGRES_DB
-              value: usersdb
+              value: publicsharecontroldb
+            - name: USERS_SERVICE_DNS
+              value: users-service.itonk-11.svc.cluster.local
+            - name: USERS_SERVICE_PORT
+              value: "80"
+            - name: SHARES_SERVICE_DNS
+              value: shares-service.itonk-11.svc.cluster.local
+            - name: SHARES_SERVICE_PORT
+              value: "80"
+          resources:
+            limits:
+              memory: '128Mi'
+              cpu: '100m'
           ports:
             - containerPort: 80
           livenessProbe:
             initialDelaySeconds: 10
             failureThreshold: 10
             httpGet:
-              path: /api/users
+              path: /api/health/ping
               port: 80
               scheme: HTTP
             periodSeconds: 5
@@ -45,7 +59,7 @@ spec:
             initialDelaySeconds: 10
             failureThreshold: 10
             httpGet:
-              path: /api/users
+              path: /api/health/ping
               port: 80
               scheme: HTTP
             periodSeconds: 5
