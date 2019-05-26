@@ -351,6 +351,50 @@
         }
       ],
       "UpstreamPathTemplate": "/swagger/trader/swagger.json"
+    },
+    {
+      "DownstreamPathTemplate": "/api/provider{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-provider-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/provider{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/provider",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-provider-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/provider"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-provider-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/provider/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/provider/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-provider-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/provider/swagger.json"
     }
   ],
   "GlobalConfiguration": {

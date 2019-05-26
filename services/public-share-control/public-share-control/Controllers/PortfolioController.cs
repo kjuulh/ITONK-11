@@ -34,17 +34,17 @@ namespace PublicShareControl.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            
+
             var portfolio = await _portfolioService.CreatePortfolio(model.UserId);
             if (portfolio == null)
                 return NotFound("User doesn't exist");
-            return CreatedAtAction(nameof(GetByPortfolio), new {portfolio.PortfolioId}, portfolio);
+            return CreatedAtAction(nameof(GetByPortfolio), new { portfolio.PortfolioId }, portfolio);
         }
 
         [HttpGet("{portfolioId}/shares/{shareId}")]
         public async Task<IActionResult> GetShareByPortfolio([FromRoute] Guid portfolioId, [FromRoute] Guid shareId) =>
             Ok(await _sharesService.GetByPortfolio(portfolioId, shareId));
-        
+
         [HttpGet("{portfolioId}/shares")]
         public async Task<IActionResult> GetAllSharesByPortfolio([FromRoute] Guid portfolioId) =>
             Ok(_sharesService.GetAllByPortfolio(portfolioId));
@@ -57,7 +57,7 @@ namespace PublicShareControl.Controllers
                 return BadRequest();
 
             var share = await _sharesService.Create(portfolioId, sharesViewModel);
-            return CreatedAtAction(nameof(GetShareByPortfolio), new {share.Portfolio.PortfolioId, share.ShareId}, share);
+            return CreatedAtAction(nameof(GetShareByPortfolio), new { share.Portfolio.PortfolioId, share.ShareId }, share);
         }
 
         [HttpPut("shares")]
@@ -69,12 +69,16 @@ namespace PublicShareControl.Controllers
             try
             {
                 await _sharesService.ChangeOwnership(ownershipViewModel);
-                return Ok(new {Status = "success"});
+                return Ok(new { Status = "success" });
             }
             catch (Exception e)
             {
                 return BadRequest("Unable to transfer shares, try again with different values");
             }
         }
+        
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetPortfolioByUser([FromRoute] Guid userId) =>
+            Ok(await _portfolioService.GetByUser(userId));
     }
 }

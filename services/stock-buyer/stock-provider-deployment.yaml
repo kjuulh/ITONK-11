@@ -1,50 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pso-control-service
+  name: stock-provider
   labels:
-    app: pso-control-service
+    app: stock-provider
   namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pso-control-service
+      app: stock-provider
   template:
     metadata:
       labels:
-        app: pso-control-service
+        app: stock-provider
     spec:
       containers:
-        - name: pso-control-service
-          image: kasperhermansen/itonk11-pso-control-service:22
+        - name: stock-provider
+          image: kasperhermansen/itonk11-stock-providers:6
           env:
             - name: RUNTIME_ENV
-              value: Production
-            - name: POSTGRES_HOST
-              value: db-service.itonk-11.svc.cluster.local
-            - name: POSTGRES_USER
-              value: postgres
-            - name: POSTGRES_PASSWORD
-              value: postgres
-            - name: POSTGRES_PORT
-              value: "5432"
-            - name: POSTGRES_DB
-              value: publicsharecontroldb
-            - name: USERS_SERVICE_DNS
-              value: users-service.itonk-11.svc.cluster.local
-            - name: USERS_SERVICE_PORT
-              value: "80"
-            - name: SHARES_SERVICE_DNS
-              value: shares-service.itonk-11.svc.cluster.local
-            - name: SHARES_SERVICE_PORT
-              value: "80"
+              value: PRODUCTION
+            - name: ACCOUNTS_SERVICE_DNS
+              value: account-service.itonk-11.svc.cluster.local
+            - name: ACCOUNTS_SERVICE_PORT
+              value: '80'
+          ports:
+            - containerPort: 80
           resources:
             limits:
               memory: '128Mi'
               cpu: '100m'
-          ports:
-            - containerPort: 80
           livenessProbe:
             initialDelaySeconds: 10
             failureThreshold: 10
@@ -69,14 +55,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: pso-control-service
+  name: stock-provider-service
   labels:
-    app: pso-control-service
+    app: stock-provider-service
   namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:
-    app: pso-control-service
+    app: stock-provider
   ports:
     - name: http
       port: 80
