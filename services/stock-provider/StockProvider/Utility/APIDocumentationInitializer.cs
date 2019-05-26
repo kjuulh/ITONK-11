@@ -8,13 +8,13 @@ namespace StockProvider.Utility
     {
         public static void ApiDocumentationInitializer(IServiceCollection services)
         {
-            services.AddSwaggerGen(c => { c.SwaggerDoc("stockProvider", new Info { Title = "StockProvider API", Version = "v1" }); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("provider", new Info { Title = "StockProvider API", Version = "v1" }); });
         }
 
         public static void AllowAPIDocumentation(IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/stockProvider/swagger.json", "StockProvider API"); });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/provider/swagger.json", "StockProvider API"); });
         }
     }
 }

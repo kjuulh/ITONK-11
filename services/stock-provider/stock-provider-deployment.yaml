@@ -17,13 +17,13 @@ spec:
     spec:
       containers:
         - name: stock-provider
-          image: kasperhermansen/itonk11-stock-providers:6
+          image: kasperhermansen/itonk11-stock-provider:2
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION
-            - name: ACCOUNTS_SERVICE_DNS
-              value: account-service.itonk-11.svc.cluster.local
-            - name: ACCOUNTS_SERVICE_PORT
+            - name: SHARECONTROL_SERVICE_DNS
+              value: pso-control-service.itonk-11.svc.cluster.local
+            - name: SHARECONTROL_SERVICE_PORT
               value: '80'
           ports:
             - containerPort: 80

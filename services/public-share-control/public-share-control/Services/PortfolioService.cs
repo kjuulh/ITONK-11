@@ -12,6 +12,7 @@ namespace PublicShareControl.Services
         IAsyncEnumerable<Portfolio> GetAll();
         void Delete(Guid portfolioId);
         Task<Portfolio> CreatePortfolio(Guid userId);
+        Task<Portfolio> GetByUser(Guid userId);
     }
 
     public class PortfolioService : IPortfolioService
@@ -59,6 +60,11 @@ namespace PublicShareControl.Services
                 return portfolio;
             }
             return portfolioSot;
+        }
+
+        public async Task<Portfolio> GetByUser(Guid userId)
+        {
+            return await _unitOfWork.PortfolioRepository.GetByUserIdAsync(userId);
         }
     }
 }

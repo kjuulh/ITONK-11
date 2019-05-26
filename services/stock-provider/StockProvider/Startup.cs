@@ -25,8 +25,8 @@ namespace StockProvider
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
 
             services.AddHttpClient();
+            services.AddScoped<IPortfolioService, PortfolioService>();
             services.AddScoped<IProviderService, ProviderService>();
-
             CorsConfig.AddCorsPolicy(services);
         }
 
