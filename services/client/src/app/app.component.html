@@ -1,43 +1,29 @@
-<div class="container">
-  <div class="sidebar">
-    <div class="logo"><h1><a routerLink="home" routerLinkActive="active-navitem">TRADERBRO</a></h1></div>
-    <div class="navigation">
-      <div class="links">
-        <ul class="navbar">
-          <li class="navitem">
-            <h2><a routerLink="portfolio" routerLinkActive="active-navitem">PORTFOLIO</a></h2>
-          </li>
-          <li class="navitem">
-            <h2><a routerLink="options" routerLinkActive="active-navitem">OPTIONS</a></h2>
-          </li>
-          <li class="navitem">
-            <h2><a routerLink="market" routerLinkActive="active-navitem">MARKET</a></h2>
-          </li>
-        </ul>
-      </div>
-      <div class="options">
-        <ul class="navoptions">
-          <li class="navitem">
-            <h2><a routerLink="settings" routerLinkActive="active-navitem">SETTINGS</a></h2>
-          </li>
-          <li class="navitem" *ngIf="getLoggedInStatus()">
-            <h2><a (click)="logout()">LOGOUT</a></h2>
-          </li>
-          <li class="navitem" *ngIf="!getLoggedInStatus()">
-            <h2><a routerLink="login" routerLinkActive="active-navitem">LOGIN</a></h2>
-          </li>
-          <li class="navitem" *ngIf="!getLoggedInStatus()">
-            <h2><a routerLink="sign-up" routerLinkActive="active-navitem">SIGN UP</a></h2>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="content">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+<mat-toolbar>
+  <button
+    mat-button
+    [routerLink]="['/home']"
+    routerLinkActive="router-link-active"
+  >
+    <span>Trader Bro</span>
+  </button>
+  <span class="menu-spacer"></span>
+  <button
+    mat-icon-button
+    [routerLink]="['/login']"
+    routerLinkActive="router-link-active"
+  >
+    <mat-icon aria-hidden="false" aria-label="Login">account_circle </mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    [routerLink]="['/sign-up']"
+    routerLinkActive="router-link-active"
+  >
+    <mat-icon aria-hidden="false" aria-label="Sign up">person_add </mat-icon>
+  </button>
+  <button mat-icon-button (click)="logout()">
+    <mat-icon aria-hidden="false" aria-label="Log out">exit_to_app </mat-icon>
+  </button>
+</mat-toolbar>
 
-
-
-
+<router-outlet></router-outlet>

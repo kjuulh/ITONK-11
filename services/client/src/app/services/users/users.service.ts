@@ -1,41 +1,28 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {User} from '../../models/user';
-import {Observable} from 'rxjs';
-import {Share} from '../../models/share';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { User } from '../../models/user';
+import { Observable } from 'rxjs';
+import { Share } from '../../models/share';
+
+const USER_ID = 'UserId';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersService {
   // Replace with environment variable
-  apiUrl = 'http://35.246.254.34/api/users';
+  apiUrl = 'http://api.kjuulh.io/api/users';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
+
+  public saveUserId(email: string) {
+    this.http.get<User>(this.apiUrl + '/email/' + email).subscribe(data => {
+      window.sessionStorage.removeItem(USER_ID);
+      window.sessionStorage.setItem(USER_ID, data.userId);
+    });
   }
 
-  public registerUser(user: User) {
-    return this.http.post(this.apiUrl, user);
-  }
-
-  public updateUser(user: User) {
-    return this.http.put(this.apiUrl, user);
-  }
-
-  public getUserById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`);
-  }
-
-  public getUsers(url?: string): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
-  }
-
-  public getSharesForUser(id: number) {
-    const shares: Share[] = [];
-    this.http.get<User>(`${this.apiUrl}/${id}`).subscribe(res => res.shares.forEach((model, index) => {
-      shares.push(model);
-    }));
-
-    return shares;
+  public getUserId(): string {
+    return sessionStorage.getItem(USER_ID);
   }
 }

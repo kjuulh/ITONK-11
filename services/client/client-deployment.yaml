@@ -1,40 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: authentication
+  name: client
   labels:
-    app: authentication
+    app: client
   namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: authentication
+      app: client
   template:
     metadata:
       labels:
-        app: authentication
+        app: client
     spec:
       containers:
-        - name: authentication
-          image: kasperhermansen/itonk11-authentication:6
-          env:
-            - name: RUNTIME_ENV
-              value: PRODUCTION
-            - name: POSTGRES_HOST
-              value: db-service.itonk-11.svc.cluster.local
-            - name: POSTGRES_USER
-              value: postgres
-            - name: POSTGRES_PASSWORD
-              value: postgres
-            - name: POSTGRES_PORT
-              value: "5432"
-            - name: POSTGRES_DB
-              value: authenticationdb
-            - name: USERS_SERVICE_DNS
-              value: users-service.itonk-11.svc.cluster.local
-            - name: USERS_SERVICE_PORT
-              value: "80"
+        - name: client
+          image: kasperhermansen/itonk11-client:2
           ports:
             - containerPort: 80
           resources:
@@ -45,7 +28,6 @@ spec:
             initialDelaySeconds: 10
             failureThreshold: 10
             httpGet:
-              path: /api/health/ping
               port: 80
               scheme: HTTP
             periodSeconds: 5
@@ -55,7 +37,6 @@ spec:
             initialDelaySeconds: 10
             failureThreshold: 10
             httpGet:
-              path: /api/health/ping
               port: 80
               scheme: HTTP
             periodSeconds: 5
@@ -65,14 +46,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: authentication-service
+  name: client-service
   labels:
-    app: authentication-service
+    app: client-service
   namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:
-    app: authentication
+    app: client
   ports:
     - name: http
       port: 80

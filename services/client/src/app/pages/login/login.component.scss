@@ -1,80 +1,8 @@
-@import './../../../styles/colors.scss';
+.example-card {
+  max-width: 400px;
+  margin: 10% auto;
+}
 
-.container {
-  display: grid;
-  align-content: center;
-  justify-content: center;
+.example-full-width {
   width: 100%;
-  height: 100%;
-
-  text-align: center;
-
-  h3 {
-    font-weight: 400;
-    font-size: 2rem;
-    &:after {
-      content: '';
-      display: block;
-      width: 100%;
-      height: 0.1em;
-      margin-top: 1em;
-      background-color: $secondary-color;
-    }
-  }
-
-  form {
-    .formSubmit {
-      display: flex;
-      justify-content: center;
-
-      button {
-        font-family: 'Montserrat', Helvetica, sans-serif;
-        color: $secondary-color;
-
-        display: block;
-        margin: 2em 0;
-        width: 22.5em;
-        height: 3em;
-
-        border-color: $secondary-color;
-        background-color: $background-color;
-        border-color: $secondary-color;
-        -webkit-border-radius: 1em;
-        -moz-border-radius: 1em;
-        border-radius: 1em;
-        outline: none;
-        text-align: center;
-
-      }
-    }
-
-
-    .formGroup {
-      margin: 0.5em;
-      label {
-        display: block;
-        margin: 1em 0 1em 0;
-        font-weight: 300;
-        font-size: 1.5rem;
-      }
-      input {
-        margin: 1em 0 1em 0;
-        display: block;
-        width: 20em;
-        height: 1.5em;
-        padding: 1em;
-
-        background-color: $background-color;
-        border-color: $secondary-color;
-        -webkit-border-radius: 1em;
-        -moz-border-radius: 1em;
-        border-radius: 1em;
-        outline: none;
-
-        font-family: 'Montserrat', Helvetica, sans-serif;
-      }
-
-
-    }
-  }
 }

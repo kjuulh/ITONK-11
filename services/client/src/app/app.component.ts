@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
+import { TokenService } from './services/token/token.service';
+import { tokenKey } from '@angular/core/src/view';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'client';
-  loggedIn = false;
 
-  getLoggedInStatus() {
-    return localStorage.getItem("name") !== null;
-  }
+  constructor(private token: TokenService) {}
 
   logout() {
-    localStorage.clear();
+    console.log('logout : fired');
+    this.token.signOut();
   }
 }
