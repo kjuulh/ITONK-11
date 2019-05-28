@@ -8,14 +8,14 @@ namespace TobinTaxer.Utility
     {
         public static void ApiDocumentationInitializer(IServiceCollection services)
         {
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "TobinTaxer API", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("taxer", new Info {Title = "TobinTaxer API", Version = "v1"}); });
         }
         
         
         public static void AllowAPIDocumentation(IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TobinTaxer API"); });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/taxer/swagger.json", "TobinTaxer API"); });
         }
     }
 }

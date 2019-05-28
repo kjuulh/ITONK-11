@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TobinTaxer.ViewModels;
 using System.Net.Http;
@@ -16,7 +15,7 @@ namespace TobinTaxer.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<TransactionViewModel> GetTransaction(DateTime dateAdded)
+        public async Task<List<TransactionViewModel>> GetTransactions(int year, int month)
         {
             var transactionServiceDNS = Environment.GetEnvironmentVariable("STOCK_TRADER_BROKER_DNS");
             if (string.IsNullOrEmpty(transactionServiceDNS))
@@ -25,13 +24,13 @@ namespace TobinTaxer.Services
             if (string.IsNullOrEmpty(transactionServicePORT))
                 throw new NullReferenceException("STOCK_TRADER_BROKER_PORT url is null");
 
-            var requestUri = "http://" + transactionServiceDNS + ":" + transactionServicePORT + "/api/transaction/" + dateAdded;
+            var requestUri = "http://" + transactionServiceDNS + ":" + transactionServicePORT + "/api/Trader/closed/" + year + "/" + month;
 
             var request = HttpRequestGet(requestUri, out var client);
 
             var response = await client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<TransactionViewModel>();
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<List<TransactionViewModel>>();
 
             return null;
         }

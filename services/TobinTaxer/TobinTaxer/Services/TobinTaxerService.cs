@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using TobinTaxer.Database;
 using TobinTaxer.Models;
 using TobinTaxer.ViewModels;
 
@@ -10,61 +7,35 @@ namespace TobinTaxer.Services
 {
     public class TobinTaxerService : ITobinTaxerService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private ISharesService _shareService;
         
 
-        public TobinTaxerService(IUnitOfWork unitOfWork)
+        public TobinTaxerService(ISharesService shareService)
         {
-            _unitOfWork = (UnitOfWork) unitOfWork;
-            
+            _shareService = shareService;
+
         }
 
-        public async Task<TaxedTransaction> Get(Guid id)
-        {
-            return await _unitOfWork.TobinTaxerRepository.GetAsync(id);
-        }
 
-        public async Task<Guid> Register(TaxedTransactionViewModel transactionViewModel)
+        public async Task<List<TaxedTransaction>> TaxTransaction(List<TransactionViewModel> transactionViewmodels)
         {
-            var transaction = new TaxedTransaction
-            {
-                TransactionId = Guid.NewGuid(),
-                Value = transactionViewModel.Value,
-                TaxedValue = transactionViewModel.TaxedValue,
-                DateTaxed = DateTime.UtcNow
-            };
-
-            _unitOfWork.TobinTaxerRepository.Register(transaction);
-            await _unitOfWork.CommitAsync();
-            return transaction.TransactionId;
-        }
-
-        public IEnumerable<TaxedTransaction> GetAll()
-        {
-            return _unitOfWork.TobinTaxerRepository.GetAllAsync().ToEnumerable();
-        }
-
-        public async Task Delete(Guid id)
-        {
-            _unitOfWork.TobinTaxerRepository.Delete(id);
-            await _unitOfWork.CommitAsync();
-        }
-
-        public TaxedTransaction Get(DateTime timestamp)
-        {
-            return _unitOfWork.TobinTaxerRepository.GetAsync(timestamp).Result;
-        }
-
-        public TaxedTransaction TaxTransaction(TransactionViewModel transaction)
-        {
-            TaxedTransaction taxedTransaction = new TaxedTransaction();
+            List<TaxedTransaction> taxedTransactions = new List<TaxedTransaction>();
             //Tax transactions
+            foreach (var transaction in transactionViewmodels)
+            {
+                var taxedTransaction = new TaxedTransaction();
+                var shareValue = await _shareService.GetShareValue(transaction.ShareId);
+                taxedTransaction.Value = shareValue.SingleShareValue * transaction.Amount;
+                taxedTransaction.TaxedValue = taxedTransaction.Value * 0.02m;
+                taxedTransaction.DateTaxed = transaction.DateClosed;
+                taxedTransaction.Taxed = true;
+                taxedTransaction.OwnerId = transaction.OwnerAccountId;
 
-            taxedTransaction.TaxedValue = transaction.Value - (transaction.Value / 2 * 100);
-            taxedTransaction.DateTaxed = DateTime.Now;
-            taxedTransaction.Taxed = true;
+                taxedTransactions.Add(taxedTransaction);
+            }
+            
 
-            return taxedTransaction;
+            return taxedTransactions;
         }
     }
 }

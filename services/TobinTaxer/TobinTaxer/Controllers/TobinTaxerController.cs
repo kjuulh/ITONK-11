@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TobinTaxer.Models;
 using TobinTaxer.Services;
-using TobinTaxer.ViewModels;
 
 namespace TobinTaxer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Taxer")]
     [ApiController]
     public class TobinTaxerController : ControllerBase
     {
@@ -22,42 +19,38 @@ namespace TobinTaxer.Controllers
         }
 
 
-        //Get all transactions
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(_TobinTaxerService.GetAll());
-        }
-
-
-        //Get transaction from id
-        [HttpGet("{id}")]
-        public IActionResult Get([FromRoute] Guid id)
-        {
-            var transaction = _TobinTaxerService.Get(id);
-
-            if (transaction == null)
-                return NotFound();
-
-            return Ok(transaction);
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> RegisterTaxedTransactions(DateTime dateAdded)
+        [HttpGet("current")]
+        public async Task<IActionResult> RegisterTaxedTransactions()
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
 
-            var transaction = await _traderService.GetTransaction(dateAdded);
+            var transaction = await _traderService.GetTransactions(DateTime.Now.Year, DateTime.Now.Month);
 
             if (transaction == null)
                 return StatusCode(500);
 
-            var taxedTransaction = _TobinTaxerService.TaxTransaction(transaction);
-            
-            return CreatedAtAction(nameof(Get), new {id = taxedTransaction.TransactionId}, taxedTransaction);
+            var taxedTransaction = await _TobinTaxerService.TaxTransaction(transaction);
+
+            return Ok(taxedTransaction);
+        }
+
+        [HttpGet("{year}/{month}")]
+        public async Task<IActionResult> RegisterTaxedTransactions([FromRoute] int year, [FromRoute] int month)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+
+            var transaction = await _traderService.GetTransactions(DateTime.Now.Year, DateTime.Now.Month);
+
+            if (transaction == null)
+                return StatusCode(500);
+
+            var taxedTransaction = await _TobinTaxerService.TaxTransaction(transaction);
+
+            return Ok(taxedTransaction);
         }
     }
 }

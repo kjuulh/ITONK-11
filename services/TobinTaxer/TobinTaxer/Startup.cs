@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TobinTaxer.Database;
-using TobinTaxer.Repositories;
 using TobinTaxer.Services;
 using TobinTaxer.Utility;
 
@@ -25,10 +23,10 @@ namespace TobinTaxer
             // Set compability mode for mvc
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
-            StartupDatabaseInitializer.InitializeDatabase(services);
 
-            services.AddScoped<ITobinTaxerRepository, TobinTaxerRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddHttpClient();
+            services.AddScoped<ISharesService, SharesService>();
+            services.AddScoped<ITraderService, TraderService>();
             services.AddScoped<ITobinTaxerService, TobinTaxerService>();
 
             CorsConfig.AddCorsPolicy(services);
@@ -48,7 +46,6 @@ namespace TobinTaxer
                 app.UseHttpsRedirection();
             }
 
-            StartupDatabaseInitializer.MigrateDatabase(app);
             APIDocumentationInitializer.AllowAPIDocumentation(app);
             CorsConfig.AddCors(app);
 

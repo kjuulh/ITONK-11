@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TobinTaxer.ViewModels
 {
     public class TransactionViewModel
     {
-        public decimal Value { get; set; }
+       public int Amount { get; set; }
 
-        public DateTime DatedTaxed { get; set; }
+       public Guid ShareId { get; set; }
 
-        public decimal TaxedValue { get; set; }
+       public Guid OwnerAccountId { get; set; }
 
-        public bool Taxed { get; set; }
+       public DateTime DateClosed { get; set; }
     }
 }
