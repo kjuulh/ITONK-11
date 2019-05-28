@@ -28,7 +28,6 @@ namespace TobinTaxer.Services
                 taxedTransaction.Value = shareValue.SingleShareValue * transaction.Amount;
                 taxedTransaction.TaxedValue = taxedTransaction.Value * 0.02m;
                 taxedTransaction.DateTaxed = transaction.DateClosed;
-                taxedTransaction.Taxed = true;
                 taxedTransaction.OwnerId = transaction.OwnerAccountId;
 
                 taxedTransactions.Add(taxedTransaction);

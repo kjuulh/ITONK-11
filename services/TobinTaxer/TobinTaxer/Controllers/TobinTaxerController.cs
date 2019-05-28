@@ -5,7 +5,7 @@ using TobinTaxer.Services;
 
 namespace TobinTaxer.Controllers
 {
-    [Route("api/Taxer")]
+    [Route("api/taxer")]
     [ApiController]
     public class TobinTaxerController : ControllerBase
     {
@@ -46,7 +46,7 @@ namespace TobinTaxer.Controllers
             var transaction = await _traderService.GetTransactions(DateTime.Now.Year, DateTime.Now.Month);
 
             if (transaction == null)
-                return StatusCode(500);
+                return NotFound();
 
             var taxedTransaction = await _TobinTaxerService.TaxTransaction(transaction);
 

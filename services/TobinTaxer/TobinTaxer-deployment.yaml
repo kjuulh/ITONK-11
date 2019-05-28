@@ -1,39 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: TobinTaxer
+  name: taxer
   labels:
-    app: TobinTaxer
+    app: taxer
   namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: TobinTaxer
+      app: taxer
   template:
     metadata:
       labels:
-        app: TobinTaxer
+        app: taxer
     spec:
       containers:
-        - name: TobinTaxer
-          image: kasperhermansen/itonk11-TobinTaxer:3
+        - name: taxer
+          image: kasperhermansen/itonk11-taxer:3
           env:
-            - name: RUNTIME_ENV
-              value: PRODUCTION
-            - name: POSTGRES_HOST
-              value: db-service.itonk-11.svc.cluster.local
-            - name: POSTGRES_USER
-              value: postgres
-            - name: POSTGRES_PASSWORD
-              value: postgres
-            - name: POSTGRES_PORT
-              value: '5432'
-            - name: POSTGRES_DB
-              value: TobinTaxerdb
             - name: STOCK_TRADER_BROKER_DNS
               value: trader-service.itonk-11.svc.cluster.local
             - name: STOCK_TRADER_BROKER_PORT
+              value: "80"
+            - name: SHARES_SERVICE_DNS
+              value: shares-service.itonk-11.svc.cluster.local
+            - name: SHARES_SERVICE_PORT
               value: "80"
           ports:
             - containerPort: 80
@@ -65,14 +57,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: TobinTaxer-service
+  name: taxer-service
   labels:
-    app: TobinTaxer-service
+    app: taxer-service
   namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:
-    app: TobinTaxer
+    app: taxer
   ports:
     - name: http
       port: 80

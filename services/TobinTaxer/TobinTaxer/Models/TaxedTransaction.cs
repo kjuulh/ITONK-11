@@ -8,8 +8,6 @@ namespace TobinTaxer.Models
 
         public decimal TaxedValue { get; set; }
         public DateTime DateTaxed { get; set; }
-
-        public bool Taxed { get; set; }
         public Guid OwnerId { get; set; }
     }
 }
