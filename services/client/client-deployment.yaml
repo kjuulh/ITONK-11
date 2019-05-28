@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: kasperhermansen/itonk11-client:7
+          image: kasperhermansen/itonk11-client:20
           ports:
             - containerPort: 80
           resources:
