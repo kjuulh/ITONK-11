@@ -16,7 +16,7 @@ namespace StockSeller.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<bool> PostTaxes(Guid requestId, Guid accountId, Guid portfolioId)
+        public async Task<RequestViewModel> SellShare(Guid accountId, Guid portfolioId, Guid shareId, int amount)
         {
             var serviceDNS = Environment.GetEnvironmentVariable("TRADER_SERVICE_DNS");
             if (string.IsNullOrEmpty(serviceDNS))
@@ -25,19 +25,22 @@ namespace StockSeller.Services
             if (string.IsNullOrEmpty(servicePORT))
                 throw new NullReferenceException("TRADER_SERVICE_PORT url is null");
 
-            var requestUri = "http://" + serviceDNS + ":" + servicePORT + $"/api/Trader/buy/{requestId}";
+            var requestUri = "http://" + serviceDNS + ":" + servicePORT + $"/api/Trader/sell";
             var request = HttpRequestPost(requestUri,
                 new
                 {
                     AccountId = accountId,
-                        PortfolioId = portfolioId
+                        PortfolioId = portfolioId,
+                        ShareId = shareId,
+                        Amount = amount
                 }, out var client);
 
             var response = await client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode) return true;
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadAsAsync<RequestViewModel>();
 
-            return false;
+            return null;
         }
 
         private HttpRequestMessage HttpRequestPost(string requestUri, object content, out HttpClient client)
@@ -54,9 +57,16 @@ namespace StockSeller.Services
             return request;
         }
 
-        public class BalanceViewModel
+        public class RequestViewModel
         {
-            public Decimal Balance { get; set; }
+            public Guid RequestId { get; set; }
+            public Guid ShareId { get; set; }
+            public Guid OwnerAccountId { get; set; }
+            public Guid PortfolioId { get; set; }
+            public int Amount { get; set; }
+            public string Status { get; set; }
+            public DateTime DateAdded { get; set; }
+            public DateTime DateClosed { get; set; }
         }
     }
 }
