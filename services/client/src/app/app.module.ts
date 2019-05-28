@@ -9,7 +9,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { PortfolioComponent } from './pages/portfolio/portfolio.component';
+import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { MarketComponent } from './pages/market/market.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -22,7 +22,12 @@ import {
   MatTableModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
+  MatExpansionModule,
+  MatListModule,
+  MatDialogModule,
 } from '@angular/material';
+
+import { CreateStockComponent } from './dialogs/create-stock/create-stock.component';
 
 @NgModule({
   declarations: [
@@ -30,8 +35,9 @@ import {
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    PortfolioComponent,
     MarketComponent,
+    PortfolioComponent,
+    CreateStockComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,8 +54,12 @@ import {
     MatTableModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatExpansionModule,
+    MatListModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [CreateStockComponent],
 })
 export class AppModule {}

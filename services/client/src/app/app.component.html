@@ -11,6 +11,7 @@
     mat-icon-button
     [routerLink]="['/login']"
     routerLinkActive="router-link-active"
+    *ngIf="!isLoggedIn"
   >
     <mat-icon aria-hidden="false" aria-label="Login">account_circle </mat-icon>
   </button>
@@ -18,12 +19,15 @@
     mat-icon-button
     [routerLink]="['/sign-up']"
     routerLinkActive="router-link-active"
+    *ngIf="!isLoggedIn"
   >
     <mat-icon aria-hidden="false" aria-label="Sign up">person_add </mat-icon>
   </button>
-  <button mat-icon-button (click)="logout()">
+  <button mat-icon-button (click)="logout()" *ngIf="isLoggedIn">
     <mat-icon aria-hidden="false" aria-label="Log out">exit_to_app </mat-icon>
   </button>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<div class="offset">
+  <router-outlet></router-outlet>
+</div>
