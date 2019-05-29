@@ -6,6 +6,10 @@ using Newtonsoft.Json;
 
 namespace StockSeller.Services
 {
+    public interface ITraderService
+    {
+        Task<TraderService.RequestViewModel> SellShare(Guid accountId, Guid portfolioId, Guid shareId, int amount);
+    }
     public class TraderService
     {
 
