@@ -1,29 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stock-Buyer
+  name: stock-buyer
   labels:
-    app: stock-Buyer
+    app: stock-buyer
   namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: stock-Buyer
+      app: stock-buyer
   template:
     metadata:
       labels:
-        app: stock-Buyer
+        app: stock-buyer
     spec:
       containers:
-        - name: stock-Buyer
-          image: kasperhermansen/itonk11-stock-Buyers:6
+        - name: stock-buyer
+          image: kasperhermansen/itonk11-stock-buyers:6
           env:
-            - name: RUNTIME_ENV
-              value: PRODUCTION
-            - name: ACCOUNTS_SERVICE_DNS
-              value: account-service.itonk-11.svc.cluster.local
-            - name: ACCOUNTS_SERVICE_PORT
+            - name: TRADER_SERVICE_DNS
+              value: trader-service.itonk-11.svc.cluster.local
+            - name: TRADER_SERVICE_PORT
+              value: '80'
+            - name: SHARECONTROL_SERVICE_DNS
+              value: pso-control-service.itonk-11.svc.cluster.local
+            - name: SHARECONTROL_SERVICE_PORT
+              value: '80'
+            - name: BANK_SERVICE_DNS
+              value: bank-service.itonk-11.svc.cluster.local
+            - name: BANK_SERVICE_PORT
               value: '80'
           ports:
             - containerPort: 80
@@ -55,14 +61,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: stock-Buyer-service
+  name: stock-buyer-service
   labels:
-    app: stock-Buyer-service
+    app: stock-buyer-service
   namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:
-    app: stock-Buyer
+    app: stock-buyer
   ports:
     - name: http
       port: 80
