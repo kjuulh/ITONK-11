@@ -1,16 +1,16 @@
 using System;
 using System.Threading.Tasks;
 
-namespace StockProvider.Services
+namespace Stockbuyer.Services
 {
-    public interface IProviderService
+    public interface IbuyerService
     {
     }
 
-    public class ProviderService : IProviderService
+    public class buyerService : IbuyerService
     {
 
-        public ProviderService()
+        public buyerService()
         {
         }
     }
