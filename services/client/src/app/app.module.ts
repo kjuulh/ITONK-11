@@ -4,13 +4,30 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
-import {FormsModule} from '@angular/forms';
-import {RouterModule} from '@angular/router';
-import { PortfolioComponent } from './pages/portfolio/portfolio.component';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { MarketComponent } from './pages/market/market.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import {
+  MatCardModule,
+  MatButtonModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatInputModule,
+  MatTableModule,
+  MatProgressSpinnerModule,
+  MatSnackBarModule,
+  MatExpansionModule,
+  MatListModule,
+  MatDialogModule,
+} from '@angular/material';
+
+import { CreateStockComponent } from './dialogs/create-stock/create-stock.component';
 
 @NgModule({
   declarations: [
@@ -18,18 +35,31 @@ import { MarketComponent } from './pages/market/market.component';
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    PortfolioComponent,
     MarketComponent,
+    PortfolioComponent,
+    CreateStockComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatListModule,
+    MatDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CreateStockComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
