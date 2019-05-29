@@ -41,8 +41,8 @@ spec:
               value: "80"
           resources:
             limits:
-              memory: '128Mi'
-              cpu: '100m'
+              memory: "128Mi"
+              cpu: "100m"
           ports:
             - containerPort: 80
           livenessProbe:
@@ -74,7 +74,7 @@ metadata:
     app: pso-control-service
   namespace: itonk-11
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: pso-control-service
   ports:
