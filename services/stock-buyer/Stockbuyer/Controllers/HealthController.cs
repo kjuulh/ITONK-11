@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Stockbuyer.Controllers
+namespace StockBuyer.Controllers
 {
     [Route("api/[controller]")]
     public class HealthController : Controller

@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Stockbuyer.Services;
-using Stockbuyer.Utility;
+using StockBuyer.Services;
+using StockBuyer.Utility;
 
-namespace Stockbuyer
+namespace StockBuyer
 {
     public class Startup
     {
@@ -25,7 +25,7 @@ namespace Stockbuyer
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
 
             services.AddHttpClient();
-            services.AddScoped<IbuyerService, buyerService>();
+            services.AddScoped<IBuyerService, BuyerService>();
 
             CorsConfig.AddCorsPolicy(services);
         }

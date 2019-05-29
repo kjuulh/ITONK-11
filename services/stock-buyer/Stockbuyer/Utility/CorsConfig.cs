@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Stockbuyer.Utility
+namespace StockBuyer.Utility
 {
     public class CorsConfig
     {

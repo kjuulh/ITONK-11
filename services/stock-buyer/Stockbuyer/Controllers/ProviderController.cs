@@ -4,19 +4,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Stockbuyer.Services;
+using StockBuyer.Services;
 
-namespace Stockbuyer.Controllers
+namespace StockBuyer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class buyerController : ControllerBase
+    public class BuyerController : ControllerBase
     {
-        private readonly IbuyerService _buyerService;
+        private readonly IBuyerService _BuyerService;
 
-        public buyerController(IbuyerService buyerService)
+        public BuyerController(IBuyerService BuyerService)
         {
-            _buyerService = buyerService;
+            _BuyerService = BuyerService;
         }
     }
 }

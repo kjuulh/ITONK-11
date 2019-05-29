@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stock-buyer
+  name: stock-Buyer
   labels:
-    app: stock-buyer
+    app: stock-Buyer
   namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: stock-buyer
+      app: stock-Buyer
   template:
     metadata:
       labels:
-        app: stock-buyer
+        app: stock-Buyer
     spec:
       containers:
-        - name: stock-buyer
-          image: kasperhermansen/itonk11-stock-buyers:6
+        - name: stock-Buyer
+          image: kasperhermansen/itonk11-stock-Buyers:6
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION
@@ -55,14 +55,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: stock-buyer-service
+  name: stock-Buyer-service
   labels:
-    app: stock-buyer-service
+    app: stock-Buyer-service
   namespace: itonk-11
 spec:
   type: LoadBalancer
   selector:
-    app: stock-buyer
+    app: stock-Buyer
   ports:
     - name: http
       port: 80
