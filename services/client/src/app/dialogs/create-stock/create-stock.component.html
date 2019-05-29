@@ -1,0 +1,40 @@
+<div class="container">
+  <h1 mat-dialog-title>Create stock</h1>
+  <div mat-dialog-content>
+    <mat-form-field color="accent">
+      <input placeholder="Name" matInput [(ngModel)]="data.name" />
+    </mat-form-field>
+    <br />
+
+    <mat-form-field color="accent">
+      <input
+        type="number"
+        placeholder="Total value"
+        matInput
+        [(ngModel)]="data.totalValue"
+      />
+    </mat-form-field>
+    <br />
+    <mat-form-field color="accent">
+      <input
+        type="number"
+        placeholder="Total count"
+        matInput
+        [(ngModel)]="data.count"
+      />
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="buttons">
+    <button mat-raised-button (click)="onCancelClick()">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      [mat-dialog-close]="data"
+      cdkFocusInitial
+      color="accent"
+    >
+      Ok
+    </button>
+  </div>
+</div>

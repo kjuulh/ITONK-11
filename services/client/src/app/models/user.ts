@@ -1,8 +1,6 @@
-import {Share} from './share';
+import { Share } from './share';
 
 export class User {
-  id: number;
-  name: string;
-  password: string;
-  shares: Array<Share>;
+  userId: string;
+  email: string;
 }

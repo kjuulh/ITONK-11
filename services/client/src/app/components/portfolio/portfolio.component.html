@@ -1,0 +1,55 @@
+<div class="container" *ngIf="isLoggedIn">
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel *ngFor="let share of shares">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ share.name }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ share.value }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div>
+        <mat-list role="list">
+          <mat-list-item role="listitem"
+            ><span class="spacer">Name</span>
+            <p>{{ share.name }}</p></mat-list-item
+          >
+          <mat-list-item role="listitem"
+            ><span class="spacer">Value</span>
+            <p>{{ share.value }}</p></mat-list-item
+          >
+          <mat-list-item role="listitem"
+            ><span class="spacer">Count</span>
+            <p>{{ share.count }}</p></mat-list-item
+          >
+          <mat-list-item role="listitem"
+            ><span class="spacer">Single Share Value</span>
+            <p>{{ share.singleShareValue }}</p></mat-list-item
+          >
+          <mat-list-item role="listitem"
+            ><span class="spacer">Total Value</span>
+            <p>{{ share.totalValue }}</p></mat-list-item
+          >
+          <mat-list-item role="listitem"
+            ><span class="spacer">Total Count</span>
+            <p>{{ share.totalCount }}</p></mat-list-item
+          >
+        </mat-list>
+        <div class="list-button">
+          <button mat-raised-button (click)="sellShare(share)" color="warn">
+            Sell
+          </button>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div class="bot">
+    <div>
+      <a mat-raised-button color="accent" (click)="onCreateStockClicked()"
+        >Create Stock</a
+      >
+    </div>
+  </div>
+</div>

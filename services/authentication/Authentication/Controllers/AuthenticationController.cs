@@ -51,7 +51,7 @@ namespace Authentication.Controllers
             if (string.IsNullOrEmpty(token))
                 return BadRequest("Password or username didn't match");
 
-            return Ok(token);
+            return Ok(new { Token = token });
         }
     }
 }
