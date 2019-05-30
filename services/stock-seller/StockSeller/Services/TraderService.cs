@@ -10,7 +10,7 @@ namespace StockSeller.Services
     {
         Task<TraderService.RequestViewModel> SellShare(Guid accountId, Guid portfolioId, Guid shareId, int amount);
     }
-    public class TraderService
+    public class TraderService : ITraderService
     {
 
         private readonly IHttpClientFactory _httpClientFactory;

@@ -20,16 +20,20 @@ namespace StockSeller.Controllers
             _sellerService = sellerService;
         }
 
-        [HttpPost("request/{requestId}")]
-        public async Task<IActionResult> BuyStock([FromRoute] Guid requestId, [FromBody] BuyStockViewModel buyStock)
+        [HttpPost()]
+        public async Task<IActionResult> SellShare([FromBody] SellShareViewModel sellShare)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
             try
             {
-                await _sellerService.BuyStock(requestId, buyStock.UserId);
-                return Ok(new { Status = "success" });
+                var request = await _sellerService.SellShare(sellShare.UserId,
+                    sellShare.ShareId,
+                    sellShare.Amount);
+                if (request == null)
+                    return BadRequest("Something went wrong. Try again later");
+                return Ok(request);
             }
             catch (System.Exception)
             {

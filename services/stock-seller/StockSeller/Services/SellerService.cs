@@ -6,7 +6,7 @@ namespace StockSeller.Services
 {
   public interface ISellerService
   {
-    Task SellStock(Guid requestId, Guid userId, int amount);
+    Task<TraderService.RequestViewModel> SellShare(Guid userId, Guid shareId, int amount);
   }
 
   public class SellerService : ISellerService
@@ -15,14 +15,16 @@ namespace StockSeller.Services
     private readonly IPortfolioService _portfolioService;
     private readonly ITraderService _traderService;
 
-    public SellerService(IBankService bankService, IPortfolioService portfolioService, ITraderService traderService)
+    public SellerService(IBankService bankService,
+      IPortfolioService portfolioService,
+      ITraderService traderService)
     {
       this._bankService = bankService;
       this._portfolioService = portfolioService;
       this._traderService = traderService;
     }
 
-    public async Task SellStock(Guid requestId, Guid userId, int amount)
+    public async Task<TraderService.RequestViewModel> SellShare(Guid userId, Guid shareId, int amount)
     {
       try
       {
@@ -32,16 +34,15 @@ namespace StockSeller.Services
         if (accounts.Accounts.FirstOrDefault() == null || portfolio == null)
           throw new ArgumentException("Either account or portfolio wasn't found");
 
-        return await _traderService.SellShare(requestId, accounts.Accounts.FirstOrDefault(), portfolio.PortfolioId, amount);
+        return await _traderService.SellShare(accounts.Accounts.FirstOrDefault().AccountId,
+          portfolio.PortfolioId,
+          shareId,
+          amount);
       }
       catch (System.Exception)
       {
-
-        throw;
+        return null;
       }
-
-      //TODO: Get portfolio from userId
-      //TODO: Make request
     }
   }
 }

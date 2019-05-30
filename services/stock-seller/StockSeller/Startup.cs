@@ -27,6 +27,7 @@ namespace StockSeller
       services.AddHttpClient();
       services.AddScoped<IBankService, BankService>();
       services.AddScoped<IPortfolioService, PortfolioService>();
+      services.AddScoped<ITraderService, TraderService>();
       services.AddScoped<ISellerService, SellerService>();
 
       CorsConfig.AddCorsPolicy(services);
