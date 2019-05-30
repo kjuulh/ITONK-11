@@ -25,6 +25,10 @@ namespace StockBuyer
             APIDocumentationInitializer.ApiDocumentationInitializer(services);
 
             services.AddHttpClient();
+
+            services.AddScoped<ITraderService, TraderService>();
+            services.AddScoped<IPortfolioService, PortfolioService>();
+            services.AddScoped<IBankService, BankService>();
             services.AddScoped<IBuyerService, BuyerService>();
 
             CorsConfig.AddCorsPolicy(services);

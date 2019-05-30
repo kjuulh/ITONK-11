@@ -1,9 +1,9 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static StockSeller.Services.PortfolioService;
+using static StockBuyer.Services.PortfolioService;
 
-namespace StockSeller.Services
+namespace StockBuyer.Services
 {
     public interface IPortfolioService
     {

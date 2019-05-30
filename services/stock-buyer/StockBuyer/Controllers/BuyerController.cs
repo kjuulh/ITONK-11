@@ -25,7 +25,9 @@ namespace StockBuyer.Controllers
 
             try
             {
-                await _buyerService.BuyStock(requestId, buyStock.UserId);
+                var requestStatus = await _buyerService.BuyStock(requestId, buyStock.UserId);
+                if (requestStatus == null)
+                    return BadRequest(new { Status = "failure" });
                 return Ok(new { Status = "success" });
             }
             catch (System.Exception)

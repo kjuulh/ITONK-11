@@ -21,15 +21,15 @@
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "swagger",
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Development",
-            "TRADER_SERVICE_DNS": "api.kjuulh.io",
-            "TRADER_SERVICE_PORT": "80",
-            "SHARECONTROL_SERVICE_DNS": "api.kjuulh.io",
-            "SHARECONTROL_SERVICE_PORT": "80",
-            "BANK_SERVICE_DNS": "api.kjuulh.io",
-            "BANK_SERVICE_PORT": "80" 
-        },
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "TRADER_SERVICE_DNS": "api.kjuulh.io",
+        "TRADER_SERVICE_PORT": "80",
+        "SHARECONTROL_SERVICE_DNS": "api.kjuulh.io",
+        "SHARECONTROL_SERVICE_PORT": "80",
+        "BANK_SERVICE_DNS": "api.kjuulh.io",
+        "BANK_SERVICE_PORT": "80"
+      },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     },
     "Docker": {

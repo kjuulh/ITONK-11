@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using StockSeller.Services;
 
 namespace StockBuyer.Services
 {
 
     public interface IBuyerService
     {
-        Task<TraderService.RequestViewModel> BuyStock(Guid requestId, Guid userId);
+        Task<TraderService.ResponseViewModel> BuyStock(Guid requestId, Guid userId);
     }
 
     public class BuyerService : IBuyerService
@@ -24,23 +23,21 @@ namespace StockBuyer.Services
             _traderService = traderService;
         }
 
-        public async Task<TraderService.RequestViewModel> BuyStock(Guid requestId, Guid userId)
+        public async Task<TraderService.ResponseViewModel> BuyStock(Guid requestId, Guid userId)
         {
             try
             {
-                var accounts = await _bankService.GetAccounts(userId);
+                var account = (await _bankService.GetAccounts(userId)).Accounts.FirstOrDefault();
                 var portfolio = await _portfolioService.GetPortfolioByUser(userId);
-           
 
-                if (accounts.Accounts.FirstOrDefault() == null || portfolio == null)
+                if (account == null || portfolio == null)
                     throw new ArgumentException("Either account or portfolio wasn't found");
 
-                return await _traderService.BuyShare(requestId, portfolio.PortfolioId);
+                return await _traderService.BuyShare(requestId, account.AccountId, portfolio.PortfolioId);
             }
             catch (System.Exception)
             {
-
-                throw;
+                return null;
             }
 
         }
