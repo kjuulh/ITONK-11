@@ -30,10 +30,10 @@ export class LoginComponent implements OnInit {
         this.token.saveToken(data.token);
         this.user.saveUserId(this.username);
         this.router.navigate(['home']);
-        this.snackbar.open('Login was successful');
+        this.snackbar.open('Login was successful', 'X', { duration: 2000 });
       },
       error => {
-        this.snackbar.open('Invalid credentials');
+        this.snackbar.open('Invalid credentials', 'X', { duration: 2000 });
       },
     );
   }
