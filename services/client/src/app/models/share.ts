@@ -1,6 +1,9 @@
 export class Share {
-  id: number;
+  shareId: string;
   name: string;
+  totalValue: number;
+  totalCount: number;
   count: number;
   value: number;
+  singleShareValue: number;
 }

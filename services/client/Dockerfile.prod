@@ -11,24 +11,25 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 RUN apt-get update && apt-get install -yq google-chrome-stable
 
 # set working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # add to path
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY package.json package.json
 RUN npm install
 RUN npm install -g @angular/cli
+RUN npm install  node-sass
 
 # add app
-COPY . .
+COPY . /app
 
 # run tests
 # RUN ng test --watch=false
 
 # generate build
-RUN npm run build
+RUN ng build --output-path=dist
 
 ####################
 #### PRODUCTION ####
@@ -37,11 +38,8 @@ RUN npm run build
 # base image
 FROM nginx:1.15.8-alpine
 
-RUN rm -rf /etc/nginx/conf.d
-COPY conf /etc/nginx
-
 # copy artifact build from the build environment
-COPY --from=BUILDER /usr/src/app/dist/client /usr/share/nginx/html
+COPY --from=BUILDER /app/dist /usr/share/nginx/html
 
 # expose 80
 EXPOSE 80

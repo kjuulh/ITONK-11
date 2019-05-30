@@ -20,9 +20,13 @@ namespace Authentication.Services
         private readonly IUsersService _usersService;
         private readonly IOptions<AppSettings> _appSettings;
         private readonly UnitOfWork _unitOfWork;
+        private readonly IPortfolioService _portfolioService;
+        private readonly IBankService _bankService;
 
-        public AuthenticationService(IUnitOfWork unitOfWork, IUsersService usersService, IOptions<AppSettings> appSettings)
+        public AuthenticationService(IUnitOfWork unitOfWork, IUsersService usersService, IOptions<AppSettings> appSettings, IPortfolioService portfolioService, IBankService bankService)
         {
+            this._bankService = bankService;
+            this._portfolioService = portfolioService;
             _usersService = usersService;
             _appSettings = appSettings;
             _unitOfWork = (UnitOfWork) unitOfWork;
@@ -38,18 +42,21 @@ namespace Authentication.Services
             var userServiceModel = await _usersService.RegisterUser(username.ToLower()) ?? await _usersService.GetUser(username.ToLower());
 
             if (userServiceModel == null) return null;
-            
-            var cipher = CryptoProvider.Encrypt(new CryptoProvider.Plain {Password = password});
+
+            if (!await _portfolioService.CreatePortfolio(userServiceModel.UserId)) return null;
+            if (!await _bankService.CreateBankAndAccount(userServiceModel.UserId)) return null;
+
+            var cipher = CryptoProvider.Encrypt(new CryptoProvider.Plain { Password = password });
             var user = new User
             {
-                UserId = userServiceModel.UserId, 
+                UserId = userServiceModel.UserId,
                 Username = userServiceModel.Email,
-                Hash = cipher.Hash, 
+                Hash = cipher.Hash,
                 Salt = cipher.Salt
             };
 
             _unitOfWork.AuthenticationRepository.Register(user);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
             return user;
         }
 
@@ -61,8 +68,8 @@ namespace Authentication.Services
                 return null;
 
             if (!CryptoProvider.VerifyPassword(
-                new CryptoProvider.Plain {Password = password},
-                new CryptoProvider.Cipher {Hash = user.Hash, Salt = user.Salt}))
+                    new CryptoProvider.Plain { Password = password },
+                    new CryptoProvider.Cipher { Hash = user.Hash, Salt = user.Salt }))
                 return null;
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -71,11 +78,11 @@ namespace Authentication.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.UserId.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature)
+                SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -87,17 +94,17 @@ namespace Authentication.Services
             return _unitOfWork.AuthenticationRepository.GetAllAsync().ToEnumerable();
         }
 
-        public void Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             _unitOfWork.AuthenticationRepository.Delete(id);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
         }
 
-        public void Update(User user)
+        public async Task UpdateAsync(User user)
         {
             user.Username = user.Username.ToLower();
             _unitOfWork.AuthenticationRepository.Update(user);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
         }
 
         public User Get(string email)

@@ -17,14 +17,17 @@ spec:
     spec:
       containers:
         - name: client
-          image: kasperhermansen/itonk11-client:6
+          image: kasperhermansen/itonk11-client:20
           ports:
             - containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
           livenessProbe:
             initialDelaySeconds: 10
             failureThreshold: 10
             httpGet:
-              path: /
               port: 80
               scheme: HTTP
             periodSeconds: 5
@@ -34,7 +37,6 @@ spec:
             initialDelaySeconds: 10
             failureThreshold: 10
             httpGet:
-              path: /
               port: 80
               scheme: HTTP
             periodSeconds: 5
@@ -44,9 +46,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: client
+  name: client-service
   labels:
-    app: client
+    app: client-service
   namespace: itonk-11
 spec:
   type: LoadBalancer

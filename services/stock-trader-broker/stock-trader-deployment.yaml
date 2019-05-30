@@ -28,7 +28,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: postgres
             - name: POSTGRES_PORT
-              value: '5432'
+              value: "5432"
             - name: POSTGRES_DB
               value: stocktraderdb
             - name: ACCOUNTS_SERVICE_DNS
@@ -38,15 +38,15 @@ spec:
             - name: SHARECONTROL_SERVICE_DNS
               value: pso-control-service
             - name: SHARECONTROL_SERVICE_PORT
-              value: "80" 
+              value: "80"
             - name: PAYMENTS_SERVICE_DNS
               value: payment-service
             - name: PAYMENTS_SERVICE_PORT
-              value: "80" 
+              value: "80"
             - name: SHARES_SERVICE_DNS
               value: shares-service
             - name: SHARES_SERVICE_PORT
-              value: "80" 
+              value: "80"
           resources:
             limits:
               memory: "128Mi"
@@ -82,7 +82,7 @@ metadata:
     app: stock-trader-service
   namespace: itonk-11
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: stock-trader
   ports:

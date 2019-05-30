@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: authentication
-          image: kasperhermansen/itonk11-authentication:4
+          image: kasperhermansen/itonk11-authentication:9
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION
@@ -34,6 +34,14 @@ spec:
             - name: USERS_SERVICE_DNS
               value: users-service.itonk-11.svc.cluster.local
             - name: USERS_SERVICE_PORT
+              value: "80"
+            - name: PORTFOLIO_SERVICE_DNS
+              value: pso-control-service.itonk-11.svc.cluster.local
+            - name: PORTFOLIO_SERVICE_PORT
+              value: "80"
+            - name: BANK_SERVICE_DNS
+              value: bank-service.itonk-11.svc.cluster.local
+            - name: BANK_SERVICE_PORT
               value: "80"
           ports:
             - containerPort: 80
@@ -70,7 +78,7 @@ metadata:
     app: authentication-service
   namespace: itonk-11
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: authentication
   ports:
