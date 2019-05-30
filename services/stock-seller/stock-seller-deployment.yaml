@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-seller
+  labels:
+    app: stock-seller
+  namespace: itonk-11
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-seller
+  template:
+    metadata:
+      labels:
+        app: stock-seller
+    spec:
+      containers:
+        - name: stock-seller
+          image: kasperhermansen/itonk11-stock-seller:1
+          env:
+            - name: ACCOUNTS_SERVICE_DNS
+              value: account-service.itonk-11.svc.cluster.local
+            - name: ACCOUNTS_SERVICE_PORT
+              value: "80"
+            - name: TRADER_SERVICE_DNS
+              value: stock-trader-service.itonk-11.svc.cluster.local
+            - name: TRADER_SERVICE_PORT
+              value: "80"
+            - name: SHARECONTROL_SERVICE_DNS
+              value: pso-control-service.itonk-11.svc.cluster.local
+            - name: SHARECONTROL_SERVICE_PORT
+              value: "80"
+            - name: BANK_SERVICE_DNS
+              value: bank-service.itonk-11.svc.cluster.local
+            - name: BANK_SERVICE_PORT
+              value: "80"
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+          livenessProbe:
+            initialDelaySeconds: 10
+            failureThreshold: 10
+            httpGet:
+              path: /api/health/ping
+              port: 80
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            initialDelaySeconds: 10
+            failureThreshold: 10
+            httpGet:
+              path: /api/health/ping
+              port: 80
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stock-seller-service
+  labels:
+    app: stock-seller-service
+  namespace: itonk-11
+spec:
+  type: ClusterIP
+  selector:
+    app: stock-seller
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
