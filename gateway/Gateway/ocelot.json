@@ -439,6 +439,50 @@
         }
       ],
       "UpstreamPathTemplate": "/swagger/seller/swagger.json"
+    },
+    {
+      "DownstreamPathTemplate": "/api/buyer{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-buyer-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/buyer{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/buyer",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-buyer-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/buyer"
+    },
+    {
+      "DownstreamPathTemplate": "/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-buyer-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/buyer/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/buyer/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock-buyer-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger/buyer/swagger.json"
     }
   ],
   "GlobalConfiguration": {
