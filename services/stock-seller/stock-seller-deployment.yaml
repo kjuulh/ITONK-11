@@ -1,29 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stock-provider
+  name: stock-seller
   labels:
-    app: stock-provider
+    app: stock-seller
   namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: stock-provider
+      app: stock-seller
   template:
     metadata:
       labels:
-        app: stock-provider
+        app: stock-seller
     spec:
       containers:
-        - name: stock-provider
-          image: kasperhermansen/itonk11-stock-providers:6
+        - name: stock-seller
+          image: kasperhermansen/itonk11-stock-sellers:6
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION
             - name: ACCOUNTS_SERVICE_DNS
               value: account-service.itonk-11.svc.cluster.local
             - name: ACCOUNTS_SERVICE_PORT
+              value: "80"
+            - name: TRADER_SERVICE_DNS
+              value: trader-service.itonk-11.svc.cluster.local
+            - name: TRADER_SERVICE_PORT
+              value: "80"
+            - name: SHARECONTROL_SERVICE_DNS
+              value: pso-control-service.itonk-11.svc.cluster.local
+            - name: SHARECONTROL_SERVICE_PORT
+              value: "80"
+            - name: BANK_SERVICE_DNS
+              value: bank-service.itonk-11.svc.cluster.local
+            - name: BANK_SERVICE_PORT
               value: "80"
           ports:
             - containerPort: 80
@@ -55,14 +67,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: stock-provider-service
+  name: stock-seller-service
   labels:
-    app: stock-provider-service
+    app: stock-seller-service
   namespace: itonk-11
 spec:
   type: ClusterIP
   selector:
-    app: stock-provider
+    app: stock-seller
   ports:
     - name: http
       port: 80

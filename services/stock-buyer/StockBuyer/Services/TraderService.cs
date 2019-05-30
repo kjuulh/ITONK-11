@@ -4,13 +4,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace StockSeller.Services
+namespace StockBuyer.Services
 {
     public interface ITraderService
     {
-        Task<TraderService.RequestViewModel> SellShare(Guid accountId, Guid portfolioId, Guid shareId, int amount);
+        Task<TraderService.RequestViewModel> BuyShare(Guid accountId, Guid portfolioId);
     }
-    public class TraderService
+
+    public class TraderService : ITraderService
     {
 
         private readonly IHttpClientFactory _httpClientFactory;
@@ -20,7 +21,7 @@ namespace StockSeller.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<RequestViewModel> SellShare(Guid accountId, Guid portfolioId, Guid shareId, int amount)
+        public async Task<RequestViewModel> BuyShare(Guid accountId, Guid portfolioId)
         {
             var serviceDNS = Environment.GetEnvironmentVariable("TRADER_SERVICE_DNS");
             if (string.IsNullOrEmpty(serviceDNS))
@@ -34,9 +35,8 @@ namespace StockSeller.Services
                 new
                 {
                     AccountId = accountId,
-                        PortfolioId = portfolioId,
-                        ShareId = shareId,
-                        Amount = amount
+                    PortfolioId = portfolioId,
+
                 }, out var client);
 
             var response = await client.SendAsync(request);

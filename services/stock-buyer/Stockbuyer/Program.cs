@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace StockProvider
+namespace StockBuyer
 {
     public class Program
     {
