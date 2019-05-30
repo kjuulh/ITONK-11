@@ -28,7 +28,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: postgres
             - name: POSTGRES_PORT
-              value: '5432'
+              value: "5432"
             - name: POSTGRES_DB
               value: usersdb
           ports:
@@ -66,7 +66,7 @@ metadata:
     app: users-service
   namespace: itonk-11
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: users
   ports:

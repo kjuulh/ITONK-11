@@ -27,11 +27,15 @@ export class SignupComponent implements OnInit {
   signup() {
     this.auth.attemptRegister(this.username, this.password).subscribe(
       data => {
-        this.snackbar.open('Registration was a success, now login');
+        this.snackbar.open('Registration was a success, now login', 'X', {
+          duration: 2000,
+        });
         this.router.navigate(['login']);
       },
       error => {
-        this.snackbar.open('Something went wrong, try again...');
+        this.snackbar.open('Something went wrong, try again...', 'X', {
+          duration: 2000,
+        });
       },
     );
   }

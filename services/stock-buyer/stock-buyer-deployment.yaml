@@ -1,42 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: account
+  name: stock-buyer
   labels:
-    app: account
+    app: stock-buyer
   namespace: itonk-11
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: account
+      app: stock-buyer
   template:
     metadata:
       labels:
-        app: account
+        app: stock-buyer
     spec:
       containers:
-        - name: account
-          image: kasperhermansen/itonk11-account:9
+        - name: stock-buyer
+          image: kasperhermansen/itonk11-stock-buyer:2
           env:
-            - name: RUNTIME_ENV
-              value: PRODUCTION
-            - name: POSTGRES_HOST
-              value: db-service.itonk-11.svc.cluster.local
-            - name: POSTGRES_USER
-              value: postgres
-            - name: POSTGRES_PASSWORD
-              value: postgres
-            - name: POSTGRES_PORT
-              value: "5432"
-            - name: POSTGRES_DB
-              value: accountdb
+            - name: ACCOUNTS_SERVICE_DNS
+              value: account-service.itonk-11.svc.cluster.local
+            - name: ACCOUNTS_SERVICE_PORT
+              value: "80"
+            - name: TRADER_SERVICE_DNS
+              value: stock-trader-service.itonk-11.svc.cluster.local
+            - name: TRADER_SERVICE_PORT
+              value: "80"
+            - name: SHARECONTROL_SERVICE_DNS
+              value: pso-control-service.itonk-11.svc.cluster.local
+            - name: SHARECONTROL_SERVICE_PORT
+              value: "80"
+            - name: BANK_SERVICE_DNS
+              value: bank-service.itonk-11.svc.cluster.local
+            - name: BANK_SERVICE_PORT
+              value: "80"
+          ports:
+            - containerPort: 80
           resources:
             limits:
               memory: "128Mi"
               cpu: "100m"
-          ports:
-            - containerPort: 80
           livenessProbe:
             initialDelaySeconds: 10
             failureThreshold: 10
@@ -61,14 +65,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: account-service
+  name: stock-buyer-service
   labels:
-    app: account-service
+    app: stock-buyer-service
   namespace: itonk-11
 spec:
   type: ClusterIP
   selector:
-    app: account
+    app: stock-buyer
   ports:
     - name: http
       port: 80
