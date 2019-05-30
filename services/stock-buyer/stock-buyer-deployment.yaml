@@ -17,16 +17,14 @@ spec:
     spec:
       containers:
         - name: stock-buyer
-          image: kasperhermansen/itonk11-stock-buyers:6
+          image: kasperhermansen/itonk11-stock-buyer:2
           env:
-            - name: RUNTIME_ENV
-              value: PRODUCTION
             - name: ACCOUNTS_SERVICE_DNS
               value: account-service.itonk-11.svc.cluster.local
             - name: ACCOUNTS_SERVICE_PORT
               value: "80"
             - name: TRADER_SERVICE_DNS
-              value: trader-service.itonk-11.svc.cluster.local
+              value: stock-trader-service.itonk-11.svc.cluster.local
             - name: TRADER_SERVICE_PORT
               value: "80"
             - name: SHARECONTROL_SERVICE_DNS
