@@ -17,10 +17,8 @@ spec:
     spec:
       containers:
         - name: stock-seller
-          image: kasperhermansen/itonk11-stock-sellers:6
+          image: kasperhermansen/itonk11-stock-sellers:1
           env:
-            - name: RUNTIME_ENV
-              value: PRODUCTION
             - name: ACCOUNTS_SERVICE_DNS
               value: account-service.itonk-11.svc.cluster.local
             - name: ACCOUNTS_SERVICE_PORT
