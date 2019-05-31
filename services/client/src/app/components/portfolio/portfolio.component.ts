@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Portfolio } from 'src/app/models/portfolio';
 import { PortfolioService } from 'src/app/services/portfolio/portfolio.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Share } from 'src/app/models/share';
 import { SharesService } from 'src/app/services/shares/shares.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CreateStockComponent } from 'src/app/dialogs/create-stock/create-stock.component';
 import { ProviderService } from 'src/app/services/provider/provider.service';
-import { providerDef } from '@angular/core/src/view';
 
 @Component({
   selector: 'app-portfolio',
@@ -39,6 +38,7 @@ export class PortfolioComponent implements OnInit {
     private token: TokenService,
     public dialog: MatDialog,
     private provider: ProviderService,
+    private snackbar: MatSnackBar,
   ) {}
 
   ngOnInit() {
@@ -92,5 +92,19 @@ export class PortfolioComponent implements OnInit {
 
   sellShare(share: Share) {
     console.log(share);
+
+    this.sharesService
+      .sellShare({
+        userId: this.userId,
+        shareId: share.shareId,
+        amount: share.count,
+      })
+      .subscribe(
+        res => this.snackbar.open('Request added', 'X', { duration: 2000 }),
+        err =>
+          this.snackbar.open("Couldn't create request", 'X', {
+            duration: 2000,
+          }),
+      );
   }
 }

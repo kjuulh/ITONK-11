@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: stock-trader
-          image: kasperhermansen/itonk11-stock-trader:1
+          image: kasperhermansen/itonk11-stock-trader:2
           env:
             - name: RUNTIME_ENV
               value: PRODUCTION

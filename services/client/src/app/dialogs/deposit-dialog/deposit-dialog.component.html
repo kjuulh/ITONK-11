@@ -1,0 +1,28 @@
+<div class="container">
+  <h1 mat-dialog-title>Deposit funds</h1>
+  <div mat-dialog-content>
+    <br />
+    <mat-form-field color="accent">
+      <input
+        type="number"
+        placeholder="Amount of funds"
+        matInput
+        [(ngModel)]="data.amount"
+        color="accent"
+      />
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="buttons">
+    <button mat-raised-button (click)="onCancelClicked()">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      [mat-dialog-close]="data"
+      cdkFocusInitial
+      color="accent"
+    >
+      Ok
+    </button>
+  </div>
+</div>

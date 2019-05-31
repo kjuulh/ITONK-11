@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = 'http://api.kjuulh.io/api/Authentication';
+  baseUrl = 'http://api.kjuulh.io/api/authentication';
 
   constructor(private http: HttpClient) {}
 

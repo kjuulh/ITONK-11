@@ -18,9 +18,7 @@ export class CreateStockComponent {
   constructor(
     public dialogRef: MatDialogRef<CreateStockComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CreateStockData,
-  ) {
-    console.log(data);
-  }
+  ) {}
 
   onCancelClick() {
     this.dialogRef.close();
