@@ -8,6 +8,30 @@
   </button>
   <span class="menu-spacer"></span>
   <button
+    mat-raised-button
+    [routerLink]="['/']"
+    routerLinkActive="router-link-active"
+    *ngIf="isLoggedIn"
+  >
+    HOME
+  </button>
+  <button
+    mat-raised-button
+    [routerLink]="['/market']"
+    routerLinkActive="router-link-active"
+    *ngIf="isLoggedIn"
+  >
+    MARKET
+  </button>
+  <button
+    mat-raised-button
+    [routerLink]="['/bank']"
+    routerLinkActive="router-link-active"
+    *ngIf="isLoggedIn"
+  >
+    BANK
+  </button>
+  <button
     mat-icon-button
     [routerLink]="['/login']"
     routerLinkActive="router-link-active"

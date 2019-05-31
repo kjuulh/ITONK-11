@@ -32,14 +32,14 @@ namespace StockTraderBroker.Services
 
             var requestUri = "http://" + shareControlServiceDNS + ":" + shareControlServicePORT + $"/api/Portfolio/shares";
             var request = HttpRequestPut(requestUri,
-            new
-            {
-                ShareId = shareId,
-                OwnerPortfolioId = ownerPortfolioId,
-                ReceiverPortfolioId = receiverPortfolioId,
-                Count = count
-            },
-            out var client);
+                new
+                {
+                    ShareId = shareId,
+                        OwnerPortfolioId = ownerPortfolioId,
+                        ReceiverPortfolioId = receiverPortfolioId,
+                        Count = count
+                },
+                out var client);
 
             var response = await client.SendAsync(request);
 
@@ -66,12 +66,11 @@ namespace StockTraderBroker.Services
             if (response.IsSuccessStatusCode)
             {
                 var countViewModel = await response.Content.ReadAsAsync<SharesViewModel>();
-                if (countViewModel.Count > amount)
+                if (countViewModel.Count >= amount)
                     return true;
             }
             return false;
         }
-
 
         private HttpRequestMessage HttpRequestGet(string requestUri, out HttpClient client)
         {

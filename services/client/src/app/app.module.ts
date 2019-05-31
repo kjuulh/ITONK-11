@@ -28,6 +28,8 @@ import {
 } from '@angular/material';
 
 import { CreateStockComponent } from './dialogs/create-stock/create-stock.component';
+import { BankComponent } from './pages/bank/bank.component';
+import { DepositDialogComponent } from './dialogs/deposit-dialog/deposit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { CreateStockComponent } from './dialogs/create-stock/create-stock.compon
     MarketComponent,
     PortfolioComponent,
     CreateStockComponent,
+    BankComponent,
+    DepositDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,6 @@ import { CreateStockComponent } from './dialogs/create-stock/create-stock.compon
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [CreateStockComponent],
+  entryComponents: [CreateStockComponent, DepositDialogComponent],
 })
 export class AppModule {}
